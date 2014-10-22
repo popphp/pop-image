@@ -1,10 +1,15 @@
 {
     "name": "popphp/pop-image",
-    "description": "Pop Image Component",
+    "description": "PHP Image library for generating, editing and effecting images.",
     "keywords": [
+        "image",
+        "image resize",
+        "image effects",
+        "image crop",
+        "image text",
+        "draw image",
         "php image library",
-        "php image processing",
-        "pop image"
+        "php image processing"
     ],
     "homepage": "http://github.com/popphp/pop-image",
     "license": "New BSD",
