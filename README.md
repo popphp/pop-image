@@ -9,6 +9,13 @@ component that's simple to use. It supports the GD, Imagick and Gmagick extensio
 the SVG image format. The API is Photoshop-like with calls to manipulation objects that can be
 extended with addition image processing functionality.
 
+INSTALL
+-------
+
+Install `Pop Image` using Composer.
+
+    composer require popphp/pop-image
+
 QUICK USE
 ---------
 
