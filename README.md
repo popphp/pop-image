@@ -1,6 +1,6 @@
 Pop Image
 =========
-[Part of the Pop PHP Framework (http://github.com/popphp/popphp2)]
+Part of the Pop PHP Framework (http://github.com/popphp/popphp2)
 
 RELEASE INFORMATION
 -------------------
@@ -11,7 +11,7 @@ OVERVIEW
 --------
 Pop Image is a component of the Pop PHP Framework 2. It is a powerful and robust image processing
 component that's simple to use. It supports the GD, Imagick and Gmagick extensions, as well as
-the SVG image format. The API is Photoshop-like will calls to manipulation objects that can be
+the SVG image format. The API is Photoshop-like with calls to manipulation objects that can be
 extended with addition image processing functionality.
 
 QUICK USE
