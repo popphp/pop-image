@@ -1,0 +1,31 @@
+{
+    "name": "popphp/pop-image",
+    "description": "Pop Image Component",
+    "keywords": [
+        "php image library",
+        "php image processing",
+        "pop image"
+    ],
+    "homepage": "http://github.com/popphp/pop-image",
+    "license": "New BSD",
+    "authors": [
+        {
+            "name": "Nick Sagona",
+            "email": "dev@nolainteractive.com",
+            "homepage": "http://www.nolainteractive.com/"
+        }
+    ],
+    "require": {
+        "php": ">=5.4.0"
+    },
+    "suggest": {
+        "ext-gd": "For the GD image adapter",
+        "ext-imagick": "For the Imagick image adapter",
+        "ext-gmagick": "For the Gmagick image adapter"
+    },
+    "autoload": {
+        "psr-4": {
+            "Pop\\": "src/"
+        }
+    }
+}
