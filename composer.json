@@ -1,6 +1,6 @@
 {
     "name": "popphp/pop-image",
-    "description": "PHP Image library for generating, editing and effecting images.",
+    "description": "PHP Image library for generating, editing and effecting images. A component of the Pop PHP Framework",
     "keywords": [
         "image",
         "image resize",
@@ -9,7 +9,10 @@
         "image text",
         "draw image",
         "php image library",
-        "php image processing"
+        "php image processing",
+        "pop",
+        "pop php",
+        "php"
     ],
     "homepage": "http://github.com/popphp/pop-image",
     "license": "New BSD",
@@ -38,5 +41,4 @@
             "dev-master": "2.0.x-dev"
         }
     }
-
 }
