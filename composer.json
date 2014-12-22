@@ -24,12 +24,12 @@
         }
     ],
     "require": {
-        "php": ">=5.4.0"
+        "php": ">=5.4.0",
+        "ext-gd": "*"
     },
     "suggest": {
-        "ext-gd": "For the GD image adapter",
-        "ext-imagick": "For the Imagick image adapter",
-        "ext-gmagick": "For the Gmagick image adapter"
+        "ext-imagick": "To use the Imagick image adapter",
+        "ext-gmagick": "To use the Gmagick image adapter"
     },
     "autoload": {
         "psr-4": {
