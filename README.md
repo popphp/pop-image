@@ -2,6 +2,8 @@ Pop Image
 =========
 Part of the Pop PHP Framework (http://github.com/popphp/popphp)
 
+[![Build Status](https://travis-ci.org/popphp/pop-image.svg?branch=master)](https://travis-ci.org/popphp/pop-image)
+
 OVERVIEW
 --------
 Pop Image is a component of the Pop PHP Framework 2. It is a powerful and robust image processing

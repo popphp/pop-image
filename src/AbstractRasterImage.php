@@ -59,35 +59,6 @@ abstract class AbstractRasterImage extends AbstractImage implements RasterImageI
     protected $layer = null;
 
     /**
-     * Constructor
-     *
-     * Instantiate an image object based on either a pre-existing image
-     * file on disk, or a new image file.
-     *
-     * @param  string $img
-     * @param  int    $w
-     * @param  int    $h
-     * @return AbstractRasterImage
-     */
-    public function __construct($img = null, $w = null, $h = null)
-    {
-        // If the arguments passed are $img, $w, $h
-        if ((null !== $img) && !is_numeric($img) && is_string($img)) {
-            $this->setImage($img);
-            if ((null !== $w) && (null !== $h) && is_numeric($w) && is_numeric($h)) {
-                $this->width  = $w;
-                $this->height = $h;
-            }
-        // Else, if the arguments passed are $w, $h, $img
-        } else if ((null !== $img) && (null !== $w) && is_numeric($img) && is_numeric($w)) {
-            $this->width  = $img;
-            $this->height = $w;
-            $imgName      = ((null !== $h) && !is_numeric($h) && is_string($h)) ? $h : 'pop-image-' . time() . '.jpg';
-            $this->setImage($imgName);
-        }
-    }
-
-    /**
      * Get the available image library adapters
      *
      * @return array
