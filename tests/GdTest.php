@@ -198,8 +198,8 @@ class GdTest extends \PHPUnit_Framework_TestCase
     {
         $image = new Image\Gd(__DIR__ . '/tmp/test.jpg');
         $image->rotate(45);
-        $this->assertEquals(792, $image->getWidth());
-        $this->assertEquals(792, $image->getHeight());
+        $this->assertGreaterThan(770, $image->getWidth());
+        $this->assertGreaterThan(770, $image->getHeight());
     }
 
     public function testRotateException()
