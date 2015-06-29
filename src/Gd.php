@@ -419,6 +419,9 @@ class Gd extends AbstractRasterImage
         }
 
         $this->resource = imagerotate($this->resource, $degrees, $this->getColor($bgColor));
+        $this->width    = imagesx($this->resource);
+        $this->height   = imagesy($this->resource);
+
         return $this;
     }
 
