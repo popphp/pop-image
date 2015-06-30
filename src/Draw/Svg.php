@@ -77,34 +77,6 @@ class Svg extends AbstractDraw
     }
 
     /**
-     * Set fill color
-     *
-     * @param  int $r
-     * @param  int $g
-     * @param  int $b
-     * @return Svg
-     */
-    public function setFillColor($r, $g, $b)
-    {
-        $this->fillColor = [(int)$r, (int)$g, (int)$b];
-        return $this;
-    }
-
-    /**
-     * Set stroke color
-     *
-     * @param  int $r
-     * @param  int $g
-     * @param  int $b
-     * @return Svg
-     */
-    public function setStrokeColor($r, $g, $b)
-    {
-        $this->strokeColor = [(int)$r, (int)$g, (int)$b];
-        return $this;
-    }
-
-    /**
      * Get stroke width
      *
      * @param int $w
@@ -157,7 +129,7 @@ class Svg extends AbstractDraw
      *
      * @return mixed
      */
-    public function getCurClippingPath()
+    public function getCurrentClippingPath()
     {
         return $this->curClippingPath;
     }
@@ -168,7 +140,7 @@ class Svg extends AbstractDraw
      * @param  mixed $path
      * @return Svg
      */
-    public function setCurClippingPath($path)
+    public function setCurrentClippingPath($path)
     {
         if (in_array($path, $this->clippingPaths) || (null === $path)) {
             $this->curClippingPath = $path;

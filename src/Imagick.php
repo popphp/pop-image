@@ -70,7 +70,7 @@ class Imagick extends AbstractRasterImage
 
     /**
      * Image blur
-     * @var int
+     * @var float
      */
     protected $imageBlur = 1;
 
@@ -195,6 +195,26 @@ class Imagick extends AbstractRasterImage
     public function getCompression()
     {
         return $this->compression;
+    }
+
+    /**
+     * Get the image filter.
+     *
+     * @return int
+     */
+    public function getImageFilter()
+    {
+        return $this->imageFilter;
+    }
+
+    /**
+     * Get the image blur.
+     *
+     * @return float
+     */
+    public function getImageBlur()
+    {
+        return $this->imageBlur;
     }
 
     /**
@@ -333,12 +353,12 @@ class Imagick extends AbstractRasterImage
     /**
      * Set the image blur.
      *
-     * @param  int $blur
+     * @param  float $blur
      * @return Imagick
      */
     public function setImageBlur($blur)
     {
-        $this->imageBlur = (int)$blur;
+        $this->imageBlur = $blur;
         return $this;
     }
 

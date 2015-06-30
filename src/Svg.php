@@ -210,10 +210,15 @@ class Svg extends AbstractImage
      * @param  array  $color1
      * @param  array  $color2
      * @param  float  $opacity
+     * @throws \InvalidArgumentException
      * @return Svg
      */
     public function addRadialGradient(array $color1, array $color2, $opacity = 1.0)
     {
+        if (!$this->colorIsValid($color1) || !$this->colorIsValid($color2)) {
+            throw new \InvalidArgumentException('Error: One of the color arrays passed is not valid.');
+        }
+
         $this->curGradient = count($this->gradients);
         $this->gradients[] = $this->curGradient;
         $defs = $this->resource->addChild('defs');
@@ -228,11 +233,11 @@ class Svg extends AbstractImage
 
         $stop1 = $grad->addChild('stop');
         $stop1->addAttribute('offset', '0%');
-        $stop1->addAttribute('style', 'stop-color: rgb(' . $color1[0] . ',' . $color1[1] . ',' . $color1[2] . '); stop-opacity: ' . $opacity . ';');
+        $stop1->addAttribute('style', 'stop-color: rgb(' . (int)$color1[0] . ',' . (int)$color1[1] . ',' . (int)$color1[2] . '); stop-opacity: ' . $opacity . ';');
 
         $stop2 = $grad->addChild('stop');
         $stop2->addAttribute('offset', '100%');
-        $stop2->addAttribute('style', 'stop-color: rgb(' . $color2[0] . ',' . $color2[1] . ',' . $color2[2] . '); stop-opacity: ' . $opacity . ';');
+        $stop2->addAttribute('style', 'stop-color: rgb(' . (int)$color2[0] . ',' . (int)$color2[1] . ',' . (int)$color2[2] . '); stop-opacity: ' . $opacity . ';');
 
         return $this;
     }
@@ -244,10 +249,15 @@ class Svg extends AbstractImage
      * @param  array   $color2
      * @param  float   $opacity
      * @param  boolean $vertical
+     * @throws \InvalidArgumentException
      * @return Svg
      */
     public function addLinearGradient(array $color1, array $color2, $opacity = 1.0, $vertical = true)
     {
+        if (!$this->colorIsValid($color1) || !$this->colorIsValid($color2)) {
+            throw new \InvalidArgumentException('Error: One of the color arrays passed is not valid.');
+        }
+
         $this->curGradient = count($this->gradients);
         $this->gradients[] = $this->curGradient;
         $defs = $this->resource->addChild('defs');
@@ -270,11 +280,11 @@ class Svg extends AbstractImage
 
         $stop1 = $grad->addChild('stop');
         $stop1->addAttribute('offset', '0%');
-        $stop1->addAttribute('style', 'stop-color: rgb(' . $color1[0] . ',' . $color1[1] . ',' . $color1[2] . '); stop-opacity: ' . $opacity . ';');
+        $stop1->addAttribute('style', 'stop-color: rgb(' . (int)$color1[0] . ',' . (int)$color1[1] . ',' . (int)$color1[2] . '); stop-opacity: ' . $opacity . ';');
 
         $stop2 = $grad->addChild('stop');
         $stop2->addAttribute('offset', '100%');
-        $stop2->addAttribute('style', 'stop-color: rgb(' . $color2[0] . ',' . $color2[1] . ',' . $color2[2] . '); stop-opacity: ' . $opacity . ';');
+        $stop2->addAttribute('style', 'stop-color: rgb(' . (int)$color2[0] . ',' . (int)$color2[1] . ',' . (int)$color2[2] . '); stop-opacity: ' . $opacity . ';');
 
         return $this;
     }
@@ -509,6 +519,29 @@ class Svg extends AbstractImage
                 }
             }
         }
+    }
+
+    /**
+     * Check if a valid color array was passed
+     *
+     * @param  array $color
+     * @return boolean
+     */
+    protected function colorIsValid(array $color)
+    {
+        $result = true;
+
+        if (count($color) != 3) {
+            $result = false;
+        }
+
+        foreach ($color as $c) {
+            if (((int)$c > 255) || ((int)$c < 0)) {
+                $result = false;
+            }
+        }
+
+        return $result;
     }
 
 }
