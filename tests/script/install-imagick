@@ -1,0 +1,12 @@
+#!/bin/bash
+
+sudo apt-get install autoconf
+
+# install this version
+IMAGICK=3.1.2
+
+# compile manually, because `pecl install imagick` keep asking questions
+wget http://pecl.php.net/get/imagick-$IMAGICK.tgz
+tar zxvf imagick-$IMAGICK.tgz
+cd "imagick-${IMAGICK}"
+phpize && ./configure && make install && echo "Installed ext/imagick-${IMAGICK}"

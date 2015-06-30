@@ -1,7 +1,9 @@
 before_script:
     - composer self-update
     - composer install
-    - sudo apt-get install php5-imagick
+    - sudo apt-get install -y imagemagick libgraphicsmagick1-dev libmagickcore-dev libmagickwand libmagickwand-dev
+    - chmod 755 ./tests/script/install-imagick
+    - ./tests/script/install-imagick
 language: php
 php:
     - 5.4
