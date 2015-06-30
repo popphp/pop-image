@@ -3,7 +3,7 @@ before_script:
     - composer install
     - chmod 755 ./tests/script/install-imagick
     - ./tests/script/install-imagick
-    echo "extension=imagick.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
+    - echo "extension=imagick.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
 language: php
 php:
     - 5.4
