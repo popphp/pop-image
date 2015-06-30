@@ -1,6 +1,8 @@
 before_script:
     - composer self-update
     - composer install
+    - sudo apt-get remove -y imagemagick libmagickcore-dev libmagickwand-dev
+    - sudo apt-get install -y libtiff-dev libjpeg-dev libdjvulibre-dev libwmf-dev pkg-config
     - chmod 755 ./tests/script/install-imagick
     - ./tests/script/install-imagick
 language: php
