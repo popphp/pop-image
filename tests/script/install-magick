@@ -2,5 +2,5 @@
 if [ "$IMAGINE_DRIVER" == "imagick" ]; then
     printf "\n" | pecl install imagick
 elif [ "$IMAGINE_DRIVER" == "gmagick" ]; then
-    printf "\n" | pecl install gmagick
+    printf "\n" | pecl install gmagick-beta
 fi
