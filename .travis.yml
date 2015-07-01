@@ -4,12 +4,8 @@ env:
 before_script:
     - composer self-update
     - composer install
-    - sh -e -c "if [ '$IMAGINE_DRIVER' = 'imagick' ]; then
-        printf "\n" | pecl install imagick
-      fi"
-    - sh -e -c "if [ '$IMAGINE_DRIVER' = 'gmagick' ]; then
-        printf "\n" | pecl install gmagick
-      fi"
+    - chmod 755 ./tests/script/install-magick
+    - ./tests/script/install-magick
 language: php
 php:
     - 5.4
