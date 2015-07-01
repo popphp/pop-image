@@ -1,13 +1,13 @@
 env:
-  - IMAGINE_DRIVER=imagick
-  - IMAGINE_DRIVER=gmagick
+    - IMAGINE_DRIVER=imagick
+    - IMAGINE_DRIVER=gmagick
 before_script:
     - composer self-update
     - composer install
     - sh -e -c "if [ '$IMAGINE_DRIVER' = 'imagick' ]; then
         printf "\n" | pecl install imagick
       fi"
-  - sh -e -c "if [ '$IMAGINE_DRIVER' = 'gmagick' ]; then
+    - sh -e -c "if [ '$IMAGINE_DRIVER' = 'gmagick' ]; then
         printf "\n" | pecl install gmagick
       fi"
 language: php
