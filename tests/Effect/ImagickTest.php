@@ -7,6 +7,15 @@ use Pop\Image;
 class ImagickTest extends \PHPUnit_Framework_TestCase
 {
 
+    protected function setUp()
+    {
+        parent::setUp();
+
+        if (!class_exists('Imagick')) {
+            $this->markTestSkipped('Imagick is not installed');
+        }
+    }
+
     public function testBorder()
     {
         $image = new Image\Imagick('test.jpg', 640, 480);
@@ -62,7 +71,5 @@ class ImagickTest extends \PHPUnit_Framework_TestCase
         $image->effect()->linearGradient([255, 0, 0], [0, 0, 255], false);
         $this->assertInstanceOf('Pop\Image\Effect\Imagick', $image->effect());
     }
-
-
 
 }

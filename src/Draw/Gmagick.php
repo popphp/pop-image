@@ -141,7 +141,7 @@ class Gmagick extends AbstractDraw
             $draw->setStrokeWidth($this->strokeWidth);
         }
 
-        $draw->roundedRectangle($x, $y, $x2, $y2, $rx, $ry);
+        $draw->roundRectangle($x, $y, $x2, $y2, $rx, $ry);
         $this->image->resource()->drawImage($draw);
 
         return $this;

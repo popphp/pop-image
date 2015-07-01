@@ -7,6 +7,15 @@ use Pop\Image;
 class ImagickTest extends \PHPUnit_Framework_TestCase
 {
 
+    protected function setUp()
+    {
+        parent::setUp();
+
+        if (!class_exists('Imagick')) {
+            $this->markTestSkipped('Imagick is not installed');
+        }
+    }
+
     public function testBlur()
     {
         $image = new Image\Imagick('test.jpg', 640, 480);

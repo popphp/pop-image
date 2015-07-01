@@ -85,10 +85,6 @@ class Gmagick extends AbstractLayer
     public function overlay($image, $x = 0, $y = 0)
     {
         $overlayImage = new \Gmagick($image);
-        if ($this->opacity < 1) {
-            $overlayImage->setImageOpacity($this->opacity);
-        }
-
         $this->image->resource()->compositeImage($overlayImage, $this->overlay, $x, $y);
         return $this;
     }

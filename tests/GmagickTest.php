@@ -7,6 +7,15 @@ use Pop\Image;
 class GmagickTest extends \PHPUnit_Framework_TestCase
 {
 
+    protected function setUp()
+    {
+        parent::setUp();
+
+        if (!class_exists('Gmagick')) {
+            $this->markTestSkipped('Gmagick is not installed');
+        }
+    }
+
     public function testCreatePng()
     {
         $image = new Image\Gmagick('test.png', 640, 480);
