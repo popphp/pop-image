@@ -32,22 +32,30 @@ class ImageTest extends \PHPUnit_Framework_TestCase
 
         $image->setDraw(new Image\Draw\Gd($image));
         $this->assertInstanceOf('Pop\Image\Draw\Gd', $image->draw());
+        $this->assertInstanceOf('Pop\Image\Draw\Gd', $image->draw);
 
         $image->setEffect(new Image\Effect\Gd($image));
         $image->setBackgroundColor(255, 0, 0);
         $this->assertInstanceOf('Pop\Image\Effect\Gd', $image->effect());
+        $this->assertInstanceOf('Pop\Image\Effect\Gd', $image->effect);
 
         $image->setType(new Image\Type\Gd($image));
         $this->assertInstanceOf('Pop\Image\Type\Gd', $image->type());
+        $this->assertInstanceOf('Pop\Image\Type\Gd', $image->type);
 
         $image->setAdjust(new Image\Adjust\Gd($image));
         $this->assertInstanceOf('Pop\Image\Adjust\Gd', $image->adjust());
+        $this->assertInstanceOf('Pop\Image\Adjust\Gd', $image->adjust);
 
         $image->setFilter(new Image\Filter\Gd($image));
         $this->assertInstanceOf('Pop\Image\Filter\Gd', $image->filter());
+        $this->assertInstanceOf('Pop\Image\Filter\Gd', $image->filter);
 
         $image->setLayer(new Image\Layer\Gd($image));
         $this->assertInstanceOf('Pop\Image\Layer\Gd', $image->layer());
+        $this->assertInstanceOf('Pop\Image\Layer\Gd', $image->layer);
+
+        $this->assertNull($image->noobject);
 
         $this->assertEquals(5, count($image->getAllowedTypes()));
         $this->assertInstanceOf('ArrayObject', $image->info());

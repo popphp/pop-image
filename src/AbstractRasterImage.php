@@ -191,6 +191,26 @@ abstract class AbstractRasterImage extends AbstractImage implements RasterImageI
     }
 
     /**
+     * Magic get method to return a manipulation object
+     *
+     * @param  string $name
+     * @return mixed
+     */
+    public function __get($name)
+    {
+        switch ($name) {
+            case 'adjust':
+                return $this->adjust();
+            case 'filter':
+                return $this->filter();
+            case 'layer':
+                return $this->layer();
+            default:
+                return parent::__get($name);
+        }
+    }
+
+    /**
      * Get the image adjust object
      *
      * @return Adjust\AdjustInterface

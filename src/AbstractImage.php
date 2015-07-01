@@ -284,6 +284,26 @@ abstract class AbstractImage implements ImageInterface
     }
 
     /**
+     * Magic get method to return a manipulation object
+     *
+     * @param  string $name
+     * @return mixed
+     */
+    public function __get($name)
+    {
+        switch ($name) {
+            case 'draw':
+                return $this->draw();
+            case 'effect':
+                return $this->effect();
+            case 'type':
+                return $this->type();
+            default:
+                return null;
+        }
+    }
+
+    /**
      * Get the image draw object
      *
      * @return Draw\DrawInterface

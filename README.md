@@ -47,18 +47,18 @@ If a feature doesn't exist yet, you can extend these classes to add your own cus
 
 ```php
 $img = new Pop\Image\Imagick('image.jpg');
-$img->adjust()->brightness(50)->constrast(50);
+$img->adjust->brightness(50)->contrast(50);
 
-$img->draw()->setFillColor(255, 0, 0)->rectangle(200, 200, 100, 50);
+$img->draw->setFillColor(255, 0, 0)->rectangle(200, 200, 100, 50);
 
-$img->effect()->verticalGradient([255, 0, 0], [0, 0, 255]);
+$img->effect->verticalGradient([255, 0, 0], [0, 0, 255]);
 
-$img->filter()->sharpen(10)->swirl(30);
+$img->filter->sharpen(10)->swirl(30);
 
-$img->layer()->overlay('watermark.png', 200, 200);
+$img->layer->overlay('watermark.png', 200, 200);
 
-$img->type()->font('myfont.ttf')
-            ->size(24)
-            ->xy(50, 100)
-            ->text('Hello World!');
+$img->type->font('myfont.ttf')
+          ->size(24)
+          ->xy(50, 100)
+          ->text('Hello World!');
 ```
