@@ -1,6 +1,6 @@
 #!/bin/bash
-if [ "$IMAGINE_DRIVER" == "imagick" ]; then
+if [ "$MAGICK_EXT" == "imagick" ]; then
     printf "\n" | pecl install imagick
-elif [ "$IMAGINE_DRIVER" == "gmagick" ]; then
+elif [ "$MAGICK_EXT" == "gmagick" ]; then
     printf "\n" | pecl install gmagick-beta
 fi

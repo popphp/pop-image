@@ -1,6 +1,6 @@
 env:
-    - IMAGINE_DRIVER=imagick
-    - IMAGINE_DRIVER=gmagick
+    - $MAGICK_EXT=imagick
+    - $MAGICK_EXT=gmagick
 before_script:
     - composer self-update
     - composer install
