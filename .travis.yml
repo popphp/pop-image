@@ -1,9 +1,5 @@
 before_script:
-    - sudo apt-get update
-    - sudo apt-get install -y autoconf automake libtool m4 php5-dev imagemagick libgraphicsmagick1-dev libmagickcore-dev libmagickwand-dev
-    - chmod 755 ./tests/script/install-imagick
-    - sudo ./tests/script/install-imagick
-    - phpenv config-add "./tests/config/$TRAVIS_PHP_VERSION.ini"
+    - printf "\n" | pecl install imagick
     - composer self-update
     - composer install
 language: php
