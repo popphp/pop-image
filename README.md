@@ -44,7 +44,7 @@ There are 6 available manipulation objects. They are:
 
 (* - Not available for SVG)
 
-Which each of these, you can perform advanced image processing manipulation on an image.
+With each of these, you can perform advanced image processing manipulation on an image.
 If a feature doesn't exist yet, you can extend these classes to add your own custom features.
 
 ```php
