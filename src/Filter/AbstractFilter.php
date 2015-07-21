@@ -60,7 +60,7 @@ abstract class AbstractFilter implements FilterInterface
     /**
      * Set the image object
      *
-     * @param  \Pop\Image\AbstractImage
+     * @param  \Pop\Image\AbstractImage $image
      * @return AbstractFilter
      */
     public function setImage(\Pop\Image\AbstractImage $image)

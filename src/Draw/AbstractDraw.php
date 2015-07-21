@@ -124,7 +124,7 @@ abstract class AbstractDraw implements DrawInterface
     /**
      * Set the image object
      *
-     * @param  \Pop\Image\AbstractImage
+     * @param  \Pop\Image\AbstractImage $image
      * @return AbstractDraw
      */
     public function setImage(\Pop\Image\AbstractImage $image)

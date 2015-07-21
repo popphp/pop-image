@@ -154,7 +154,7 @@ abstract class AbstractType implements TypeInterface
     /**
      * Set the image object
      *
-     * @param  \Pop\Image\AbstractImage
+     * @param  \Pop\Image\AbstractImage $image
      * @return AbstractType
      */
     public function setImage(\Pop\Image\AbstractImage $image)

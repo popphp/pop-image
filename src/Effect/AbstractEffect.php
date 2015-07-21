@@ -60,7 +60,7 @@ abstract class AbstractEffect implements EffectInterface
     /**
      * Set the image object
      *
-     * @param  \Pop\Image\AbstractImage
+     * @param  \Pop\Image\AbstractImage $image
      * @return AbstractEffect
      */
     public function setImage(\Pop\Image\AbstractImage $image)

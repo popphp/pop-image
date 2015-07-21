@@ -88,7 +88,7 @@ abstract class AbstractLayer implements LayerInterface
     /**
      * Set the image object
      *
-     * @param  \Pop\Image\AbstractImage
+     * @param  \Pop\Image\AbstractImage $image
      * @return AbstractLayer
      */
     public function setImage(\Pop\Image\AbstractImage $image)
