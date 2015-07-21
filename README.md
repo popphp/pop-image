@@ -1,6 +1,5 @@
 pop-image
 =========
-Part of the Pop PHP Framework (http://github.com/popphp/popphp)
 
 [![Build Status](https://travis-ci.org/popphp/pop-image.svg?branch=master)](https://travis-ci.org/popphp/pop-image)
 [![Coverage Status](http://www.popphp.org/cc/coverage.php?comp=pop-image)](http://www.popphp.org/cc/pop-image/)
