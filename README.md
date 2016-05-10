@@ -2,8 +2,8 @@ pop-image
 =========
 
 [![Build Status](https://travis-ci.org/popphp/pop-image.svg?branch=master)](https://travis-ci.org/popphp/pop-image)
-[![Coverage Status](http://www.popphp.org/cc/coverage.php?comp=pop-image-imagick)](http://www.popphp.org/cc/pop-image/imagick/)
-[![Coverage Status](http://www.popphp.org/cc/coverage.php?comp=pop-image-gmagick)](http://www.popphp.org/cc/pop-image/gmagick/)
+[![Coverage Status](http://cc.popphp.org/coverage.php?comp=pop-image-imagick)](http://cc.popphp.org/pop-image/imagick/)
+[![Coverage Status](http://cc.popphp.org/coverage.php?comp=pop-image-gmagick)](http://cc.popphp.org/pop-image/gmagick/)
 
 OVERVIEW
 --------
