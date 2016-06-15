@@ -25,12 +25,12 @@
     ],
     "require": {
         "php": ">=5.4.0",
-        "ext-gd": "*"
     },
     "require-dev": {
         "phpunit/phpunit": "4.6.*"
     },
     "suggest": {
+        "ext-gd": "To use the Gd image adapter",
         "ext-imagick": "To use the Imagick image adapter",
         "ext-gmagick": "To use the Gmagick image adapter"
     },
