@@ -76,7 +76,6 @@ class Gd extends AbstractRasterImage
             'version'             => $gd['GD Version'],
             'freeTypeSupport'     => $gd['FreeType Support'],
             'freeTypeLinkage'     => $gd['FreeType Linkage'],
-            't1LibSupport'        => $gd['T1Lib Support'],
             'gifReadSupport'      => $gd['GIF Read Support'],
             'gifCreateSupport'    => $gd['GIF Create Support'],
             'jpegSupport'         => $gd['JPEG Support'],
