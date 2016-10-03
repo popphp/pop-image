@@ -7,6 +7,9 @@ before_script:
     - chmod 755 ./tests/script/install-magick
     - ./tests/script/install-magick
 language: php
+branches:
+  only:
+  - master
 php:
     - 5.4
     - 5.5
