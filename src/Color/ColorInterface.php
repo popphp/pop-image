@@ -11,37 +11,26 @@
 /**
  * @namespace
  */
-namespace Pop\Image\Factory;
+namespace Pop\Image\Color;
 
 /**
- * Abstract factory class
+ * Image color interface
  *
  * @category   Pop
- * @package    Pop_Image
+ * @package    Pop\Image
  * @author     Nick Sagona, III <dev@nolainteractive.com>
  * @copyright  Copyright (c) 2009-2016 NOLA Interactive, LLC. (http://www.nolainteractive.com)
  * @license    http://www.popphp.org/license     New BSD License
- * @version    2.1.0
+ * @version    3.0.0
  */
-abstract class AbstractImageFactory implements ImageFactoryInterface
+interface ColorInterface
 {
 
     /**
-     * Load an existing image as a resource and return the image object
+     * Method to print the color object
      *
-     * @param  string $image
-     * @return mixed
+     * @return string
      */
-    abstract public function load($image);
-
-    /**
-     * Create a new image resource and return the image object
-     *
-     * @param  int    $width
-     * @param  int    $height
-     * @param  string $image
-     * @return mixed
-     */
-    abstract public function create($width, $height, $image = null);
+    public function __toString();
 
 }

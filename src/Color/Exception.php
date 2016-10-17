@@ -11,16 +11,16 @@
 /**
  * @namespace
  */
-namespace Pop\Image\Factory;
+namespace Pop\Image\Color;
 
 /**
- * Factory exception class
+ * Image color exception class
  *
  * @category   Pop
- * @package    Pop_Image
+ * @package    Pop\Image
  * @author     Nick Sagona, III <dev@nolainteractive.com>
  * @copyright  Copyright (c) 2009-2016 NOLA Interactive, LLC. (http://www.nolainteractive.com)
  * @license    http://www.popphp.org/license     New BSD License
- * @version    2.1.0
+ * @version    3.0.0
  */
 class Exception extends \Exception {}
