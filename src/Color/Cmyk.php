@@ -173,6 +173,41 @@ class Cmyk extends AbstractColor
     }
 
     /**
+     * Convert to RGB
+     *
+     * @return Rgb
+     */
+    public function toRgb()
+    {
+        // Calculate CMY.
+        $c = $this->c / 100;
+        $m = $this->m / 100;
+        $y = $this->y / 100;
+        $k = $this->k / 100;
+
+        $cyan    = (($c * (1 - $k)) + $k);
+        $magenta = (($m * (1 - $k)) + $k);
+        $yellow  = (($y * (1 - $k)) + $k);
+
+        // Calculate RGB.
+        $r = round((1 - $cyan) * 255);
+        $g = round((1 - $magenta) * 255);
+        $b = round((1 - $yellow) * 255);
+
+        return new Rgb($r, $g, $b);
+    }
+
+    /**
+     * Convert to Gray
+     *
+     * @return Gray
+     */
+    public function toGray()
+    {
+        return new Gray($this->k);
+    }
+
+    /**
      * Method to print the color object
      *
      * @return string

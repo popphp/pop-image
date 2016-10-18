@@ -68,7 +68,7 @@ class Image
     }
 
     /**
-     * Create a GD adapter object from an existing image
+     * Load the image resource from the existing image file into a Gd object
      *
      * @param  string $image
      * @return Adapter\Gd
@@ -79,7 +79,7 @@ class Image
     }
 
     /**
-     * Create a Gmagick adapter object from an existing image
+     * Load the image resource from the existing image file into a Gmagick object
      *
      * @param  string $image
      * @return Adapter\Gmagick
@@ -90,7 +90,7 @@ class Image
     }
 
     /**
-     * Create a Gmagick adapter object from an existing image
+     * Load the image resource from the existing image file into a Imagick object
      *
      * @param  string $image
      * @return Adapter\Imagick
@@ -101,7 +101,7 @@ class Image
     }
 
     /**
-     * Create a GD adapter object from an existing image
+     * Load the image resource from data into a Gd object
      *
      * @param  string $data
      * @param  string $name
@@ -113,7 +113,7 @@ class Image
     }
 
     /**
-     * Create a Gmagick adapter object from an existing image
+     * Load the image resource from data into a Gmagick object
      *
      * @param  string $data
      * @param  string $name
@@ -125,7 +125,7 @@ class Image
     }
 
     /**
-     * Create a Gmagick adapter object from an existing image
+     * Load the image resource from data into a Imagick object
      *
      * @param  string $data
      * @param  string $name
@@ -137,7 +137,7 @@ class Image
     }
 
     /**
-     * Create a GD adapter object from an existing image
+     * Create a new image resource and load it into a Gd object
      *
      * @param  int    $width
      * @param  int    $height
@@ -150,7 +150,20 @@ class Image
     }
 
     /**
-     * Create a Gmagick adapter object from an existing image
+     * Create a new indexed image resource and load it into a Gd object
+     *
+     * @param  int    $width
+     * @param  int    $height
+     * @param  string $image
+     * @return Adapter\Gd
+     */
+    public static function createGdIndex($width, $height, $image = null)
+    {
+        return Gd::createIndex($width, $height, $image);
+    }
+
+    /**
+     * Create a new image resource and load it into a Gmagick object
      *
      * @param  int    $width
      * @param  int    $height
@@ -163,7 +176,20 @@ class Image
     }
 
     /**
-     * Create a Gmagick adapter object from an existing image
+     * Create a new indexed image resource and load it into a Gmagick object
+     *
+     * @param  int    $width
+     * @param  int    $height
+     * @param  string $image
+     * @return Adapter\Gmagick
+     */
+    public static function createGmagickIndex($width, $height, $image = null)
+    {
+        return Gmagick::createIndex($width, $height, $image);
+    }
+
+    /**
+     * Create a new image resource and load it into a Imagick object
      *
      * @param  int    $width
      * @param  int    $height
@@ -173,6 +199,19 @@ class Image
     public static function createImagick($width, $height, $image = null)
     {
         return Imagick::create($width, $height, $image);
+    }
+
+    /**
+     * Create a new indexde image resource and load it into a Imagick object
+     *
+     * @param  int    $width
+     * @param  int    $height
+     * @param  string $image
+     * @return Adapter\Imagick
+     */
+    public static function createImagickIndex($width, $height, $image = null)
+    {
+        return Imagick::createIndex($width, $height, $image);
     }
 
 }

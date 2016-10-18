@@ -13,7 +13,7 @@
  */
 namespace Pop\Image\Adapter;
 
-use Pop\Image\Color\ColorInterface;
+use Pop\Image\Color;
 
 /**
  * Gd adapter class
@@ -31,11 +31,16 @@ class Gd extends AbstractAdapter
     /**
      * Load the image resource from the existing image file
      *
+     * @param  string $name
      * @throws Exception
      * @return Gd
      */
-    public function load()
+    public function load($name = null)
     {
+        if (null !== $name) {
+            $this->name = $name;
+        }
+
         if ((null === $this->name) || !file_exists($this->name)) {
             throw new Exception('Error: The image file has not been passed to the image adapter');
         }
@@ -54,25 +59,7 @@ class Gd extends AbstractAdapter
             throw new Exception('Error: Unable to load image resource');
         }
 
-        $size = getimagesize($this->name);
-
-        $this->width  = $size[0];
-        $this->height = $size[1];
-
-        if (isset($size['channels'])) {
-            switch ($size['channels']) {
-                case 1:
-                    $this->colorspace = self::IMAGE_GRAY;
-                    break;
-                case 3:
-                    $this->colorspace = self::IMAGE_RGB;
-                    break;
-                case 4:
-                    $this->colorspace = self::IMAGE_CMYK;
-                    break;
-            }
-        }
-
+        $this->parseImage(getimagesize($this->name), file_get_contents($this->name));
         return $this;
     }
 
@@ -92,25 +79,43 @@ class Gd extends AbstractAdapter
             throw new Exception('Error: Unable to load image resource');
         }
 
-        $this->name = $name;
+        $this->parseImage(getimagesizefromstring($data), $data);
+        return $this;
+    }
 
-        $size = getimagesizefromstring($data);
+    /**
+     * Create a new image resource
+     *
+     * @param  int    $width
+     * @param  int    $height
+     * @param  string $name
+     * @throws Exception
+     * @return Gd
+     */
+    public function create($width = null, $height = null, $name = null)
+    {
+        if ((null !== $width) && (null !== $height)) {
+            $this->width  = $width;
+            $this->height = $height;
+        }
 
-        $this->width  = $size[0];
-        $this->height = $size[1];
+        if (null !== $name) {
+            $this->name = $name;
+        }
 
-        if (isset($size['channels'])) {
-            switch ($size['channels']) {
-                case 1:
-                    $this->colorspace = self::IMAGE_GRAY;
-                    break;
-                case 3:
-                    $this->colorspace = self::IMAGE_RGB;
-                    break;
-                case 4:
-                    $this->colorspace = self::IMAGE_CMYK;
-                    break;
-            }
+        if ((null === $this->width) && (null === $this->height)) {
+            throw new Exception('Error: You must pass a width and a height');
+        }
+
+        if (stripos($this->name, '.gif') !== false) {
+            $this->resource = imagecreate($this->width, $this->height);
+            $this->indexed  = true;
+        } else {
+            $this->resource = imagecreatetruecolor($this->width, $this->height);
+        }
+
+        if ($this->resource === false) {
+            throw new Exception('Error: Unable to create image resource');
         }
 
         return $this;
@@ -119,16 +124,32 @@ class Gd extends AbstractAdapter
     /**
      * Create a new image resource
      *
+     * @param  int    $width
+     * @param  int    $height
+     * @param  string $name
      * @throws Exception
      * @return Gd
      */
-    public function create()
+    public function createIndex($width = null, $height = null, $name = null)
     {
-        $this->resource = (stripos($this->name, '.gif') !== false) ?
-            imagecreate($this->width, $this->height) : imagecreatetruecolor($this->width, $this->height);
+        if ((null !== $width) && (null !== $height)) {
+            $this->width  = $width;
+            $this->height = $height;
+        }
+
+        if (null !== $name) {
+            $this->name = $name;
+        }
+
+        if ((null === $this->width) && (null === $this->height)) {
+            throw new Exception('Error: You must pass a width and a height');
+        }
+
+        $this->resource = imagecreate($this->width, $this->height);
+        $this->indexed  = true;
 
         if ($this->resource === false) {
-            throw new Exception('Error: Unable to crate image resource');
+            throw new Exception('Error: Unable to create image resource');
         }
 
         return $this;
@@ -142,6 +163,10 @@ class Gd extends AbstractAdapter
      */
     public function resizeToWidth($w)
     {
+        $scale = $w / $this->width;
+        $h     = round($this->height * $scale);
+        $this->copyImage($w, $h);
+
         return $this;
     }
 
@@ -153,6 +178,10 @@ class Gd extends AbstractAdapter
      */
     public function resizeToHeight($h)
     {
+        $scale = $h / $this->height;
+        $w     = round($this->width * $scale);
+        $this->copyImage($w, $h);
+
         return $this;
     }
 
@@ -165,18 +194,27 @@ class Gd extends AbstractAdapter
      */
     public function resize($px)
     {
+        $scale = ($this->width > $this->height) ? ($px / $this->width) : ($px / $this->height);
+        $w     = round($this->width * $scale);
+        $h     = round($this->height * $scale);
+        $this->copyImage($w, $h);
+
         return $this;
     }
 
     /**
      * Scale the image object, allowing for the dimensions to be scaled
-     * proportionally to the value of the $scl argument.
+     * proportionally to the value of the $scale argument.
      *
      * @param  float $scale
      * @return Gd
      */
     public function scale($scale)
     {
+        $w = round($this->width * $scale);
+        $h = round($this->height * $scale);
+        $this->copyImage($w, $h);
+
         return $this;
     }
 
@@ -194,6 +232,7 @@ class Gd extends AbstractAdapter
      */
     public function crop($w, $h, $x = 0, $y = 0)
     {
+        $this->copyImage($w, $h, $x, $y);
         return $this;
     }
 
@@ -209,19 +248,57 @@ class Gd extends AbstractAdapter
      */
     public function cropThumb($px, $offset = null)
     {
+        $xOffset = 0;
+        $yOffset = 0;
+        $scale   = ($this->width > $this->height) ? ($px / $this->height) : ($px / $this->width);
+        $w       = round($this->width * $scale);
+        $h       = round($this->height * $scale);
+
+        if (null !== $offset) {
+            if ($this->width > $this->height) {
+                $xOffset = $offset;
+                $yOffset = 0;
+            } else if ($this->width < $this->height) {
+                $xOffset = 0;
+                $yOffset = $offset;
+            }
+        } else {
+            if ($this->width > $this->height) {
+                $xOffset = round(($this->width - $this->height) / 2);
+                $yOffset = 0;
+            } else if ($this->width < $this->height) {
+                $xOffset = 0;
+                $yOffset = round(($this->height - $this->width) / 2);
+            }
+        }
+
+        $result = imagecreatetruecolor($px, $px);
+        imagecopyresampled($result, $this->resource, 0, 0, $xOffset, $yOffset, $w, $h, $this->width, $this->height);
+
+        if ($this->indexed) {
+            imagetruecolortopalette($result, false, 255);
+        }
+
+        $this->resource = $result;
+        $this->width    = imagesx($this->resource);
+        $this->height   = imagesy($this->resource);
+
         return $this;
     }
 
     /**
      * Rotate the image object
      *
-     * @param  int            $degrees
-     * @param  ColorInterface $bgColor
-     * @throws Exception
+     * @param  int                  $degrees
+     * @param  Color\ColorInterface $bgColor
+     * @param  int                  $alpha
      * @return Gd
      */
-    public function rotate($degrees, ColorInterface $bgColor = null)
+    public function rotate($degrees, Color\ColorInterface $bgColor = null, $alpha = null)
     {
+        $this->resource = imagerotate($this->resource, $degrees, $this->createColor($bgColor, $alpha));
+        $this->width    = imagesx($this->resource);
+        $this->height   = imagesy($this->resource);
         return $this;
     }
 
@@ -255,6 +332,110 @@ class Gd extends AbstractAdapter
     public function convert($type)
     {
         return $this;
+    }
+
+    /**
+     * Copy the image resource to the image output resource with the set parameters.
+     *
+     * @param  int $w
+     * @param  int $h
+     * @param  int $x
+     * @param  int $y
+     * @return void
+     */
+    protected function copyImage($w, $h, $x = 0, $y = 0)
+    {
+        $result = imagecreatetruecolor($w, $h);
+        imagecopyresampled($result, $this->resource, 0, 0, $x, $y, $w, $h, $this->width, $this->height);
+
+        if ($this->indexed) {
+            imagetruecolortopalette($result, false, 255);
+        }
+
+        $this->resource = $result;
+        $this->width    = imagesx($this->resource);
+        $this->height   = imagesy($this->resource);
+    }
+
+    /**
+     * Parse the image data
+     *
+     * @param  array  $size
+     * @param  string $data
+     * @return void
+     */
+    protected function parseImage(array $size, $data)
+    {
+        $this->width  = $size[0];
+        $this->height = $size[1];
+
+        if (isset($size['channels'])) {
+            switch ($size['channels']) {
+                case 1:
+                    $this->colorspace = self::IMAGE_GRAY;
+                    break;
+                case 3:
+                    $this->colorspace = self::IMAGE_RGB;
+                    break;
+                case 4:
+                    $this->colorspace = self::IMAGE_CMYK;
+                    break;
+            }
+        } else if ($size[2] == IMAGETYPE_PNG) {
+            switch (ord($data[25])) {
+                case 0:
+                    $this->colorspace = self::IMAGE_GRAY;
+                    break;
+                case 2:
+                    $this->colorspace = self::IMAGE_RGB;
+                    break;
+                case 3:
+                    $this->colorspace = self::IMAGE_RGB;
+                    $this->indexed    = true;
+                    break;
+                case 4:
+                    $this->colorspace = self::IMAGE_GRAY;
+                    break;
+                case 6:
+                    $this->colorspace = self::IMAGE_RGB;
+                    break;
+            }
+        } else if ($size[2] == IMAGETYPE_GIF) {
+            $this->colorspace = self::IMAGE_RGB;
+            $this->indexed    = true;
+        }
+    }
+
+    /**
+     * Create and return a color.
+     *
+     * @param  Color\ColorInterface $color
+     * @param  int                  $alpha
+     * @throws Exception
+     * @return mixed
+     */
+    public function createColor(Color\ColorInterface $color = null, $alpha = null)
+    {
+        if (null === $color) {
+            $color = new Color\Rgb(0, 0, 0);
+        }
+
+        if (!($color instanceof Color\Rgb)) {
+            $color = $color->toRgb();
+        }
+
+        $r = $color->getR();
+        $g = $color->getG();
+        $b = $color->getB();
+
+        if (null !== $alpha) {
+            if (((int)$alpha < 0) || ((int)$alpha > 127)) {
+                throw new \OutOfRangeException('Error: The alpha parameter must be between 0 and 127');
+            }
+            return imagecolorallocatealpha($this->resource, (int)$r, (int)$g, (int)$b, (int)$alpha);
+        } else {
+            return imagecolorallocate($this->resource, (int)$r, (int)$g, (int)$b);
+        }
     }
 
 }

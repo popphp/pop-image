@@ -66,6 +66,12 @@ abstract class AbstractAdapter
     protected $colorspace = 2;
 
     /**
+     * Index color flag
+     * @var boolean
+     */
+    protected $indexed = false;
+
+    /**
      * Constructor
      *
      * Instantiate an image object based on either a pre-existing image
@@ -80,7 +86,7 @@ abstract class AbstractAdapter
         if (isset($args[0]) && !is_numeric($args[0]) && file_exists($args[0])) {
             $this->name = $args[0];
             $this->load();
-        // $width, $height or $width, $height, $image
+        // $width, $height, $name
         } else if ((count($args) >= 2) && is_numeric($args[0]) && is_numeric($args[1])) {
             $this->width  = $args[0];
             $this->height = $args[1];
@@ -152,27 +158,52 @@ abstract class AbstractAdapter
     }
 
     /**
-     * Set the colorspace
+     * Determine if the image is index color
      *
-     * @param  int $colorspace
-     * @return AbstractAdapter
+     * @return boolean
      */
-    public function setColorspace($colorspace)
+    public function isIndexed()
     {
-        $colorspace = (int)$colorspace;
+        return $this->indexed;
+    }
 
-        if (($colorspace > 0) && ($colorspace < 4)) {
-            $this->colorspace = $colorspace;
-        }
-        return $this;
+    /**
+     * Determine if the image is grayscale
+     *
+     * @return boolean
+     */
+    public function isGray()
+    {
+        return ($this->colorspace == self::IMAGE_GRAY);
+    }
+
+    /**
+     * Determine if the image is RGB
+     *
+     * @return boolean
+     */
+    public function isRgb()
+    {
+        return ($this->colorspace == self::IMAGE_RGB);
+    }
+
+    /**
+     * Determine if the image is CMYK
+     *
+     * @return boolean
+     */
+    public function isCmyk()
+    {
+        return ($this->colorspace == self::IMAGE_CMYK);
     }
 
     /**
      * Load the image resource from the existing image file
      *
+     * @param  string $name
      * @return AbstractAdapter
      */
-    abstract public function load();
+    abstract public function load($name = null);
 
     /**
      * Load the image resource from data
@@ -186,9 +217,22 @@ abstract class AbstractAdapter
     /**
      * Create a new image resource
      *
+     * @param  int    $width
+     * @param  int    $height
+     * @param  string $name
      * @return AbstractAdapter
      */
-    abstract public function create();
+    abstract public function create($width = null, $height = null, $name = null);
+
+    /**
+     * Create a new indexed image resource
+     *
+     * @param  int    $width
+     * @param  int    $height
+     * @param  string $name
+     * @return AbstractAdapter
+     */
+    abstract public function createIndex($width = null, $height = null, $name = null);
 
     /**
      * Resize the image object to the width parameter passed.

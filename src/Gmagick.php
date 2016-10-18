@@ -48,7 +48,7 @@ class Gmagick
     }
 
     /**
-     * Create a Gmagick adapter object from an existing image
+     * Load the image resource from the existing image file into a Gmagick object
      *
      * @param  string $image
      * @return Adapter\Gmagick
@@ -59,7 +59,7 @@ class Gmagick
     }
 
     /**
-     * Create a Gmagick adapter object from an existing image
+     * Load the image resource from data into a Gmagick object
      *
      * @param  string $data
      * @param  string $name
@@ -73,7 +73,7 @@ class Gmagick
     }
 
     /**
-     * Create a Gmagick adapter object from an existing image
+     * Create a new image resource and load it into a Gmagick object
      *
      * @param  int    $width
      * @param  int    $height
@@ -83,6 +83,21 @@ class Gmagick
     public static function create($width, $height, $image = null)
     {
         return new Adapter\Gmagick($width, $height, $image);
+    }
+
+    /**
+     * Create a new indexed image resource and load it into a Gmagick object
+     *
+     * @param  int    $width
+     * @param  int    $height
+     * @param  string $image
+     * @return Adapter\Gmagick
+     */
+    public static function createIndex($width, $height, $image = null)
+    {
+        $gmagick = new Adapter\Gmagick();
+        $gmagick->createIndex($width, $height, $image);
+        return $gmagick;
     }
 
 }

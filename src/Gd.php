@@ -48,18 +48,7 @@ class Gd
     }
 
     /**
-     * Create a GD adapter object from an existing image
-     *
-     * @param  string $image
-     * @return Adapter\Gd
-     */
-    public static function loadGd($image)
-    {
-        return Gd::load($image);
-    }
-
-    /**
-     * Create a GD adapter object from an existing image
+     * Load the image resource from the existing image file into a Gd object
      *
      * @param  string $image
      * @return Adapter\Gd
@@ -70,7 +59,7 @@ class Gd
     }
 
     /**
-     * Create a GD adapter object from an existing image
+     * Load the image resource from data into a Gd object
      *
      * @param  string $data
      * @param  string $name
@@ -84,7 +73,7 @@ class Gd
     }
 
     /**
-     * Create a GD adapter object from an existing image
+     * Create a new image resource and load it into a Gd object
      *
      * @param  int    $width
      * @param  int    $height
@@ -94,6 +83,21 @@ class Gd
     public static function create($width, $height, $image = null)
     {
         return new Adapter\Gd($width, $height, $image);
+    }
+
+    /**
+     * Create a new indexed image resource and load it into a Gd object
+     *
+     * @param  int    $width
+     * @param  int    $height
+     * @param  string $image
+     * @return Adapter\Gd
+     */
+    public static function createIndex($width, $height, $image = null)
+    {
+        $gd = new Adapter\Gd();
+        $gd->createIndex($width, $height, $image);
+        return $gd;
     }
 
 }

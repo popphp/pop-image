@@ -71,6 +71,26 @@ class Gray extends AbstractColor
     }
 
     /**
+     * Convert to CMYK
+     *
+     * @return Cmyk
+     */
+    public function toCmyk()
+    {
+        return new Cmyk(0, 0, 0, $this->g);
+    }
+
+    /**
+     * Convert to RGB
+     *
+     * @return Rgb
+     */
+    public function toRgb()
+    {
+        return new Rgb($this->g, $this->g, $this->g);
+    }
+
+    /**
      * Method to print the color object
      *
      * @return string

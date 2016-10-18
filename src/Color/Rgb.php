@@ -139,6 +139,56 @@ class Rgb extends AbstractColor
     }
 
     /**
+     * Convert to CMYK
+     *
+     * @return Cmyk
+     */
+    public function toCmyk()
+    {
+        $K = 1;
+
+        // Calculate CMY.
+        $cyan    = 1 - ($this->r / 255);
+        $magenta = 1 - ($this->g / 255);
+        $yellow  = 1 - ($this->b / 255);
+
+        // Calculate K.
+        if ($cyan < $K) {
+            $K = $cyan;
+        }
+        if ($magenta < $K) {
+            $K = $magenta;
+        }
+        if ($yellow < $K) {
+            $K = $yellow;
+        }
+
+        if ($K == 1) {
+            $cyan    = 0;
+            $magenta = 0;
+            $yellow  = 0;
+        } else {
+            $cyan    = round((($cyan - $K) / (1 - $K)) * 100);
+            $magenta = round((($magenta - $K) / (1 - $K)) * 100);
+            $yellow  = round((($yellow - $K) / (1 - $K)) * 100);
+        }
+
+        $black = round($K * 100);
+
+        return new Cmyk($cyan, $magenta, $yellow, $black);
+    }
+
+    /**
+     * Convert to Gray
+     *
+     * @return Gray
+     */
+    public function toGray()
+    {
+        return new Gray(floor(($this->r + $this->g + $this->b) / 3));
+    }
+
+    /**
      * Method to print the color object
      *
      * @return string
