@@ -60,6 +60,12 @@ abstract class AbstractAdapter
     protected $height = 480;
 
     /**
+     * Index type
+     * @var string
+     */
+    protected $type = null;
+
+    /**
      * Image colorspace
      * @var int
      */
@@ -70,6 +76,12 @@ abstract class AbstractAdapter
      * @var boolean
      */
     protected $indexed = false;
+
+    /**
+     * EXIF data
+     * @var array
+     */
+    protected $exif = [];
 
     /**
      * Constructor
@@ -168,6 +180,26 @@ abstract class AbstractAdapter
     }
 
     /**
+     * Get the image type
+     *
+     * @return string
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    /**
+     * Get the image EXIF data
+     *
+     * @return array
+     */
+    public function getExif()
+    {
+        return $this->exif;
+    }
+
+    /**
      * Determine if the image is grayscale
      *
      * @return boolean
@@ -235,7 +267,7 @@ abstract class AbstractAdapter
     abstract public function createIndex($width = null, $height = null, $name = null);
 
     /**
-     * Resize the image object to the width parameter passed.
+     * Resize the image object to the width parameter passed
      *
      * @param  int $w
      * @return AbstractAdapter
@@ -243,7 +275,7 @@ abstract class AbstractAdapter
     abstract public function resizeToWidth($w);
 
     /**
-     * Resize the image object to the height parameter passed.
+     * Resize the image object to the height parameter passed
      *
      * @param  int $h
      * @return AbstractAdapter
@@ -251,8 +283,8 @@ abstract class AbstractAdapter
     abstract public function resizeToHeight($h);
 
     /**
-     * Resize the image object, allowing for the largest dimension to be scaled
-     * to the value of the $px argument.
+     * Resize the image object, allowing for the largest dimension
+     * to be scaled to the value of the $px argument.
      *
      * @param  int $px
      * @return AbstractAdapter
@@ -285,8 +317,7 @@ abstract class AbstractAdapter
     /**
      * Crop the image object to a square image whose dimensions are based on the
      * value of the $px argument. The optional $offset argument allows for the
-     * adjustment of the crop to select a certain area of the image to be
-     * cropped.
+     * adjustment of the crop to select a certain area of the image to be cropped.
      *
      * @param  int $px
      * @param  int $offset
@@ -305,26 +336,56 @@ abstract class AbstractAdapter
     abstract public function rotate($degrees, ColorInterface $bgColor = null);
 
     /**
-     * Method to flip the image over the x-axis.
+     * Method to flip the image over the x-axis
      *
      * @return AbstractAdapter
      */
     abstract public function flip();
 
     /**
-     * Method to flip the image over the y-axis.
+     * Method to flip the image over the y-axis
      *
      * @return AbstractAdapter
      */
     abstract public function flop();
 
     /**
-     * Convert the image object to another format.
+     * Convert the image object to another format
      *
      * @param  string $type
      * @throws Exception
      * @return AbstractAdapter
      */
     abstract public function convert($type);
-    
+
+    /**
+     * Write the image object to a file on disk
+     *
+     * @param  string $to
+     * @param  int    $quality
+     * @throws Exception
+     * @return void
+     */
+    abstract public function writeToFile($to = null, $quality = 100);
+
+    /**
+     * Output the image object directly to HTTP
+     *
+     * @param  int     $quality
+     * @param  string  $to
+     * @param  boolean $download
+     * @param  boolean $sendHeaders
+     * @throws Exception
+     * @return void
+     */
+    abstract public function outputToHttp($quality = 100, $to = null, $download = false, $sendHeaders = true);
+
+    /**
+     * Destroy the image object and the related image file directly
+     *
+     * @param  boolean $delete
+     * @return void
+     */
+    abstract public function destroy($delete = false);
+
 }

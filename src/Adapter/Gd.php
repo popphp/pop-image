@@ -49,6 +49,9 @@ class Gd extends AbstractAdapter
             $this->resource = imagecreatefromgif($this->name);
         } else if (stripos($this->name, '.jp') !== false) {
             $this->resource = imagecreatefromjpeg($this->name);
+            if (function_exists('exif_read_data')) {
+                $this->exif = exif_read_data($this->name);
+            }
         } else if (stripos($this->name, '.png') !== false) {
             $this->resource = imagecreatefrompng($this->name);
         } else {
@@ -156,7 +159,7 @@ class Gd extends AbstractAdapter
     }
 
     /**
-     * Resize the image object to the width parameter passed.
+     * Resize the image object to the width parameter passed
      *
      * @param  int $w
      * @return Gd
@@ -171,7 +174,7 @@ class Gd extends AbstractAdapter
     }
 
     /**
-     * Resize the image object to the height parameter passed.
+     * Resize the image object to the height parameter passed
      *
      * @param  int $h
      * @return Gd
@@ -186,8 +189,8 @@ class Gd extends AbstractAdapter
     }
 
     /**
-     * Resize the image object, allowing for the largest dimension to be scaled
-     * to the value of the $px argument.
+     * Resize the image object, allowing for the largest dimension
+     * to be scaled to the value of the $px argument.
      *
      * @param  int $px
      * @return Gd
@@ -232,15 +235,24 @@ class Gd extends AbstractAdapter
      */
     public function crop($w, $h, $x = 0, $y = 0)
     {
-        $this->copyImage($w, $h, $x, $y);
+        $result = imagecreatetruecolor($w, $h);
+        imagecopyresampled($result, $this->resource, 0, 0, $x, $y, $this->width, $this->height, $this->width, $this->height);
+
+        if ($this->indexed) {
+            imagetruecolortopalette($result, false, 255);
+        }
+
+        $this->resource = $result;
+        $this->width    = imagesx($this->resource);
+        $this->height   = imagesy($this->resource);
+
         return $this;
     }
 
     /**
      * Crop the image object to a square image whose dimensions are based on the
      * value of the $px argument. The optional $offset argument allows for the
-     * adjustment of the crop to select a certain area of the image to be
-     * cropped.
+     * adjustment of the crop to select a certain area of the image to be cropped.
      *
      * @param  int $px
      * @param  int $offset
@@ -303,39 +315,197 @@ class Gd extends AbstractAdapter
     }
 
     /**
-     * Method to flip the image over the x-axis.
+     * Method to flip the image over the x-axis
      *
      * @return Gd
      */
     public function flip()
     {
+        $curWidth     = $this->width;
+        $curHeight    = $this->height;
+        $srcX         = 0;
+        $srcY         = $this->height - 1; // Compensate for a 1-pixel space on the flipped image
+        $this->height = 0 - $this->height;
+
+        $this->copyImage($curWidth, $curHeight, $srcX , $srcY);
+        $this->height = abs($this->height);
+
         return $this;
     }
 
     /**
-     * Method to flip the image over the y-axis.
+     * Method to flip the image over the y-axis
      *
      * @return Gd
      */
     public function flop()
     {
+        $curWidth    = $this->width;
+        $curHeight   = $this->height;
+        $srcX        = $this->width - 1; // Compensate for a 1-pixel space on the flipped image
+        $srcY        = 0;
+        $this->width = 0 - $this->width;
+
+        $this->copyImage($curWidth, $curHeight, $srcX , $srcY);
+        $this->width = abs($this->width);
+
         return $this;
     }
 
     /**
-     * Convert the image object to another format.
+     * Convert the image object to another format
      *
-     * @param  string $type
+     * @param  string $to
      * @throws Exception
      * @return Gd
      */
-    public function convert($type)
+    public function convert($to)
     {
+        $to = strtolower($to);
+
+        if (($to != 'jpg') && ($to != 'jpeg') && ($to != 'gif') && ($to != 'png')) {
+            throw new Exception('Error: The image type must be a GIF, PNG or JPG');
+        }
+
+        if (null === $this->resource) {
+            throw new Exception('Error: An image resource has not been created or loaded');
+        }
+
+        switch ($to) {
+            case 'jpg':
+            case 'jpeg':
+                $this->type    = 'jpg';
+                $this->indexed = false;
+                break;
+            case 'png':
+                $this->type = 'png';
+                break;
+            case 'gif':
+                $this->type    = 'gif';
+                $this->indexed = true;
+                break;
+        }
+
+        if ((null !== $this->name) && (strpos($this->name, '.') !== false)) {
+            $this->name = substr($this->name, 0, (strrpos($this->name, '.') + 1)) . $this->type;
+        }
+
+        $result = imagecreatetruecolor($this->width, $this->height);
+        imagecopyresampled($result, $this->resource, 0, 0, 0, 0, $this->width, $this->height, $this->width, $this->height);
+
+        if ($this->indexed) {
+            imagetruecolortopalette($result, false, 255);
+        }
+
+        $this->resource = $result;
+        $this->width    = imagesx($this->resource);
+        $this->height   = imagesy($this->resource);
+
         return $this;
     }
 
     /**
-     * Copy the image resource to the image output resource with the set parameters.
+     * Write the image object to a file on disk
+     *
+     * @param  string $to
+     * @param  int    $quality
+     * @throws Exception
+     * @return void
+     */
+    public function writeToFile($to = null, $quality = 100)
+    {
+        if (null === $this->resource) {
+            throw new Exception('Error: An image resource has not been created or loaded');
+        }
+
+        if (((int)$quality < 0) || ((int)$quality < 100)) {
+            throw new \OutOfRangeException('Error: The quality parameter must be between 0 and 100');
+        }
+
+        $this->type = strtolower($this->type);
+
+        if (null === $to) {
+            $to = (null !== $this->name) ? $this->name : 'pop-image.' . $this->type;
+        }
+
+        $this->generateImage((int)$quality, $to);
+    }
+
+    /**
+     * Output the image object directly to HTTP
+     *
+     * @param  int     $quality
+     * @param  string  $to
+     * @param  boolean $download
+     * @param  boolean $sendHeaders
+     * @throws Exception
+     * @return void
+     */
+    public function outputToHttp($quality = 100, $to = null, $download = false, $sendHeaders = true)
+    {
+        if (null === $this->resource) {
+            throw new Exception('Error: An image resource has not been created or loaded');
+        }
+
+        if (((int)$quality < 0) || ((int)$quality < 100)) {
+            throw new \OutOfRangeException('Error: The quality parameter must be between 0 and 100');
+        }
+
+        $this->type = strtolower($this->type);
+
+        if (null === $to) {
+            $to = (null !== $this->name) ? $this->name : 'pop-image.' . $this->type;
+        }
+
+        // Determine if the force download argument has been passed.
+        $headers = [
+            'Content-type'        => 'image/' . (($this->type == 'jpg') ? 'jpeg' : $this->type),
+            'Content-disposition' => (($download) ? 'attachment; ' : null) . 'filename=' . $to
+        ];
+
+        if (isset($_SERVER['SERVER_PORT']) && ($_SERVER['SERVER_PORT'] == 443)) {
+            $headers['Expires']       = 0;
+            $headers['Cache-Control'] = 'private, must-revalidate';
+            $headers['Pragma']        = 'cache';
+        }
+
+        // Send the headers and output the image
+        if (!headers_sent() && ($sendHeaders)) {
+            header('HTTP/1.1 200 OK');
+            foreach ($headers as $name => $value) {
+                header($name . ': ' . $value);
+            }
+        }
+
+        $this->generateImage((int)$quality);
+    }
+
+    /**
+     * Destroy the image object and the related image file directly
+     *
+     * @param  boolean $delete
+     * @return void
+     */
+    public function destroy($delete = false)
+    {
+        // Destroy the image resource.
+        if (null !== $this->resource) {
+            if (!is_string($this->resource) && is_resource($this->resource)) {
+                imagedestroy($this->resource);
+            }
+        }
+
+        $this->resource = null;
+        clearstatcache();
+
+        // If the $delete flag is passed, delete the image file.
+        if (($delete) && file_exists($this->name)) {
+            unlink($this->name);
+        }
+    }
+
+    /**
+     * Copy the image resource to the image output resource with the set parameters
      *
      * @param  int $w
      * @param  int $h
@@ -369,7 +539,7 @@ class Gd extends AbstractAdapter
         $this->width  = $size[0];
         $this->height = $size[1];
 
-        if (isset($size['channels'])) {
+        if ((($size[2] == IMAGETYPE_JPEG) || ($size[2] == IMAGETYPE_JPEG2000)) && isset($size['channels'])) {
             switch ($size['channels']) {
                 case 1:
                     $this->colorspace = self::IMAGE_GRAY;
@@ -381,6 +551,7 @@ class Gd extends AbstractAdapter
                     $this->colorspace = self::IMAGE_CMYK;
                     break;
             }
+            $this->type = 'jpg';
         } else if ($size[2] == IMAGETYPE_PNG) {
             switch (ord($data[25])) {
                 case 0:
@@ -400,14 +571,40 @@ class Gd extends AbstractAdapter
                     $this->colorspace = self::IMAGE_RGB;
                     break;
             }
+            $this->type = 'png';
         } else if ($size[2] == IMAGETYPE_GIF) {
             $this->colorspace = self::IMAGE_RGB;
             $this->indexed    = true;
+            $this->type       = 'gif';
         }
     }
 
     /**
-     * Create and return a color.
+     * Parse the image data
+     *
+     * @param  int    $quality
+     * @param  string $to
+     * @return void
+     */
+    protected function generateImage($quality, $to = null)
+    {
+        switch ($this->type) {
+            case 'jpg':
+            case 'jpeg':
+                imagejpeg($this->resource, $to, (int)$quality);
+                break;
+            case 'png':
+                $quality = ($quality < 10) ? 9 : 10 - round(($quality / 10), PHP_ROUND_HALF_DOWN);
+                imagepng($this->resource, $to, (int)$quality);
+                break;
+            case 'gif':
+                imagegif($this->resource, $to);
+                break;
+        }
+    }
+
+    /**
+     * Create and return a color
      *
      * @param  Color\ColorInterface $color
      * @param  int                  $alpha
