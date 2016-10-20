@@ -361,4 +361,14 @@ interface AdapterInterface
      */
     public function destroy($delete = false);
 
+    /**
+     * Create and return a color.
+     *
+     * @param  Color\ColorInterface $color
+     * @param  int                  $alpha
+     * @throws Exception
+     * @return mixed
+     */
+    public function createColor(Color\ColorInterface $color = null, $alpha = 100);
+
 }

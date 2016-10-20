@@ -505,6 +505,38 @@ class Gd extends AbstractAdapter
     }
 
     /**
+     * Create and return a color
+     *
+     * @param  Color\ColorInterface $color
+     * @param  int                  $alpha
+     * @throws Exception
+     * @return mixed
+     */
+    public function createColor(Color\ColorInterface $color = null, $alpha = null)
+    {
+        if (null === $color) {
+            $color = new Color\Rgb(0, 0, 0);
+        }
+
+        if (!($color instanceof Color\Rgb)) {
+            $color = $color->toRgb();
+        }
+
+        $r = $color->getR();
+        $g = $color->getG();
+        $b = $color->getB();
+
+        if (null !== $alpha) {
+            if (((int)$alpha < 0) || ((int)$alpha > 127)) {
+                throw new \OutOfRangeException('Error: The alpha parameter must be between 0 and 127');
+            }
+            return imagecolorallocatealpha($this->resource, (int)$r, (int)$g, (int)$b, (int)$alpha);
+        } else {
+            return imagecolorallocate($this->resource, (int)$r, (int)$g, (int)$b);
+        }
+    }
+
+    /**
      * Copy the image resource to the image output resource with the set parameters
      *
      * @param  int $w
@@ -600,38 +632,6 @@ class Gd extends AbstractAdapter
             case 'gif':
                 imagegif($this->resource, $to);
                 break;
-        }
-    }
-
-    /**
-     * Create and return a color
-     *
-     * @param  Color\ColorInterface $color
-     * @param  int                  $alpha
-     * @throws Exception
-     * @return mixed
-     */
-    protected function createColor(Color\ColorInterface $color = null, $alpha = null)
-    {
-        if (null === $color) {
-            $color = new Color\Rgb(0, 0, 0);
-        }
-
-        if (!($color instanceof Color\Rgb)) {
-            $color = $color->toRgb();
-        }
-
-        $r = $color->getR();
-        $g = $color->getG();
-        $b = $color->getB();
-
-        if (null !== $alpha) {
-            if (((int)$alpha < 0) || ((int)$alpha > 127)) {
-                throw new \OutOfRangeException('Error: The alpha parameter must be between 0 and 127');
-            }
-            return imagecolorallocatealpha($this->resource, (int)$r, (int)$g, (int)$b, (int)$alpha);
-        } else {
-            return imagecolorallocate($this->resource, (int)$r, (int)$g, (int)$b);
         }
     }
 

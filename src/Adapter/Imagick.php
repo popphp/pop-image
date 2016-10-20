@@ -558,10 +558,10 @@ class Imagick extends AbstractAdapter
      * @throws Exception
      * @return \ImagickPixel
      */
-    protected function createColor(Color\ColorInterface $color = null, $alpha = 100)
+    public function createColor(Color\ColorInterface $color = null, $alpha = 100)
     {
-        if (null === $this->resource) {
-            throw new Exception('Error: The image resource has not been created.');
+        if (null === $color) {
+            $color = new Color\Rgb(0, 0, 0);
         }
 
         if ($color instanceof Color\Gray) {

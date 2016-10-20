@@ -189,6 +189,16 @@ class Rgb extends AbstractColor
     }
 
     /**
+     * Convert to hex string
+     *
+     * @return string
+     */
+    public function toHex()
+    {
+        return sprintf('%02x', $this->r) . sprintf('%02x', $this->g) . sprintf('%02x', $this->b);
+    }
+
+    /**
      * Method to print the color object
      *
      * @return string
