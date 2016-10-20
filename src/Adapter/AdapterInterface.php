@@ -113,6 +113,54 @@ interface AdapterInterface
     public function isCmyk();
 
     /**
+     * Set the image adjust object
+     *
+     * @param  Adjust\AdjustInterface $adjust
+     * @return AdapterInterface
+     */
+    public function setAdjust(Adjust\AdjustInterface $adjust);
+
+    /**
+     * Set the image draw object
+     *
+     * @param  Draw\DrawInterface $draw
+     * @return AdapterInterface
+     */
+    public function setDraw(Draw\DrawInterface $draw);
+
+    /**
+     * Set the image effect object
+     *
+     * @param  Effect\EffectInterface $effect
+     * @return AdapterInterface
+     */
+    public function setEffect(Effect\EffectInterface $effect);
+
+    /**
+     * Set the image filter object
+     *
+     * @param  Filter\FilterInterface $filter
+     * @return AdapterInterface
+     */
+    public function setFilter(Filter\FilterInterface $filter);
+
+    /**
+     * Set the image layer object
+     *
+     * @param  Layer\LayerInterface $layer
+     * @return AdapterInterface
+     */
+    public function setLayer(Layer\LayerInterface $layer);
+
+    /**
+     * Set the image type object
+     *
+     * @param  Type\TypeInterface $type
+     * @return AdapterInterface
+     */
+    public function setType(Type\TypeInterface $type);
+    
+    /**
      * Load the image resource from the existing image file
      *
      * @param  string $name
@@ -231,6 +279,48 @@ interface AdapterInterface
      * @return AdapterInterface
      */
     public function flop();
+
+    /**
+     * Get the image adjust object
+     *
+     * @return Adjust\AdjustInterface
+     */
+    public function adjust();
+
+    /**
+     * Get the image filter object
+     *
+     * @return Filter\FilterInterface
+     */
+    public function filter();
+
+    /**
+     * Get the image layer object
+     *
+     * @return Layer\LayerInterface
+     */
+    public function layer();
+
+    /**
+     * Get the image draw object
+     *
+     * @return Draw\DrawInterface
+     */
+    public function draw();
+
+    /**
+     * Get the image effect object
+     *
+     * @return Effect\EffectInterface
+     */
+    public function effect();
+
+    /**
+     * Get the image type object
+     *
+     * @return Type\TypeInterface
+     */
+    public function type();
 
     /**
      * Convert the image object to another format
