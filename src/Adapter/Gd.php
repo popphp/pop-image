@@ -611,7 +611,7 @@ class Gd extends AbstractAdapter
      * @throws Exception
      * @return mixed
      */
-    public function createColor(Color\ColorInterface $color = null, $alpha = null)
+    protected function createColor(Color\ColorInterface $color = null, $alpha = null)
     {
         if (null === $color) {
             $color = new Color\Rgb(0, 0, 0);
