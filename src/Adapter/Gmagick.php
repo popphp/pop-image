@@ -80,12 +80,12 @@ class Gmagick extends AbstractAdapter
                 break;
         }
 
-        $this->type = strtolower($this->resource->getimageformat());
+        $this->format = strtolower($this->resource->getimageformat());
         if ($this->resource->getimagecolors() < 256) {
             $this->indexed = true;
         }
 
-        if ((strpos($this->type, 'jp') !== false) && function_exists('exif_read_data')) {
+        if ((strpos($this->format, 'jp') !== false) && function_exists('exif_read_data')) {
             $this->exif = exif_read_data($this->name);
         }
 
@@ -120,12 +120,12 @@ class Gmagick extends AbstractAdapter
                 break;
         }
 
-        $this->type = strtolower($this->resource->getimageformat());
+        $this->format = strtolower($this->resource->getimageformat());
         if ($this->resource->getimagecolors() < 256) {
             $this->indexed = true;
         }
 
-        if ((strpos($this->type, 'jp') !== false) && function_exists('exif_read_data')) {
+        if ((strpos($this->format, 'jp') !== false) && function_exists('exif_read_data')) {
             $this->exif = exif_read_data($this->name);
         }
 
@@ -159,7 +159,7 @@ class Gmagick extends AbstractAdapter
             $extension = strtolower(substr($this->name, (strrpos($this->name, '.') + 1)));
             if (!empty($extension)) {
                 $this->resource->setimageformat($extension);
-                $this->type = $extension;
+                $this->format = $extension;
             }
         }
 
@@ -193,7 +193,7 @@ class Gmagick extends AbstractAdapter
             $extension = strtolower(substr($this->name, (strrpos($this->name, '.') + 1)));
             if (!empty($extension)) {
                 $this->resource->setimageformat($extension);
-                $this->type = $extension;
+                $this->format = $extension;
             }
         }
 
@@ -442,7 +442,7 @@ class Gmagick extends AbstractAdapter
     public function convert($type)
     {
         $type = strtolower($type);
-        $old  = strtolower($this->type);
+        $old  = strtolower($this->format);
 
         if ((($old == 'psd') || ($old == 'tif') || ($old == 'tiff')) && method_exists($this->resource, 'flattenImages')) {
             $this->resource->flattenimages();
@@ -469,7 +469,7 @@ class Gmagick extends AbstractAdapter
         $this->resource->setimagecompressionquality($quality);
 
         if (null === $to) {
-            $to = (null !== $this->name) ? $this->name : 'pop-image.' . $this->type;
+            $to = (null !== $this->name) ? $this->name : 'pop-image.' . $this->format;
         }
 
         $this->resource->writeimage($to);
@@ -502,7 +502,7 @@ class Gmagick extends AbstractAdapter
         $this->resource->setimagecompressionquality($quality);
 
         if (null === $to) {
-            $to = (null !== $this->name) ? $this->name : 'pop-image.' . strtolower($this->type);
+            $to = (null !== $this->name) ? $this->name : 'pop-image.' . strtolower($this->format);
         }
 
         // Determine if the force download argument has been passed.

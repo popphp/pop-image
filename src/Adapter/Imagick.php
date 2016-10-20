@@ -80,12 +80,12 @@ class Imagick extends AbstractAdapter
                 break;
         }
 
-        $this->type = strtolower($this->resource->getImageFormat());
+        $this->format = strtolower($this->resource->getImageFormat());
         if ($this->resource->getImageColors() < 256) {
             $this->indexed = true;
         }
 
-        if ((strpos($this->type, 'jp') !== false) && function_exists('exif_read_data')) {
+        if ((strpos($this->format, 'jp') !== false) && function_exists('exif_read_data')) {
             $this->exif = exif_read_data($this->name);
         }
 
@@ -120,12 +120,12 @@ class Imagick extends AbstractAdapter
                 break;
         }
 
-        $this->type = strtolower($this->resource->getImageFormat());
+        $this->format = strtolower($this->resource->getImageFormat());
         if ($this->resource->getImageColors() < 256) {
             $this->indexed = true;
         }
 
-        if ((strpos($this->type, 'jp') !== false) && function_exists('exif_read_data')) {
+        if ((strpos($this->format, 'jp') !== false) && function_exists('exif_read_data')) {
             $this->exif = exif_read_data($this->name);
         }
 
@@ -159,7 +159,7 @@ class Imagick extends AbstractAdapter
             $extension = strtolower(substr($this->name, (strrpos($this->name, '.') + 1)));
             if (!empty($extension)) {
                 $this->resource->setImageFormat($extension);
-                $this->type = $extension;
+                $this->format = $extension;
             }
         }
 
@@ -193,7 +193,7 @@ class Imagick extends AbstractAdapter
             $extension = strtolower(substr($this->name, (strrpos($this->name, '.') + 1)));
             if (!empty($extension)) {
                 $this->resource->setImageFormat($extension);
-                $this->type = $extension;
+                $this->format = $extension;
             }
         }
 
@@ -442,7 +442,7 @@ class Imagick extends AbstractAdapter
     public function convert($type)
     {
         $type = strtolower($type);
-        $old  = strtolower($this->type);
+        $old  = strtolower($this->format);
 
         if (($old == 'psd') || ($old == 'tif') || ($old == 'tiff')) {
             $this->resource->mergeImageLayers(\Imagick::LAYERMETHOD_FLATTEN);
@@ -469,7 +469,7 @@ class Imagick extends AbstractAdapter
         $this->resource->setImageCompressionQuality($quality);
 
         if (null === $to) {
-            $to = (null !== $this->name) ? $this->name : 'pop-image.' . $this->type;
+            $to = (null !== $this->name) ? $this->name : 'pop-image.' . $this->format;
         }
 
         $this->resource->writeImage($to);
@@ -502,7 +502,7 @@ class Imagick extends AbstractAdapter
         $this->resource->setImageCompressionQuality($quality);
 
         if (null === $to) {
-            $to = (null !== $this->name) ? $this->name : 'pop-image.' . strtolower($this->type);
+            $to = (null !== $this->name) ? $this->name : 'pop-image.' . strtolower($this->format);
         }
 
         // Determine if the force download argument has been passed.

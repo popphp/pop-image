@@ -13,7 +13,7 @@
  */
 namespace Pop\Image\Adapter;
 
-use Pop\Image\Color\ColorInterface;
+use Pop\Image\Color;
 
 /**
  * Abstract adapter class
@@ -60,10 +60,10 @@ abstract class AbstractAdapter
     protected $height = 480;
 
     /**
-     * Index type
+     * Image format
      * @var string
      */
-    protected $type = null;
+    protected $format = null;
 
     /**
      * Image colorspace
@@ -82,6 +82,42 @@ abstract class AbstractAdapter
      * @var array
      */
     protected $exif = [];
+
+    /**
+     * Image adjust object
+     * @var Adjust\AdjustInterface
+     */
+    protected $adjust = null;
+
+    /**
+     * Image draw object
+     * @var Draw\DrawInterface
+     */
+    protected $draw = null;
+
+    /**
+     * Image effect object
+     * @var Effect\EffectInterface
+     */
+    protected $effect = null;
+
+    /**
+     * Image filter object
+     * @var Filter\FilterInterface
+     */
+    protected $filter = null;
+
+    /**
+     * Image layer object
+     * @var Layer\LayerInterface
+     */
+    protected $layer = null;
+
+    /**
+     * Image type object
+     * @var Type\TypeInterface
+     */
+    protected $type = null;
 
     /**
      * Constructor
@@ -180,13 +216,13 @@ abstract class AbstractAdapter
     }
 
     /**
-     * Get the image type
+     * Get the image format
      *
      * @return string
      */
-    public function getType()
+    public function getFormat()
     {
-        return $this->type;
+        return $this->format;
     }
 
     /**
@@ -227,6 +263,103 @@ abstract class AbstractAdapter
     public function isCmyk()
     {
         return ($this->colorspace == self::IMAGE_CMYK);
+    }
+
+    /**
+     * Set the image adjust object
+     *
+     * @param  Adjust\AdjustInterface $adjust
+     * @return AbstractAdapter
+     */
+    public function setAdjust(Adjust\AdjustInterface $adjust)
+    {
+        $this->adjust = $adjust;
+        return $this;
+    }
+
+    /**
+     * Set the image draw object
+     *
+     * @param  Draw\DrawInterface $draw
+     * @return AbstractAdapter
+     */
+    public function setDraw(Draw\DrawInterface $draw)
+    {
+        $this->draw = $draw;
+        return $this;
+    }
+
+    /**
+     * Set the image effect object
+     *
+     * @param  Effect\EffectInterface $effect
+     * @return AbstractAdapter
+     */
+    public function setEffect(Effect\EffectInterface $effect)
+    {
+        $this->effect = $effect;
+        return $this;
+    }
+
+    /**
+     * Set the image filter object
+     *
+     * @param  Filter\FilterInterface $filter
+     * @return AbstractAdapter
+     */
+    public function setFilter(Filter\FilterInterface $filter)
+    {
+        $this->filter = $filter;
+        return $this;
+    }
+    /**
+     * Set the image layer object
+     *
+     * @param  Layer\LayerInterface $layer
+     * @return AbstractAdapter
+     */
+    public function setLayer(Layer\LayerInterface $layer)
+    {
+        $this->layer = $layer;
+        return $this;
+    }
+
+    /**
+     * Set the image type object
+     *
+     * @param  Type\TypeInterface $type
+     * @return AbstractAdapter
+     */
+    public function setType(Type\TypeInterface $type)
+    {
+        $this->type = $type;
+        return $this;
+    }
+
+    /**
+     * Magic get method to return a manipulation object
+     *
+     * @param  string $name
+     * @return mixed
+     */
+    public function __get($name)
+    {
+        switch ($name) {
+            case 'adjust':
+                return $this->adjust();
+            case 'filter':
+                return $this->filter();
+            case 'layer':
+                return $this->layer();
+            case 'draw':
+                return $this->draw();
+            case 'effect':
+                return $this->effect();
+            case 'type':
+                return $this->type();
+            default:
+                return null;
+        }
     }
 
     /**
@@ -328,12 +461,12 @@ abstract class AbstractAdapter
     /**
      * Rotate the image object
      *
-     * @param  int            $degrees
-     * @param  ColorInterface $bgColor
+     * @param  int                  $degrees
+     * @param  Color\ColorInterface $bgColor
      * @throws Exception
      * @return Gd
      */
-    abstract public function rotate($degrees, ColorInterface $bgColor = null);
+    abstract public function rotate($degrees, Color\ColorInterface $bgColor = null);
 
     /**
      * Method to flip the image over the x-axis
@@ -348,6 +481,48 @@ abstract class AbstractAdapter
      * @return AbstractAdapter
      */
     abstract public function flop();
+
+    /**
+     * Get the image adjust object
+     *
+     * @return Adjust\AdjustInterface
+     */
+    abstract public function adjust();
+
+    /**
+     * Get the image filter object
+     *
+     * @return Filter\FilterInterface
+     */
+    abstract public function filter();
+
+    /**
+     * Get the image layer object
+     *
+     * @return Layer\LayerInterface
+     */
+    abstract public function layer();
+
+    /**
+     * Get the image draw object
+     *
+     * @return Draw\DrawInterface
+     */
+    abstract public function draw();
+
+    /**
+     * Get the image effect object
+     *
+     * @return Effect\EffectInterface
+     */
+    abstract public function effect();
+
+    /**
+     * Get the image type object
+     *
+     * @return Type\TypeInterface
+     */
+    abstract public function type();
 
     /**
      * Convert the image object to another format

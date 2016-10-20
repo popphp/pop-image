@@ -374,20 +374,20 @@ class Gd extends AbstractAdapter
         switch ($to) {
             case 'jpg':
             case 'jpeg':
-                $this->type    = 'jpg';
+                $this->format  = 'jpg';
                 $this->indexed = false;
                 break;
             case 'png':
-                $this->type = 'png';
+                $this->format = 'png';
                 break;
             case 'gif':
-                $this->type    = 'gif';
+                $this->format  = 'gif';
                 $this->indexed = true;
                 break;
         }
 
         if ((null !== $this->name) && (strpos($this->name, '.') !== false)) {
-            $this->name = substr($this->name, 0, (strrpos($this->name, '.') + 1)) . $this->type;
+            $this->name = substr($this->name, 0, (strrpos($this->name, '.') + 1)) . $this->format;
         }
 
         $result = imagecreatetruecolor($this->width, $this->height);
@@ -422,10 +422,10 @@ class Gd extends AbstractAdapter
             throw new \OutOfRangeException('Error: The quality parameter must be between 0 and 100');
         }
 
-        $this->type = strtolower($this->type);
+        $this->format = strtolower($this->format);
 
         if (null === $to) {
-            $to = (null !== $this->name) ? $this->name : 'pop-image.' . $this->type;
+            $to = (null !== $this->name) ? $this->name : 'pop-image.' . $this->format;
         }
 
         $this->generateImage((int)$quality, $to);
@@ -451,15 +451,15 @@ class Gd extends AbstractAdapter
             throw new \OutOfRangeException('Error: The quality parameter must be between 0 and 100');
         }
 
-        $this->type = strtolower($this->type);
+        $this->format = strtolower($this->format);
 
         if (null === $to) {
-            $to = (null !== $this->name) ? $this->name : 'pop-image.' . $this->type;
+            $to = (null !== $this->name) ? $this->name : 'pop-image.' . $this->format;
         }
 
         // Determine if the force download argument has been passed.
         $headers = [
-            'Content-type'        => 'image/' . (($this->type == 'jpg') ? 'jpeg' : $this->type),
+            'Content-type'        => 'image/' . (($this->format == 'jpg') ? 'jpeg' : $this->format),
             'Content-disposition' => (($download) ? 'attachment; ' : null) . 'filename=' . $to
         ];
 
@@ -551,7 +551,7 @@ class Gd extends AbstractAdapter
                     $this->colorspace = self::IMAGE_CMYK;
                     break;
             }
-            $this->type = 'jpg';
+            $this->format = 'jpg';
         } else if ($size[2] == IMAGETYPE_PNG) {
             switch (ord($data[25])) {
                 case 0:
@@ -571,11 +571,11 @@ class Gd extends AbstractAdapter
                     $this->colorspace = self::IMAGE_RGB;
                     break;
             }
-            $this->type = 'png';
+            $this->format = 'png';
         } else if ($size[2] == IMAGETYPE_GIF) {
             $this->colorspace = self::IMAGE_RGB;
             $this->indexed    = true;
-            $this->type       = 'gif';
+            $this->format     = 'gif';
         }
     }
 
@@ -588,7 +588,7 @@ class Gd extends AbstractAdapter
      */
     protected function generateImage($quality, $to = null)
     {
-        switch ($this->type) {
+        switch ($this->format) {
             case 'jpg':
             case 'jpeg':
                 imagejpeg($this->resource, $to, (int)$quality);
