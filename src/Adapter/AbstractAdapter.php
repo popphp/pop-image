@@ -343,6 +343,40 @@ abstract class AbstractAdapter
     }
 
     /**
+     * Send image headers the image
+     *
+     * @param  string  $to
+     * @param  boolean $download
+     * @return void
+     */
+    public function sendHeaders($to = null, $download = false)
+    {
+        if (null === $to) {
+            $to = (null !== $this->name) ? $this->name : 'pop-image.' . $this->format;
+        }
+
+        // Determine if the force download argument has been passed.
+        $headers = [
+            'Content-type'        => 'image/' . (($this->format == 'jpg') ? 'jpeg' : $this->format),
+            'Content-disposition' => (($download) ? 'attachment; ' : null) . 'filename=' . $to
+        ];
+
+        if (isset($_SERVER['SERVER_PORT']) && ($_SERVER['SERVER_PORT'] == 443)) {
+            $headers['Expires']       = 0;
+            $headers['Cache-Control'] = 'private, must-revalidate';
+            $headers['Pragma']        = 'cache';
+        }
+
+        // Send the headers and output the image
+        if (!headers_sent()) {
+            header('HTTP/1.1 200 OK');
+            foreach ($headers as $name => $value) {
+                header($name . ': ' . $value);
+            }
+        }
+    }
+
+    /**
      * Magic get method to return a manipulation object
      *
      * @param  string $name
@@ -578,5 +612,12 @@ abstract class AbstractAdapter
      * @return mixed
      */
     abstract public function createColor(Color\ColorInterface $color = null, $alpha = 100);
+
+    /**
+     * Output the image
+     *
+     * @return string
+     */
+    abstract public function __toString();
 
 }

@@ -377,4 +377,20 @@ interface AdapterInterface
      */
     public function createColor(Color\ColorInterface $color = null, $alpha = 100);
 
+    /**
+     * Send image headers the image
+     *
+     * @param  string  $to
+     * @param  boolean $download
+     * @return void
+     */
+    public function sendHeaders($to = null, $download = false);
+
+    /**
+     * Output the image
+     *
+     * @return string
+     */
+    public function __toString();
+
 }

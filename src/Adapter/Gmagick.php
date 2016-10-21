@@ -612,26 +612,7 @@ class Gmagick extends AbstractAdapter
             $to = (null !== $this->name) ? $this->name : 'pop-image.' . strtolower($this->format);
         }
 
-        // Determine if the force download argument has been passed.
-        $headers = [
-            'Content-type'        => $this->resource->getImageMimeType(),
-            'Content-disposition' => (($download) ? 'attachment; ' : null) . 'filename=' . $to
-        ];
-
-        if (isset($_SERVER['SERVER_PORT']) && ($_SERVER['SERVER_PORT'] == 443)) {
-            $headers['Expires']       = 0;
-            $headers['Cache-Control'] = 'private, must-revalidate';
-            $headers['Pragma']        = 'cache';
-        }
-
-        // Send the headers and output the image
-        if (!headers_sent() && ($sendHeaders)) {
-            header('HTTP/1.1 200 OK');
-            foreach ($headers as $name => $value) {
-                header($name . ': ' . $value);
-            }
-        }
-
+        $this->sendHeaders($to, $download);
         echo $this->resource;
     }
 
@@ -684,6 +665,18 @@ class Gmagick extends AbstractAdapter
         }
 
         return $pixel;
+    }
+
+    /**
+     * Output the image
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        $this->sendHeaders();
+        echo $this->resource;
+        return '';
     }
 
 }

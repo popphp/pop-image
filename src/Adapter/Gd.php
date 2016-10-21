@@ -572,26 +572,7 @@ class Gd extends AbstractAdapter
             $to = (null !== $this->name) ? $this->name : 'pop-image.' . $this->format;
         }
 
-        // Determine if the force download argument has been passed.
-        $headers = [
-            'Content-type'        => 'image/' . (($this->format == 'jpg') ? 'jpeg' : $this->format),
-            'Content-disposition' => (($download) ? 'attachment; ' : null) . 'filename=' . $to
-        ];
-
-        if (isset($_SERVER['SERVER_PORT']) && ($_SERVER['SERVER_PORT'] == 443)) {
-            $headers['Expires']       = 0;
-            $headers['Cache-Control'] = 'private, must-revalidate';
-            $headers['Pragma']        = 'cache';
-        }
-
-        // Send the headers and output the image
-        if (!headers_sent() && ($sendHeaders)) {
-            header('HTTP/1.1 200 OK');
-            foreach ($headers as $name => $value) {
-                header($name . ': ' . $value);
-            }
-        }
-
+        $this->sendHeaders($to, $download);
         $this->generateImage((int)$quality);
     }
 
@@ -649,6 +630,18 @@ class Gd extends AbstractAdapter
         } else {
             return imagecolorallocate($this->resource, (int)$r, (int)$g, (int)$b);
         }
+    }
+
+    /**
+     * Output the image
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        $this->sendHeaders();
+        $this->generateImage(100);
+        return '';
     }
 
     /**
