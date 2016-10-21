@@ -38,7 +38,7 @@ class Gmagick extends AbstractFilter
      */
     public function blur($radius = 0, $sigma = 0, $channel = \Gmagick::CHANNEL_ALL)
     {
-        $this->image->resource()->blurimage($radius, $sigma, $channel);
+        $this->image->getResource()->blurimage($radius, $sigma, $channel);
         return $this;
     }
 
@@ -52,7 +52,7 @@ class Gmagick extends AbstractFilter
      */
     public function motionBlur($radius = 0, $sigma = 0, $angle = 0)
     {
-        $this->image->resource()->motionblurimage($radius, $sigma, $angle);
+        $this->image->getResource()->motionblurimage($radius, $sigma, $angle);
         return $this;
     }
 
@@ -65,7 +65,7 @@ class Gmagick extends AbstractFilter
      */
     public function radialBlur($angle = 0, $channel = \Gmagick::CHANNEL_ALL)
     {
-        $this->image->resource()->radialblurimage($angle, $channel);
+        $this->image->getResource()->radialblurimage($angle, $channel);
         return $this;
     }
 
@@ -79,7 +79,7 @@ class Gmagick extends AbstractFilter
      */
     public function sharpen($radius = 0, $sigma = 0, $channel = \Gmagick::CHANNEL_ALL)
     {
-        $this->image->resource()->sharpenimage($radius, $sigma, $channel);
+        $this->image->getResource()->sharpenimage($radius, $sigma, $channel);
         return $this;
     }
 
@@ -90,7 +90,7 @@ class Gmagick extends AbstractFilter
      */
     public function negate()
     {
-        $this->image->resource()->negateimage(false, \Gmagick::CHANNEL_ALL);
+        $this->image->getResource()->negateimage(false, \Gmagick::CHANNEL_ALL);
         return $this;
     }
 
@@ -102,7 +102,7 @@ class Gmagick extends AbstractFilter
      */
     public function paint($radius)
     {
-        $this->image->resource()->oilpaintimage($radius);
+        $this->image->getResource()->oilpaintimage($radius);
         return $this;
     }
 
@@ -114,7 +114,7 @@ class Gmagick extends AbstractFilter
      */
     public function noise($type = \Gmagick::NOISE_MULTIPLICATIVEGAUSSIAN)
     {
-        $this->image->resource()->addnoiseimage($type);
+        $this->image->getResource()->addnoiseimage($type);
         return $this;
     }
 
@@ -126,7 +126,7 @@ class Gmagick extends AbstractFilter
      */
     public function diffuse($radius)
     {
-        $this->image->resource()->spreadimage($radius);
+        $this->image->getResource()->spreadimage($radius);
         return $this;
     }
 
@@ -146,7 +146,7 @@ class Gmagick extends AbstractFilter
         if (!($color instanceof Color\Rgb)) {
             $color = $color->toRgb();
         }
-        $this->image->resource()->shearimage('rgb(' . $color . ')', $x, $y);
+        $this->image->getResource()->shearimage('rgb(' . $color . ')', $x, $y);
         return $this;
     }
 
@@ -158,7 +158,7 @@ class Gmagick extends AbstractFilter
      */
     public function solarize($threshold)
     {
-        $this->image->resource()->solarizeimage($threshold);
+        $this->image->getResource()->solarizeimage($threshold);
         return $this;
     }
 
@@ -170,7 +170,7 @@ class Gmagick extends AbstractFilter
      */
     public function swirl($degrees)
     {
-        $this->image->resource()->swirlimage($degrees);
+        $this->image->getResource()->swirlimage($degrees);
         return $this;
     }
 
@@ -186,8 +186,8 @@ class Gmagick extends AbstractFilter
         $x = $this->image->getWidth() / $w;
         $y = $this->image->getHeight() / ((null === $h) ? $w : $h);
 
-        $this->image->resource()->scaleimage($x, $y);
-        $this->image->resource()->scaleimage($this->image->getWidth(), $this->image->getHeight());
+        $this->image->getResource()->scaleimage($x, $y);
+        $this->image->getResource()->scaleimage($this->image->getWidth(), $this->image->getHeight());
 
         return $this;
     }

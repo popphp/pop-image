@@ -38,7 +38,7 @@ class Gd extends AbstractFilter
     public function blur($amount, $type = IMG_FILTER_GAUSSIAN_BLUR)
     {
         for ($i = 1; $i <= $amount; $i++) {
-            imagefilter($this->image->resource(), $type);
+            imagefilter($this->image->getResource(), $type);
         }
 
         return $this;
@@ -52,7 +52,7 @@ class Gd extends AbstractFilter
      */
     public function sharpen($amount)
     {
-        imagefilter($this->image->resource(), IMG_FILTER_SMOOTH, (0 - $amount));
+        imagefilter($this->image->getResource(), IMG_FILTER_SMOOTH, (0 - $amount));
         return $this;
     }
 
@@ -63,7 +63,7 @@ class Gd extends AbstractFilter
      */
     public function negate()
     {
-        imagefilter($this->image->resource(), IMG_FILTER_NEGATE);
+        imagefilter($this->image->getResource(), IMG_FILTER_NEGATE);
         return $this;
     }
 
@@ -75,7 +75,7 @@ class Gd extends AbstractFilter
      */
     public function colorize(Color\Rgb $color)
     {
-        imagefilter($this->image->resource(), IMG_FILTER_COLORIZE, $color->getR(), $color->getG(), $color->getB());
+        imagefilter($this->image->getResource(), IMG_FILTER_COLORIZE, $color->getR(), $color->getG(), $color->getB());
         return $this;
     }
 
@@ -87,7 +87,7 @@ class Gd extends AbstractFilter
      */
     public function pixelate($px)
     {
-        imagefilter($this->image->resource(), IMG_FILTER_PIXELATE, $px, true);
+        imagefilter($this->image->getResource(), IMG_FILTER_PIXELATE, $px, true);
         return $this;
     }
 
@@ -98,7 +98,7 @@ class Gd extends AbstractFilter
      */
     public function pencil()
     {
-        imagefilter($this->image->resource(), IMG_FILTER_MEAN_REMOVAL);
+        imagefilter($this->image->getResource(), IMG_FILTER_MEAN_REMOVAL);
         return $this;
     }
 

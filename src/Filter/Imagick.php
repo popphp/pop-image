@@ -38,7 +38,7 @@ class Imagick extends AbstractFilter
      */
     public function blur($radius = 0, $sigma = 0, $channel = \Imagick::CHANNEL_ALL)
     {
-        $this->image->resource()->blurImage($radius, $sigma, $channel);
+        $this->image->getResource()->blurImage($radius, $sigma, $channel);
         return $this;
     }
 
@@ -52,7 +52,7 @@ class Imagick extends AbstractFilter
      */
     public function adaptiveBlur($radius = 0, $sigma = 0, $channel = \Imagick::CHANNEL_DEFAULT)
     {
-        $this->image->resource()->adaptiveBlurImage($radius, $sigma, $channel);
+        $this->image->getResource()->adaptiveBlurImage($radius, $sigma, $channel);
         return $this;
     }
 
@@ -66,7 +66,7 @@ class Imagick extends AbstractFilter
      */
     public function gaussianBlur($radius = 0, $sigma = 0, $channel = \Imagick::CHANNEL_ALL)
     {
-        $this->image->resource()->gaussianBlurImage($radius, $sigma, $channel);
+        $this->image->getResource()->gaussianBlurImage($radius, $sigma, $channel);
         return $this;
     }
 
@@ -81,7 +81,7 @@ class Imagick extends AbstractFilter
      */
     public function motionBlur($radius = 0, $sigma = 0, $angle = 0, $channel = \Imagick::CHANNEL_DEFAULT)
     {
-        $this->image->resource()->motionBlurImage($radius, $sigma, $angle, $channel);
+        $this->image->getResource()->motionBlurImage($radius, $sigma, $angle, $channel);
         return $this;
     }
 
@@ -94,7 +94,7 @@ class Imagick extends AbstractFilter
      */
     public function radialBlur($angle = 0, $channel = \Imagick::CHANNEL_ALL)
     {
-        $this->image->resource()->radialBlurImage($angle, $channel);
+        $this->image->getResource()->radialBlurImage($angle, $channel);
         return $this;
     }
 
@@ -108,7 +108,7 @@ class Imagick extends AbstractFilter
      */
     public function sharpen($radius = 0, $sigma = 0, $channel = \Imagick::CHANNEL_ALL)
     {
-        $this->image->resource()->sharpenImage($radius, $sigma, $channel);
+        $this->image->getResource()->sharpenImage($radius, $sigma, $channel);
         return $this;
     }
 
@@ -119,7 +119,7 @@ class Imagick extends AbstractFilter
      */
     public function negate()
     {
-        $this->image->resource()->negateImage(false);
+        $this->image->getResource()->negateImage(false);
         return $this;
     }
 
@@ -131,7 +131,7 @@ class Imagick extends AbstractFilter
      */
     public function paint($radius)
     {
-        $this->image->resource()->oilPaintImage($radius);
+        $this->image->getResource()->oilPaintImage($radius);
         return $this;
     }
 
@@ -144,7 +144,7 @@ class Imagick extends AbstractFilter
      */
     public function posterize($levels, $dither = false)
     {
-        $this->image->resource()->posterizeImage($levels, $dither);
+        $this->image->getResource()->posterizeImage($levels, $dither);
         return $this;
     }
 
@@ -157,7 +157,7 @@ class Imagick extends AbstractFilter
      */
     public function noise($type = \Imagick::NOISE_MULTIPLICATIVEGAUSSIAN, $channel = \Imagick::CHANNEL_DEFAULT)
     {
-        $this->image->resource()->addNoiseImage($type, $channel);
+        $this->image->getResource()->addNoiseImage($type, $channel);
         return $this;
     }
 
@@ -169,7 +169,7 @@ class Imagick extends AbstractFilter
      */
     public function diffuse($radius)
     {
-        $this->image->resource()->spreadImage($radius);
+        $this->image->getResource()->spreadImage($radius);
         return $this;
     }
 
@@ -189,7 +189,7 @@ class Imagick extends AbstractFilter
         if (!($color instanceof Color\Rgb)) {
             $color = $color->toRgb();
         }
-        $this->image->resource()->shearImage('rgb(' . $color . ')', $x, $y);
+        $this->image->getResource()->shearImage('rgb(' . $color . ')', $x, $y);
         return $this;
     }
 
@@ -201,7 +201,7 @@ class Imagick extends AbstractFilter
      */
     public function swirl($degrees)
     {
-        $this->image->resource()->swirlImage($degrees);
+        $this->image->getResource()->swirlImage($degrees);
         return $this;
     }
 
@@ -214,7 +214,7 @@ class Imagick extends AbstractFilter
      */
     public function wave($amp, $length)
     {
-        $this->image->resource()->waveImage($amp, $length);
+        $this->image->getResource()->waveImage($amp, $length);
         return $this;
     }
 
@@ -230,8 +230,8 @@ class Imagick extends AbstractFilter
         $x = $this->image->getWidth() / $w;
         $y = $this->image->getHeight() / ((null === $h) ? $w : $h);
 
-        $this->image->resource()->scaleImage($x, $y);
-        $this->image->resource()->scaleImage($this->image->getWidth(), $this->image->getHeight());
+        $this->image->getResource()->scaleImage($x, $y);
+        $this->image->getResource()->scaleImage($this->image->getWidth(), $this->image->getHeight());
 
         return $this;
     }
@@ -246,7 +246,7 @@ class Imagick extends AbstractFilter
      */
     public function pencil($radius, $sigma, $angle)
     {
-        $this->image->resource()->sketchImage($radius, $sigma, $angle);
+        $this->image->getResource()->sketchImage($radius, $sigma, $angle);
         return $this;
     }
 

@@ -61,9 +61,9 @@ class Gd extends AbstractEffect
     public function fill(Color\ColorInterface $color)
     {
         if ($this->image->isIndexed()) {
-            imagefill($this->image->resource(), 0, 0, $this->image->createColor($color));
+            imagefill($this->image->getResource(), 0, 0, $this->image->createColor($color));
         } else {
-            imagefill($this->image->resource(), 0, 0, $this->image->createColor($color, 0));
+            imagefill($this->image->getResource(), 0, 0, $this->image->createColor($color, 0));
         }
         return $this;
     }
@@ -104,7 +104,7 @@ class Gd extends AbstractEffect
             $color = ($this->image->isIndexed()) ? $this->image->createColor(new Color\Rgb($r, $g, $b), null) :
                 $this->image->createColor(new Color\Rgb($r, $g, $b), 0);
 
-            imagefilledellipse($this->image->resource(), $x, $y, $w, $h, $color);
+            imagefilledellipse($this->image->getResource(), $x, $y, $w, $h, $color);
             $w--;
             $h--;
         }
@@ -157,9 +157,9 @@ class Gd extends AbstractEffect
             $color = ($this->image->isIndexed()) ? $this->image->createColor(new Color\Rgb($r, $g, $b), null) :
                 $this->image->createColor(new Color\Rgb($r, $g, $b), 0);
             if ($vertical) {
-                imageline($this->image->resource(), 0, $i, $this->image->getWidth(), $i, $color);
+                imageline($this->image->getResource(), 0, $i, $this->image->getWidth(), $i, $color);
             } else {
-                imageline($this->image->resource(), $i, 0, $i, $this->image->getHeight(), $color);
+                imageline($this->image->getResource(), $i, 0, $i, $this->image->getHeight(), $color);
             }
         }
 

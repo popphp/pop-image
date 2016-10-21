@@ -13,7 +13,13 @@
  */
 namespace Pop\Image\Adapter;
 
+use Pop\Image\Adjust;
 use Pop\Image\Color;
+use Pop\Image\Draw;
+use Pop\Image\Effect;
+use Pop\Image\Filter;
+use Pop\Image\Layer;
+use Pop\Image\Type;
 
 /**
  * Abstract adapter class
@@ -45,7 +51,7 @@ abstract class AbstractAdapter
      * Image name
      * @var string
      */
-    protected $name = null;
+    protected $name = 'pop-image.jpg';
 
     /**
      * Image width
@@ -63,7 +69,7 @@ abstract class AbstractAdapter
      * Image format
      * @var string
      */
-    protected $format = null;
+    protected $format = 'jpg';
 
     /**
      * Image colorspace

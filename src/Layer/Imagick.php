@@ -87,7 +87,7 @@ class Imagick extends AbstractLayer
             $overlayImage->setImageOpacity($this->opacity);
         }
 
-        $this->image->resource()->compositeImage($overlayImage, $this->overlay, $x, $y);
+        $this->image->getResource()->compositeImage($overlayImage, $this->overlay, $x, $y);
         return $this;
     }
 
@@ -99,7 +99,7 @@ class Imagick extends AbstractLayer
      */
     public function flatten($method = \Imagick::LAYERMETHOD_FLATTEN)
     {
-        $this->image->resource()->mergeImageLayers($method);
+        $this->image->getResource()->mergeImageLayers($method);
         return $this;
     }
 

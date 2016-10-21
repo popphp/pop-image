@@ -13,7 +13,13 @@
  */
 namespace Pop\Image\Adapter;
 
+use Pop\Image\Adjust;
 use Pop\Image\Color;
+use Pop\Image\Draw;
+use Pop\Image\Effect;
+use Pop\Image\Filter;
+use Pop\Image\Layer;
+use Pop\Image\Type;
 
 /**
  * Adapter interface

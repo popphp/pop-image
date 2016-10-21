@@ -59,7 +59,7 @@ class Imagick extends AbstractDraw
         $draw->setStrokeColor($this->image->createColor($this->strokeColor, $this->opacity));
         $draw->setStrokeWidth((null === $this->strokeWidth) ? 1 : $this->strokeWidth);
         $draw->line($x1, $y1, $x2, $y2);
-        $this->image->resource()->drawImage($draw);
+        $this->image->getResource()->drawImage($draw);
 
         return $this;
     }
@@ -91,7 +91,7 @@ class Imagick extends AbstractDraw
         }
 
         $draw->rectangle($x, $y, $x2, $y2);
-        $this->image->resource()->drawImage($draw);
+        $this->image->getResource()->drawImage($draw);
 
         return $this;
     }
@@ -140,7 +140,7 @@ class Imagick extends AbstractDraw
         }
 
         $draw->roundRectangle($x, $y, $x2, $y2, $rx, $ry);
-        $this->image->resource()->drawImage($draw);
+        $this->image->getResource()->drawImage($draw);
 
         return $this;
     }
@@ -185,7 +185,7 @@ class Imagick extends AbstractDraw
         }
 
         $draw->ellipse($x, $y, $wid, $hgt, 0, 360);
-        $this->image->resource()->drawImage($draw);
+        $this->image->getResource()->drawImage($draw);
 
         return $this;
     }
@@ -230,7 +230,7 @@ class Imagick extends AbstractDraw
 
         $draw->ellipse($x, $y, $wid, $hgt, $start, $end);
 
-        $this->image->resource()->drawImage($draw);
+        $this->image->getResource()->drawImage($draw);
 
         return $this;
     }
@@ -260,7 +260,7 @@ class Imagick extends AbstractDraw
         $y2 = $h * sin($end / 180 * pi());
 
         $draw->ellipse($x, $y, $wid, $hgt, $start, $end);
-        $this->image->resource()->drawImage($draw);
+        $this->image->getResource()->drawImage($draw);
 
         if ($this->strokeWidth > 0) {
             $draw = new \ImagickDraw();
@@ -272,7 +272,7 @@ class Imagick extends AbstractDraw
             $draw->ellipse($x, $y, $wid, $hgt, $start, $end);
             $draw->line($x + $x1, $y + $y1, $x + $x2, $y + $y2);
 
-            $this->image->resource()->drawImage($draw);
+            $this->image->getResource()->drawImage($draw);
         }
 
         return $this;
@@ -312,7 +312,7 @@ class Imagick extends AbstractDraw
         $draw->polygon($points);
 
         $draw->ellipse($x, $y, $wid, $hgt, $start, $end);
-        $this->image->resource()->drawImage($draw);
+        $this->image->getResource()->drawImage($draw);
 
         if ($this->strokeWidth > 0) {
             $draw = new \ImagickDraw();
@@ -325,7 +325,7 @@ class Imagick extends AbstractDraw
             $draw->line($x, $y, $x + $x1, $y + $y1);
             $draw->line($x, $y, $x + $x2, $y + $y2);
 
-            $this->image->resource()->drawImage($draw);
+            $this->image->getResource()->drawImage($draw);
         }
 
         return $this;
@@ -350,7 +350,7 @@ class Imagick extends AbstractDraw
         }
 
         $draw->polygon($points);
-        $this->image->resource()->drawImage($draw);
+        $this->image->getResource()->drawImage($draw);
 
         return $this;
     }

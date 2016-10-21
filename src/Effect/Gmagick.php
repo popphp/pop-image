@@ -40,7 +40,7 @@ class Gmagick extends AbstractEffect
     public function border(Color\ColorInterface $color, $w = 1, $h = null)
     {
         $h = (null === $h) ? $w : $h;
-        $this->image->resource()->borderImage($this->image->createColor($color), $w, $h);
+        $this->image->getResource()->borderImage($this->image->createColor($color), $w, $h);
         return $this;
     }
 
@@ -55,7 +55,7 @@ class Gmagick extends AbstractEffect
         $draw = new \GmagickDraw();
         $draw->setfillcolor($this->image->createColor($color));
         $draw->rectangle(0, 0, $this->image->getWidth(), $this->image->getHeight());
-        $this->image->resource()->drawImage($draw);
+        $this->image->getResource()->drawImage($draw);
         return $this;
     }
 

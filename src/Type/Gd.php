@@ -59,12 +59,12 @@ class Gd extends AbstractType
             if (null !== $this->strokeColor) {
                 $strokeColor = ($this->image->isIndexed()) ? $this->image->createColor($this->strokeColor, null) :
                     $this->image->createColor($this->strokeColor, $this->opacity);
-                imagettftext($this->image->resource(), $this->size, $this->rotation, $this->x, ($this->y - 1), $strokeColor, $this->font, $string);
-                imagettftext($this->image->resource(), $this->size, $this->rotation, $this->x, ($this->y + 1), $strokeColor, $this->font, $string);
-                imagettftext($this->image->resource(), $this->size, $this->rotation, ($this->x - 1), $this->y, $strokeColor, $this->font, $string);
-                imagettftext($this->image->resource(), $this->size, $this->rotation, ($this->x + 1), $this->y, $strokeColor, $this->font, $string);
+                imagettftext($this->image->getResource(), $this->size, $this->rotation, $this->x, ($this->y - 1), $strokeColor, $this->font, $string);
+                imagettftext($this->image->getResource(), $this->size, $this->rotation, $this->x, ($this->y + 1), $strokeColor, $this->font, $string);
+                imagettftext($this->image->getResource(), $this->size, $this->rotation, ($this->x - 1), $this->y, $strokeColor, $this->font, $string);
+                imagettftext($this->image->getResource(), $this->size, $this->rotation, ($this->x + 1), $this->y, $strokeColor, $this->font, $string);
             }
-            imagettftext($this->image->resource(), $this->size, $this->rotation, $this->x, $this->y, $fillColor, $this->font, $string);
+            imagettftext($this->image->getResource(), $this->size, $this->rotation, $this->x, $this->y, $fillColor, $this->font, $string);
         } else {
             // Cap the system font size between 1 and 5
             if ($this->size > 5) {
@@ -72,7 +72,7 @@ class Gd extends AbstractType
             } else if ($this->size < 1) {
                 $this->size = 1;
             }
-            imagestring($this->image->resource(), $this->size, $this->x, $this->y,  $string, $fillColor);
+            imagestring($this->image->getResource(), $this->size, $this->x, $this->y,  $string, $fillColor);
         }
 
         return $this;

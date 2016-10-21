@@ -13,7 +13,13 @@
  */
 namespace Pop\Image\Adapter;
 
+use Pop\Image\Adjust;
 use Pop\Image\Color;
+use Pop\Image\Draw;
+use Pop\Image\Effect;
+use Pop\Image\Filter;
+use Pop\Image\Layer;
+use Pop\Image\Type;
 
 /**
  * Imagick adapter class
@@ -434,6 +440,103 @@ class Imagick extends AbstractAdapter
     }
 
     /**
+     * Get the image adjust object
+     *
+     * @return Adjust\AdjustInterface
+     */
+    public function adjust()
+    {
+        if (null === $this->adjust) {
+            $this->adjust = new Adjust\Imagick($this);
+        }
+        if (null === $this->adjust->getImage()) {
+            $this->adjust->setImage($this);
+        }
+
+        return $this->adjust;
+    }
+
+    /**
+     * Get the image draw object
+     *
+     * @return Draw\DrawInterface
+     */
+    public function draw()
+    {
+        if (null === $this->draw) {
+            $this->draw = new Draw\Imagick($this);
+        }
+        if (null === $this->draw->getImage()) {
+            $this->draw->setImage($this);
+        }
+        return $this->draw;
+    }
+
+    /**
+     * Get the image effect object
+     *
+     * @return Effect\EffectInterface
+     */
+    public function effect()
+    {
+        if (null === $this->effect) {
+            $this->effect = new Effect\Imagick($this);
+        }
+        if (null === $this->effect->getImage()) {
+            $this->effect->setImage($this);
+        }
+        return $this->effect;
+    }
+
+    /**
+     * Get the image filter object
+     *
+     * @return Filter\FilterInterface
+     */
+    public function filter()
+    {
+        if (null === $this->filter) {
+            $this->filter = new Filter\Imagick($this);
+        }
+        if (null === $this->filter->getImage()) {
+            $this->filter->setImage($this);
+        }
+        return $this->filter;
+    }
+
+    /**
+     * Get the image layer object
+     *
+     * @return Layer\LayerInterface
+     */
+    public function layer()
+    {
+        if (null === $this->layer) {
+            $this->layer = new Layer\Imagick($this);
+        }
+        if (null === $this->layer->getImage()) {
+            $this->layer->setImage($this);
+        }
+        return $this->layer;
+    }
+
+    /**
+     * Get the image type object
+     *
+     * @return Type\TypeInterface
+     */
+    public function type()
+    {
+        if (null === $this->type) {
+            $this->type = new Type\Imagick($this);
+        }
+        if (null === $this->type->getImage()) {
+            $this->type->setImage($this);
+        }
+        return $this->type;
+    }
+
+    /**
      * Convert the image object to another format
      *
      * @param  string $type
@@ -466,6 +569,10 @@ class Imagick extends AbstractAdapter
             $this->resource->setImageCompression($this->compression);
         }
 
+        if (((int)$quality < 0) || ((int)$quality > 100)) {
+            throw new \OutOfRangeException('Error: The quality parameter must be between 0 and 100');
+        }
+
         $this->resource->setImageCompressionQuality($quality);
 
         if (null === $to) {
@@ -491,7 +598,7 @@ class Imagick extends AbstractAdapter
             throw new Exception('Error: An image resource has not been created or loaded');
         }
 
-        if (((int)$quality < 0) || ((int)$quality < 100)) {
+        if (((int)$quality < 0) || ((int)$quality > 100)) {
             throw new \OutOfRangeException('Error: The quality parameter must be between 0 and 100');
         }
 

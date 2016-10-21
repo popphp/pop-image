@@ -13,7 +13,13 @@
  */
 namespace Pop\Image\Adapter;
 
+use Pop\Image\Adjust;
 use Pop\Image\Color;
+use Pop\Image\Draw;
+use Pop\Image\Effect;
+use Pop\Image\Filter;
+use Pop\Image\Layer;
+use Pop\Image\Type;
 
 /**
  * Gd adapter class
@@ -113,8 +119,14 @@ class Gd extends AbstractAdapter
         if (stripos($this->name, '.gif') !== false) {
             $this->resource = imagecreate($this->width, $this->height);
             $this->indexed  = true;
+            $this->format   = 'gif';
         } else {
             $this->resource = imagecreatetruecolor($this->width, $this->height);
+            if (stripos($this->name, '.png') !== false) {
+                $this->format = 'png';
+            } else if (stripos($this->name, '.jp') !== false) {
+                $this->format = 'jpg';
+            }
         }
 
         if ($this->resource === false) {
@@ -150,6 +162,12 @@ class Gd extends AbstractAdapter
 
         $this->resource = imagecreate($this->width, $this->height);
         $this->indexed  = true;
+
+        if (stripos($this->name, '.png') !== false) {
+            $this->format = 'png';
+        } else {
+            $this->format = 'gif';
+        }
 
         if ($this->resource === false) {
             throw new Exception('Error: Unable to create image resource');
@@ -353,6 +371,103 @@ class Gd extends AbstractAdapter
     }
 
     /**
+     * Get the image adjust object
+     *
+     * @return Adjust\AdjustInterface
+     */
+    public function adjust()
+    {
+        if (null === $this->adjust) {
+            $this->adjust = new Adjust\Gd($this);
+        }
+        if (null === $this->adjust->getImage()) {
+            $this->adjust->setImage($this);
+        }
+
+        return $this->adjust;
+    }
+
+    /**
+     * Get the image draw object
+     *
+     * @return Draw\DrawInterface
+     */
+    public function draw()
+    {
+        if (null === $this->draw) {
+            $this->draw = new Draw\Gd($this);
+        }
+        if (null === $this->draw->getImage()) {
+            $this->draw->setImage($this);
+        }
+        return $this->draw;
+    }
+
+    /**
+     * Get the image effect object
+     *
+     * @return Effect\EffectInterface
+     */
+    public function effect()
+    {
+        if (null === $this->effect) {
+            $this->effect = new Effect\Gd($this);
+        }
+        if (null === $this->effect->getImage()) {
+            $this->effect->setImage($this);
+        }
+        return $this->effect;
+    }
+
+    /**
+     * Get the image filter object
+     *
+     * @return Filter\FilterInterface
+     */
+    public function filter()
+    {
+        if (null === $this->filter) {
+            $this->filter = new Filter\Gd($this);
+        }
+        if (null === $this->filter->getImage()) {
+            $this->filter->setImage($this);
+        }
+        return $this->filter;
+    }
+
+    /**
+     * Get the image layer object
+     *
+     * @return Layer\LayerInterface
+     */
+    public function layer()
+    {
+        if (null === $this->layer) {
+            $this->layer = new Layer\Gd($this);
+        }
+        if (null === $this->layer->getImage()) {
+            $this->layer->setImage($this);
+        }
+        return $this->layer;
+    }
+
+    /**
+     * Get the image type object
+     *
+     * @return Type\TypeInterface
+     */
+    public function type()
+    {
+        if (null === $this->type) {
+            $this->type = new Type\Gd($this);
+        }
+        if (null === $this->type->getImage()) {
+            $this->type->setImage($this);
+        }
+        return $this->type;
+    }
+
+    /**
      * Convert the image object to another format
      *
      * @param  string $to
@@ -418,7 +533,7 @@ class Gd extends AbstractAdapter
             throw new Exception('Error: An image resource has not been created or loaded');
         }
 
-        if (((int)$quality < 0) || ((int)$quality < 100)) {
+        if (((int)$quality < 0) || ((int)$quality > 100)) {
             throw new \OutOfRangeException('Error: The quality parameter must be between 0 and 100');
         }
 
@@ -447,7 +562,7 @@ class Gd extends AbstractAdapter
             throw new Exception('Error: An image resource has not been created or loaded');
         }
 
-        if (((int)$quality < 0) || ((int)$quality < 100)) {
+        if (((int)$quality < 0) || ((int)$quality > 100)) {
             throw new \OutOfRangeException('Error: The quality parameter must be between 0 and 100');
         }
 

@@ -83,7 +83,7 @@ class Gmagick extends AbstractLayer
     public function overlay($image, $x = 0, $y = 0)
     {
         $overlayImage = new \Gmagick($image);
-        $this->image->resource()->compositeimage($overlayImage, $this->overlay, $x, $y);
+        $this->image->getResource()->compositeimage($overlayImage, $this->overlay, $x, $y);
         return $this;
     }
 
@@ -94,8 +94,8 @@ class Gmagick extends AbstractLayer
      */
     public function flatten()
     {
-        if (method_exists($this->image->resource(), 'flattenImages')) {
-            $this->image->resource()->flattenimages();
+        if (method_exists($this->image->getResource(), 'flattenImages')) {
+            $this->image->getResource()->flattenimages();
         }
         return $this;
     }

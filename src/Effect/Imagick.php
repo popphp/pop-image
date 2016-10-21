@@ -40,7 +40,7 @@ class Imagick extends AbstractEffect
     public function border(Color\ColorInterface $color, $w = 1, $h = null)
     {
         $h = (null === $h) ? $w : $h;
-        $this->image->resource()->borderImage($this->image->createColor($color), $w, $h);
+        $this->image->getResource()->borderImage($this->image->createColor($color), $w, $h);
         return $this;
     }
 
@@ -55,7 +55,7 @@ class Imagick extends AbstractEffect
         $draw = new \ImagickDraw();
         $draw->setFillColor($this->image->createColor($color));
         $draw->rectangle(0, 0, $this->image->getWidth(), $this->image->getHeight());
-        $this->image->resource()->drawImage($draw);
+        $this->image->getResource()->drawImage($draw);
         return $this;
     }
 
@@ -76,7 +76,7 @@ class Imagick extends AbstractEffect
         $color2 = $color2->toRgb();
 
         $im->newPseudoImage($width, $height, 'radial-gradient:#' . $color1->toHex() . '-#' . $color2->toHex());
-        $this->image->resource()->compositeImage(
+        $this->image->getResource()->compositeImage(
             $im, \Imagick::COMPOSITE_ATOP,
             0 - round(($width - $this->image->getWidth()) / 2),
             0 - round(($height - $this->image->getHeight()) / 2)
@@ -99,7 +99,7 @@ class Imagick extends AbstractEffect
         $color2 = $color2->toRgb();
 
         $im->newPseudoImage($this->image->getWidth(), $this->image->getHeight(), 'gradient:#' . $color1->toHex() . '-#' . $color2->toHex());
-        $this->image->resource()->compositeImage($im, \Imagick::COMPOSITE_ATOP, 0, 0);
+        $this->image->getResource()->compositeImage($im, \Imagick::COMPOSITE_ATOP, 0, 0);
         return $this;
     }
 
@@ -119,7 +119,7 @@ class Imagick extends AbstractEffect
 
         $im->newPseudoImage($this->image->getHeight(), $this->image->getWidth(), 'gradient:#' . $color1->toHex() . '-#' . $color2->toHex());
         $im->rotateImage('rgb(255, 255, 255)', -90);
-        $this->image->resource()->compositeImage($im, \Imagick::COMPOSITE_ATOP, 0, 0);
+        $this->image->getResource()->compositeImage($im, \Imagick::COMPOSITE_ATOP, 0, 0);
         return $this;
     }
 

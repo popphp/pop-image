@@ -62,7 +62,7 @@ class Imagick extends AbstractType
             }
             // Else, attempt to set a basic, default system font
         } else {
-            $fonts = $this->image->resource()->queryFonts();
+            $fonts = $this->image->getResource()->queryFonts();
             if (in_array('Arial', $fonts)) {
                 $this->font = 'Arial';
             } else if (in_array('Helvetica', $fonts)) {
@@ -100,7 +100,7 @@ class Imagick extends AbstractType
         }
 
         $draw->annotation($this->x, $this->y, $string);
-        $this->image->resource()->drawImage($draw);
+        $this->image->getResource()->drawImage($draw);
 
         return $this;
     }

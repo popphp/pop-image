@@ -43,7 +43,7 @@ class Gd extends AbstractLayer
      */
     public function overlay($image, $x = 0, $y = 0)
     {
-        imagealphablending($this->image->resource(), true);
+        imagealphablending($this->image->getResource(), true);
 
         // Create an image resource from the overlay image.
         if (stripos($image, '.gif') !== false) {
@@ -58,9 +58,9 @@ class Gd extends AbstractLayer
 
         if ($this->opacity > 0) {
             if ($this->opacity == 100) {
-                imagecopy($this->image->resource(), $overlay, $x, $y, 0, 0, imagesx($overlay), imagesy($overlay));
+                imagecopy($this->image->getResource(), $overlay, $x, $y, 0, 0, imagesx($overlay), imagesy($overlay));
             } else{
-                imagecopymerge($this->image->resource(), $overlay, $x, $y, 0, 0, imagesx($overlay), imagesy($overlay), $this->opacity);
+                imagecopymerge($this->image->getResource(), $overlay, $x, $y, 0, 0, imagesx($overlay), imagesy($overlay), $this->opacity);
             }
         }
 
