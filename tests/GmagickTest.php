@@ -62,7 +62,7 @@ class GmagickTest extends \PHPUnit_Framework_TestCase
 
     public function testLoadException()
     {
-        $this->setExpectedException('Pop\Image\Exception');
+        $this->expectException('Pop\Image\Exception');
         $image = new Image\Gmagick();
         $image->load('bad.jpg');
     }
@@ -234,7 +234,7 @@ class GmagickTest extends \PHPUnit_Framework_TestCase
 
     public function testRotateException()
     {
-        $this->setExpectedException('Pop\Image\Exception');
+        $this->expectException('Pop\Image\Exception');
         $image = new Image\Gmagick(__DIR__ . '/tmp/test.jpg');
         $image->rotate(45, [255]);
     }
@@ -276,14 +276,14 @@ class GmagickTest extends \PHPUnit_Framework_TestCase
 
     public function testConvertTypeNotAllowedException()
     {
-        $this->setExpectedException('Pop\Image\Exception');
+        $this->expectException('Pop\Image\Exception');
         $image = new Image\Gmagick(__DIR__ . '/tmp/test.jpg');
         $image->convert('bad');
     }
 
     public function testConvertCurrentTypeException()
     {
-        $this->setExpectedException('Pop\Image\Exception');
+        $this->expectException('Pop\Image\Exception');
         $image = new Image\Gmagick(__DIR__ . '/tmp/test.jpg');
         $image->convert('jpg');
     }

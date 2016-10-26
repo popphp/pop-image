@@ -16,7 +16,7 @@ class SvgTest extends \PHPUnit_Framework_TestCase
 
     public function testBorderException()
     {
-        $this->setExpectedException('Pop\Image\Effect\Exception');
+        $this->expectException('Pop\Image\Effect\Exception');
         $image = new Image\Svg('test.svg', '640px', '480px');
         $image->effect()->border([255, 0], 5);
     }
@@ -37,7 +37,7 @@ class SvgTest extends \PHPUnit_Framework_TestCase
 
     public function testRadialGradientBadColorException()
     {
-        $this->setExpectedException('Pop\Image\Effect\Exception');
+        $this->expectException('Pop\Image\Effect\Exception');
         $image = new Image\Svg('test.svg', '640px', '480px');
         $image->effect()->radialGradient([255, 0], [0, 0, 255]);
     }
@@ -58,7 +58,7 @@ class SvgTest extends \PHPUnit_Framework_TestCase
 
     public function testLinearGradientBadColorException()
     {
-        $this->setExpectedException('Pop\Image\Effect\Exception');
+        $this->expectException('Pop\Image\Effect\Exception');
         $image = new Image\Svg('test.svg', '640px', '480px');
         $image->effect()->linearGradient([255, 0], [0, 0, 255]);
     }

@@ -38,7 +38,7 @@ class GdTest extends \PHPUnit_Framework_TestCase
 
     public function testOverlayException()
     {
-        $this->setExpectedException('Pop\Image\Layer\Exception');
+        $this->expectException('Pop\Image\Layer\Exception');
         $image = new Image\Gd('test.png', 640, 480);
         $image->layer()->overlay('test.bad');
     }

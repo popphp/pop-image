@@ -64,7 +64,7 @@ class ImageTest extends \PHPUnit_Framework_TestCase
 
     public function testConstructorTypeNotAllowedException()
     {
-        $this->setExpectedException('Pop\Image\Exception');
+        $this->expectException('Pop\Image\Exception');
         $image = new Image\Gd('test.bad', 640, 480);
     }
 
