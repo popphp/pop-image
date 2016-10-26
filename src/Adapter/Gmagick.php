@@ -539,19 +539,39 @@ class Gmagick extends AbstractAdapter
     /**
      * Convert the image object to another format
      *
-     * @param  string $type
+     * @param  string $to
      * @return Gmagick
      */
-    public function convert($type)
+    public function convert($to)
     {
-        $type = strtolower($type);
+        $to   = strtolower($to);
         $old  = strtolower($this->format);
 
-        if ((($old == 'psd') || ($old == 'tif') || ($old == 'tiff')) && method_exists($this->resource, 'flattenImages')) {
-            $this->resource->flattenimages();
+        if (($old == 'psd') || ($old == 'tif') || ($old == 'tiff')) {
+            if (method_exists($this->resource, 'flattenImages')) {
+                $this->resource->flattenimages();
+            }
         }
 
-        $this->resource->setimageformat($type);
+        $this->resource->setimageformat($to);
+
+        switch ($to) {
+            case 'jpg':
+            case 'jpeg':
+                $this->format  = 'jpg';
+                $this->indexed = false;
+                break;
+            case 'png':
+                $this->format = 'png';
+                break;
+            case 'gif':
+                $this->format  = 'gif';
+                $this->indexed = true;
+                break;
+            default:
+                $this->format = $to;
+        }
+
         return $this;
     }
 

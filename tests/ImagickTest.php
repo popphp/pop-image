@@ -2,6 +2,7 @@
 
 namespace Pop\Image\Test;
 
+use Pop\Image;
 use Pop\Image\Adapter;
 
 class ImagickTest extends \PHPUnit_Framework_TestCase
@@ -18,51 +19,46 @@ class ImagickTest extends \PHPUnit_Framework_TestCase
 
     public function testCreatePng()
     {
-        $image = new Adapter\Imagick('test.png', 640, 480);
-        $this->assertEquals('image/png', $image->getMime());
-        $image->save(__DIR__ . '/tmp/test.png');
+        $image = new Adapter\Imagick(640, 480, 'test.png');
+        $this->assertEquals('png', $image->getFormat());
+        $image->writeToFile(__DIR__ . '/tmp/test.png');
         $this->assertFileExists(__DIR__ . '/tmp/test.png');
         unlink(__DIR__ . '/tmp/test.png');
     }
 
     public function testCreateGif()
     {
-        $image = new Adapter\Imagick('test.gif', 640, 480);
-        $this->assertEquals('image/gif', $image->getMime());
-        $image->save(__DIR__ . '/tmp/test.gif');
+        $image = new Adapter\Imagick(640, 480, 'test.gif');
+        $this->assertEquals('gif', $image->getFormat());
+        $image->writeToFile(__DIR__ . '/tmp/test.gif');
         $this->assertFileExists(__DIR__ . '/tmp/test.gif');
         unlink(__DIR__ . '/tmp/test.gif');
     }
 
-    public function testGetFormats()
-    {
-        $this->assertGreaterThan(5, count(Adapter\Imagick::getFormats()));
-    }
-
     public function testSetCompression()
     {
-        $image = new Adapter\Imagick('test.gif', 640, 480);
+        $image = new Adapter\Imagick(640, 480, 'test.gif');
         $image->setCompression(50);
         $this->assertEquals(50, $image->getCompression());
     }
 
     public function testSetImageFilter()
     {
-        $image = new Adapter\Imagick('test.gif', 640, 480);
+        $image = new Adapter\Imagick(640, 480, 'test.gif');
         $image->setImageFilter(\Imagick::FILTER_CUBIC);
         $this->assertEquals(\Imagick::FILTER_CUBIC, $image->getImageFilter());
     }
 
     public function testSetImageBlur()
     {
-        $image = new Adapter\Imagick('test.gif', 640, 480);
+        $image = new Adapter\Imagick(640, 480, 'test.gif');
         $image->setImageBlur(5);
         $this->assertEquals(5, $image->getImageBlur());
     }
 
     public function testLoadException()
     {
-        $this->expectException('Pop\Image\Exception');
+        $this->expectException('Pop\Image\Adapter\Exception');
         $image = new Adapter\Imagick();
         $image->load('bad.jpg');
     }
@@ -145,13 +141,6 @@ class ImagickTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('Pop\Image\Type\Imagick', $image->type());
     }
 
-    public function testSetQualityPng()
-    {
-        $image = new Adapter\Imagick('test.png', 640, 480);
-        $image->setQuality(80);
-        $this->assertEquals(80, (int)$image->getQuality());
-    }
-
     public function testResizeToWidth()
     {
         $image = new Adapter\Imagick(__DIR__ . '/tmp/test.jpg');
@@ -210,7 +199,7 @@ class ImagickTest extends \PHPUnit_Framework_TestCase
 
     public function testCropThumbVertical()
     {
-        $image = new Adapter\Imagick('test.jpg', 480, 640);
+        $image = new Adapter\Imagick(480, 640, 'test.jpg');
         $image->cropThumb(50);
         $this->assertEquals(50, $image->getWidth());
         $this->assertEquals(50, $image->getHeight());
@@ -218,7 +207,7 @@ class ImagickTest extends \PHPUnit_Framework_TestCase
 
     public function testCropThumbOffsetVertical()
     {
-        $image = new Adapter\Imagick('test.jpg', 480, 640);
+        $image = new Adapter\Imagick(480, 640, 'test.jpg');
         $image->cropThumb(50, 10);
         $this->assertEquals(50, $image->getWidth());
         $this->assertEquals(50, $image->getHeight());
@@ -230,13 +219,6 @@ class ImagickTest extends \PHPUnit_Framework_TestCase
         $image->rotate(45);
         $this->assertGreaterThan(770, $image->getWidth());
         $this->assertGreaterThan(770, $image->getHeight());
-    }
-
-    public function testRotateException()
-    {
-        $this->expectException('Pop\Image\Exception');
-        $image = new Adapter\Imagick(__DIR__ . '/tmp/test.jpg');
-        $image->rotate(45, [255]);
     }
 
     public function testFlip()
@@ -259,33 +241,19 @@ class ImagickTest extends \PHPUnit_Framework_TestCase
     {
         $image = new Adapter\Imagick(__DIR__ . '/tmp/test.jpg');
         $image->convert('gif');
-        $this->assertEquals('image/gif', $image->getMime());
+        $this->assertEquals('gif', $image->getFormat());
         $image->convert('png');
-        $this->assertEquals('image/png', $image->getMime());
+        $this->assertEquals('png', $image->getFormat());
         $image->convert('jpg');
-        $this->assertEquals('image/jpeg', $image->getMime());
+        $this->assertEquals('jpg', $image->getFormat());
     }
 
     public function testConvertPsd()
     {
-        $image = new Adapter\Imagick('test.psd', 640, 480);
-        $this->assertEquals('image/x-photoshop', $image->getMime());
+        $image = new Adapter\Imagick(640, 480, 'test.psd');
+        $this->assertEquals('psd', $image->getFormat());
         $image->convert('png');
-        $this->assertEquals('image/png', $image->getMime());
-    }
-
-    public function testConvertTypeNotAllowedException()
-    {
-        $this->expectException('Pop\Image\Exception');
-        $image = new Adapter\Imagick(__DIR__ . '/tmp/test.jpg');
-        $image->convert('bad');
-    }
-
-    public function testConvertCurrentTypeException()
-    {
-        $this->expectException('Pop\Image\Exception');
-        $image = new Adapter\Imagick(__DIR__ . '/tmp/test.jpg');
-        $image->convert('jpg');
+        $this->assertEquals('png', $image->getFormat());
     }
 
     public function testSave()
@@ -295,7 +263,7 @@ class ImagickTest extends \PHPUnit_Framework_TestCase
         $image->resize(240);
         $this->assertEquals(240, $image->getWidth());
         $this->assertEquals(180, $image->getHeight());
-        $image->save(__DIR__ . '/tmp/test-240.jpg');
+        $image->writeToFile(__DIR__ . '/tmp/test-240.jpg');
         $this->assertFileExists(__DIR__ . '/tmp/test-240.jpg');
         unlink(__DIR__ . '/tmp/test-240.jpg');
     }
@@ -303,40 +271,15 @@ class ImagickTest extends \PHPUnit_Framework_TestCase
     /**
      * @runInSeparateProcess
      */
-    public function testOutput()
-    {
-        $image = new Adapter\Imagick(__DIR__ . '/tmp/test.jpg');
-        $image->setCompression(50);
-        $image->resize(240);
-        $this->assertEquals(240, $image->getWidth());
-        $this->assertEquals(180, $image->getHeight());
-        $image->save(__DIR__ . '/tmp/test-240.jpg');
-
-        ob_start();
-        $image->output();
-        $result = ob_get_clean();
-
-        $image->destroy(true);
-        $this->assertFalse(ctype_print($result));
-        $this->assertFileNotExists(__DIR__ . '/tmp/test-240.jpg');
-    }
-    /**
-     * @runInSeparateProcess
-     */
     public function testToString()
     {
         $image = new Adapter\Imagick(__DIR__ . '/tmp/test.jpg');
-        $image->setCompression(50);
-        $image->resize(240);
-        $this->assertEquals(240, $image->getWidth());
-        $this->assertEquals(180, $image->getHeight());
-        $image->save(__DIR__ . '/tmp/test-240.jpg');
 
         ob_start();
         echo $image;
         $result = ob_get_clean();
 
-        $image->destroy(true);
+        $image->destroy();
         $this->assertFalse(ctype_print($result));
         $this->assertFileNotExists(__DIR__ . '/tmp/test-240.jpg');
     }

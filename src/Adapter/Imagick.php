@@ -539,19 +539,37 @@ class Imagick extends AbstractAdapter
     /**
      * Convert the image object to another format
      *
-     * @param  string $type
+     * @param  string $to
      * @return Imagick
      */
-    public function convert($type)
+    public function convert($to)
     {
-        $type = strtolower($type);
+        $to   = strtolower($to);
         $old  = strtolower($this->format);
 
         if (($old == 'psd') || ($old == 'tif') || ($old == 'tiff')) {
             $this->resource->mergeImageLayers(\Imagick::LAYERMETHOD_FLATTEN);
         }
 
-        $this->resource->setImageFormat($type);
+        $this->resource->setImageFormat($to);
+
+        switch ($to) {
+            case 'jpg':
+            case 'jpeg':
+                $this->format  = 'jpg';
+                $this->indexed = false;
+                break;
+            case 'png':
+                $this->format = 'png';
+                break;
+            case 'gif':
+                $this->format  = 'gif';
+                $this->indexed = true;
+                break;
+            default:
+                $this->format = $to;
+        }
+
         return $this;
     }
 
