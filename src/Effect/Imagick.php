@@ -72,8 +72,12 @@ class Imagick extends AbstractEffect
         $width  = round($this->image->getWidth() * 1.25);
         $height = round($this->image->getHeight() * 1.25);
 
-        $color1 = $color1->toRgb();
-        $color2 = $color2->toRgb();
+        if (!($color1 instanceof Color\Rgb)) {
+            $color1 = $color1->toRgb();
+        }
+        if (!($color2 instanceof Color\Rgb)) {
+            $color2 = $color2->toRgb();
+        }
 
         $im->newPseudoImage($width, $height, 'radial-gradient:#' . $color1->toHex() . '-#' . $color2->toHex());
         $this->image->getResource()->compositeImage(
@@ -95,8 +99,12 @@ class Imagick extends AbstractEffect
     {
         $im = new \Imagick();
 
-        $color1 = $color1->toRgb();
-        $color2 = $color2->toRgb();
+        if (!($color1 instanceof Color\Rgb)) {
+            $color1 = $color1->toRgb();
+        }
+        if (!($color2 instanceof Color\Rgb)) {
+            $color2 = $color2->toRgb();
+        }
 
         $im->newPseudoImage($this->image->getWidth(), $this->image->getHeight(), 'gradient:#' . $color1->toHex() . '-#' . $color2->toHex());
         $this->image->getResource()->compositeImage($im, \Imagick::COMPOSITE_ATOP, 0, 0);
@@ -114,8 +122,12 @@ class Imagick extends AbstractEffect
     {
         $im = new \Imagick();
 
-        $color1 = $color1->toRgb();
-        $color2 = $color2->toRgb();
+        if (!($color1 instanceof Color\Rgb)) {
+            $color1 = $color1->toRgb();
+        }
+        if (!($color2 instanceof Color\Rgb)) {
+            $color2 = $color2->toRgb();
+        }
 
         $im->newPseudoImage($this->image->getHeight(), $this->image->getWidth(), 'gradient:#' . $color1->toHex() . '-#' . $color2->toHex());
         $im->rotateImage('rgb(255, 255, 255)', -90);

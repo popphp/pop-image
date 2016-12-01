@@ -2,56 +2,57 @@
 
 namespace Pop\Image\Test\Draw;
 
-use Pop\Image;
+use Pop\Image\Adapter;
+use Pop\Image\Color\Rgb;
 
 class GdTest extends \PHPUnit_Framework_TestCase
 {
 
     public function testSetOpacity()
     {
-        $image = new Image\Gd('test.jpg', 640, 480);
+        $image = new Adapter\Gd(640, 480, 'test.jpg');
         $image->draw()->setOpacity(50);
         $this->assertEquals(64, $image->draw()->getOpacity());
     }
 
     public function testSetFillColor()
     {
-        $image = new Image\Gd('test.jpg', 640, 480);
-        $image->draw()->setFillColor(255, 128, 1);
-        $this->assertEquals(255, $image->draw()->getFillColor()[0]);
-        $this->assertEquals(128, $image->draw()->getFillColor()[1]);
-        $this->assertEquals(1, $image->draw()->getFillColor()[2]);
+        $image = new Adapter\Gd(640, 480, 'test.jpg');
+        $image->draw()->setFillColor(new Rgb(255, 128, 1));
+        $this->assertEquals(255, $image->draw()->getFillColor()->getR());
+        $this->assertEquals(128, $image->draw()->getFillColor()->getG());
+        $this->assertEquals(1, $image->draw()->getFillColor()->getB());
     }
 
     public function testSetStrokeColor()
     {
-        $image = new Image\Gd('test.jpg', 640, 480);
-        $image->draw()->setStrokeColor(255, 128, 1);
-        $this->assertEquals(255, $image->draw()->getStrokeColor()[0]);
-        $this->assertEquals(128, $image->draw()->getStrokeColor()[1]);
-        $this->assertEquals(1, $image->draw()->getStrokeColor()[2]);
+        $image = new Adapter\Gd(640, 480, 'test.jpg');
+        $image->draw()->setStrokeColor(new Rgb(255, 128, 1));
+        $this->assertEquals(255, $image->draw()->getStrokeColor()->getR());
+        $this->assertEquals(128, $image->draw()->getStrokeColor()->getG());
+        $this->assertEquals(1, $image->draw()->getStrokeColor()->getB());
     }
 
     public function testSetStrokeWidth()
     {
-        $image = new Image\Gd('test.jpg', 640, 480);
+        $image = new Adapter\Gd(640, 480, 'test.jpg');
         $image->draw()->setStrokeWidth(5);
         $this->assertEquals(5, $image->draw()->getStrokeWidth());
     }
 
     public function testLine()
     {
-        $image = new Image\Gd('test.jpg', 640, 480);
-        $image->draw()->setStrokeColor(0, 0, 0);
+        $image = new Adapter\Gd(640, 480, 'test.jpg');
+        $image->draw()->setStrokeColor(new Rgb(0, 0, 0));
         $image->draw()->line(50, 50, 150, 150);
         $this->assertInstanceOf('Pop\Image\Draw\Gd', $image->draw());
     }
 
     public function testRectangle()
     {
-        $image = new Image\Gd('test.jpg', 640, 480);
-        $image->draw()->setFillColor(255, 128, 1);
-        $image->draw()->setStrokeColor(0, 0, 0);
+        $image = new Adapter\Gd(640, 480, 'test.jpg');
+        $image->draw()->setFillColor(new Rgb(255, 128, 1));
+        $image->draw()->setStrokeColor(new Rgb(0, 0, 0));
         $image->draw()->setStrokeWidth(5);
         $image->draw()->rectangle(50, 50, 150, 150);
         $this->assertInstanceOf('Pop\Image\Draw\Gd', $image->draw());
@@ -59,9 +60,9 @@ class GdTest extends \PHPUnit_Framework_TestCase
 
     public function testSquare()
     {
-        $image = new Image\Gd('test.jpg', 640, 480);
-        $image->draw()->setFillColor(255, 128, 1);
-        $image->draw()->setStrokeColor(0, 0, 0);
+        $image = new Adapter\Gd(640, 480, 'test.jpg');
+        $image->draw()->setFillColor(new Rgb(255, 128, 1));
+        $image->draw()->setStrokeColor(new Rgb(0, 0, 0));
         $image->draw()->setStrokeWidth(5);
         $image->draw()->square(50, 50, 150);
         $this->assertInstanceOf('Pop\Image\Draw\Gd', $image->draw());
@@ -69,9 +70,9 @@ class GdTest extends \PHPUnit_Framework_TestCase
 
     public function testEllipse()
     {
-        $image = new Image\Gd('test.jpg', 640, 480);
-        $image->draw()->setFillColor(255, 128, 1);
-        $image->draw()->setStrokeColor(0, 0, 0);
+        $image = new Adapter\Gd(640, 480, 'test.jpg');
+        $image->draw()->setFillColor(new Rgb(255, 128, 1));
+        $image->draw()->setStrokeColor(new Rgb(0, 0, 0));
         $image->draw()->setStrokeWidth(5);
         $image->draw()->ellipse(50, 50, 150, 150);
         $this->assertInstanceOf('Pop\Image\Draw\Gd', $image->draw());
@@ -79,9 +80,9 @@ class GdTest extends \PHPUnit_Framework_TestCase
 
     public function testCircle()
     {
-        $image = new Image\Gd('test.jpg', 640, 480);
-        $image->draw()->setFillColor(255, 128, 1);
-        $image->draw()->setStrokeColor(0, 0, 0);
+        $image = new Adapter\Gd(640, 480, 'test.jpg');
+        $image->draw()->setFillColor(new Rgb(255, 128, 1));
+        $image->draw()->setStrokeColor(new Rgb(0, 0, 0));
         $image->draw()->setStrokeWidth(5);
         $image->draw()->circle(50, 50, 150);
         $this->assertInstanceOf('Pop\Image\Draw\Gd', $image->draw());
@@ -89,18 +90,18 @@ class GdTest extends \PHPUnit_Framework_TestCase
 
     public function testArc()
     {
-        $image = new Image\Gd('test.jpg', 640, 480);
-        $image->draw()->setFillColor(255, 128, 1);
-        $image->draw()->setStrokeColor(0, 0, 0);
+        $image = new Adapter\Gd(640, 480, 'test.jpg');
+        $image->draw()->setFillColor(new Rgb(255, 128, 1));
+        $image->draw()->setStrokeColor(new Rgb(0, 0, 0));
         $image->draw()->arc(50, 50, 30, 80, 150, 150);
         $this->assertInstanceOf('Pop\Image\Draw\Gd', $image->draw());
     }
 
     public function testChord()
     {
-        $image = new Image\Gd('test.jpg', 640, 480);
-        $image->draw()->setFillColor(255, 128, 1);
-        $image->draw()->setStrokeColor(0, 0, 0);
+        $image = new Adapter\Gd(640, 480, 'test.jpg');
+        $image->draw()->setFillColor(new Rgb(255, 128, 1));
+        $image->draw()->setStrokeColor(new Rgb(0, 0, 0));
         $image->draw()->setStrokeWidth(5);
         $image->draw()->chord(50, 50, 30, 80, 150, 150);
         $this->assertInstanceOf('Pop\Image\Draw\Gd', $image->draw());
@@ -108,9 +109,9 @@ class GdTest extends \PHPUnit_Framework_TestCase
 
     public function testPie()
     {
-        $image = new Image\Gd('test.jpg', 640, 480);
-        $image->draw()->setFillColor(255, 128, 1);
-        $image->draw()->setStrokeColor(0, 0, 0);
+        $image = new Adapter\Gd(640, 480, 'test.jpg');
+        $image->draw()->setFillColor(new Rgb(255, 128, 1));
+        $image->draw()->setStrokeColor(new Rgb(0, 0, 0));
         $image->draw()->setStrokeWidth(5);
         $image->draw()->pie(50, 50, 30, 80, 150, 150);
         $this->assertInstanceOf('Pop\Image\Draw\Gd', $image->draw());
@@ -118,9 +119,9 @@ class GdTest extends \PHPUnit_Framework_TestCase
 
     public function testPolygon()
     {
-        $image = new Image\Gd('test.jpg', 640, 480);
-        $image->draw()->setFillColor(255, 128, 1);
-        $image->draw()->setStrokeColor(0, 0, 0);
+        $image = new Adapter\Gd(640, 480, 'test.jpg');
+        $image->draw()->setFillColor(new Rgb(255, 128, 1));
+        $image->draw()->setStrokeColor(new Rgb(0, 0, 0));
         $image->draw()->setStrokeWidth(5);
         $image->draw()->polygon([
             ['x' => 50, 'y' => 50],

@@ -88,9 +88,13 @@ class Gd extends AbstractEffect
             $tween = round($tween * 1.5);
         }
 
-        $color1 = $color1->toRgb();
-        $color2 = $color2->toRgb();
-        $blend  = $this->getBlend($color1, $color2, $tween);
+        if (!($color1 instanceof Color\Rgb)) {
+            $color1 = $color1->toRgb();
+        }
+        if (!($color2 instanceof Color\Rgb)) {
+            $color2 = $color2->toRgb();
+        }
+        $blend = $this->getBlend($color1, $color2, $tween);
 
         $x = round($this->image->getWidth() / 2);
         $y = round($this->image->getHeight() / 2);

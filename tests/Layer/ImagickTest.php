@@ -2,7 +2,7 @@
 
 namespace Pop\Image\Test\Layer;
 
-use Pop\Image;
+use Pop\Image\Adapter;
 
 class ImagickTest extends \PHPUnit_Framework_TestCase
 {
@@ -18,21 +18,21 @@ class ImagickTest extends \PHPUnit_Framework_TestCase
 
     public function testOpacity()
     {
-        $image = new Image\Imagick('test.jpg', 640, 480);
+        $image = new Adapter\Imagick(640, 480, 'test.jpg');
         $image->layer()->setOpacity(50);
         $this->assertEquals(50, $image->layer()->getOpacity());
     }
 
     public function testSetOverlay()
     {
-        $image = new Image\Imagick('test.jpg', 640, 480);
+        $image = new Adapter\Imagick(640, 480, 'test.jpg');
         $image->layer()->setOverlay(\Imagick::COMPOSITE_ADD);
         $this->assertEquals(\Imagick::COMPOSITE_ADD, $image->layer()->getOverlay());
     }
 
     public function testOverlay()
     {
-        $image = new Image\Imagick('test.jpg', 640, 480);
+        $image = new Adapter\Imagick(640, 480, 'test.jpg');
         $image->layer()->setOpacity(0.5);
         $image->layer()->overlay(__DIR__ . '/../tmp/test.jpg');
         $this->assertInstanceOf('Pop\Image\Layer\Imagick', $image->layer());

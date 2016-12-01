@@ -52,7 +52,7 @@ class Gd extends AbstractType
      */
     public function text($string)
     {
-        $fillColor = ($this->image->isIndex()) ? $this->image->createColor($this->fillColor, null) :
+        $fillColor = ($this->image->isIndexed()) ? $this->image->createColor($this->fillColor, null) :
             $this->image->createColor($this->fillColor, $this->opacity);
 
         if ((null !== $this->font) && function_exists('imagettftext')) {

@@ -2,7 +2,8 @@
 
 namespace Pop\Image\Test\Draw;
 
-use Pop\Image;
+use Pop\Image\Adapter;
+use Pop\Image\Color\Rgb;
 
 class GmagickTest extends \PHPUnit_Framework_TestCase
 {
@@ -17,24 +18,24 @@ class GmagickTest extends \PHPUnit_Framework_TestCase
 
     public function testSetOpacity()
     {
-        $image = new Image\Gmagick('test.jpg', 640, 480);
+        $image = new Adapter\Gmagick(640, 480, 'test.jpg');
         $image->draw()->setOpacity(50);
         $this->assertEquals(50, $image->draw()->getOpacity());
     }
 
     public function testLine()
     {
-        $image = new Image\Gmagick('test.jpg', 640, 480);
-        $image->draw()->setStrokeColor(0, 0, 0);
+        $image = new Adapter\Gmagick(640, 480, 'test.jpg');
+        $image->draw()->setStrokeColor(new Rgb(0, 0, 0));
         $image->draw()->line(50, 50, 150, 150);
         $this->assertInstanceOf('Pop\Image\Draw\Gmagick', $image->draw());
     }
 
     public function testRectangle()
     {
-        $image = new Image\Gmagick('test.jpg', 640, 480);
-        $image->draw()->setFillColor(255, 128, 1);
-        $image->draw()->setStrokeColor(0, 0, 0);
+        $image = new Adapter\Gmagick(640, 480, 'test.jpg');
+        $image->draw()->setFillColor(new Rgb(255, 128, 1));
+        $image->draw()->setStrokeColor(new Rgb(0, 0, 0));
         $image->draw()->setStrokeWidth(5);
         $image->draw()->rectangle(50, 50, 150, 150);
         $this->assertInstanceOf('Pop\Image\Draw\Gmagick', $image->draw());
@@ -42,9 +43,9 @@ class GmagickTest extends \PHPUnit_Framework_TestCase
 
     public function testRoundedRectangle()
     {
-        $image = new Image\Gmagick('test.jpg', 640, 480);
-        $image->draw()->setFillColor(255, 128, 1);
-        $image->draw()->setStrokeColor(0, 0, 0);
+        $image = new Adapter\Gmagick(640, 480, 'test.jpg');
+        $image->draw()->setFillColor(new Rgb(255, 128, 1));
+        $image->draw()->setStrokeColor(new Rgb(0, 0, 0));
         $image->draw()->setStrokeWidth(5);
         $image->draw()->roundedRectangle(50, 50, 150, 150, 10, 10);
         $this->assertInstanceOf('Pop\Image\Draw\Gmagick', $image->draw());
@@ -52,9 +53,9 @@ class GmagickTest extends \PHPUnit_Framework_TestCase
 
     public function testRoundedSquare()
     {
-        $image = new Image\Gmagick('test.jpg', 640, 480);
-        $image->draw()->setFillColor(255, 128, 1);
-        $image->draw()->setStrokeColor(0, 0, 0);
+        $image = new Adapter\Gmagick(640, 480, 'test.jpg');
+        $image->draw()->setFillColor(new Rgb(255, 128, 1));
+        $image->draw()->setStrokeColor(new Rgb(0, 0, 0));
         $image->draw()->setStrokeWidth(5);
         $image->draw()->roundedSquare(50, 50, 150, 10);
         $this->assertInstanceOf('Pop\Image\Draw\Gmagick', $image->draw());
@@ -62,9 +63,9 @@ class GmagickTest extends \PHPUnit_Framework_TestCase
 
     public function testSquare()
     {
-        $image = new Image\Gmagick('test.jpg', 640, 480);
-        $image->draw()->setFillColor(255, 128, 1);
-        $image->draw()->setStrokeColor(0, 0, 0);
+        $image = new Adapter\Gmagick(640, 480, 'test.jpg');
+        $image->draw()->setFillColor(new Rgb(255, 128, 1));
+        $image->draw()->setStrokeColor(new Rgb(0, 0, 0));
         $image->draw()->setStrokeWidth(5);
         $image->draw()->square(50, 50, 150);
         $this->assertInstanceOf('Pop\Image\Draw\Gmagick', $image->draw());
@@ -72,9 +73,9 @@ class GmagickTest extends \PHPUnit_Framework_TestCase
 
     public function testEllipse()
     {
-        $image = new Image\Gmagick('test.jpg', 640, 480);
-        $image->draw()->setFillColor(255, 128, 1);
-        $image->draw()->setStrokeColor(0, 0, 0);
+        $image = new Adapter\Gmagick(640, 480, 'test.jpg');
+        $image->draw()->setFillColor(new Rgb(255, 128, 1));
+        $image->draw()->setStrokeColor(new Rgb(0, 0, 0));
         $image->draw()->setStrokeWidth(5);
         $image->draw()->ellipse(50, 50, 150, 150);
         $this->assertInstanceOf('Pop\Image\Draw\Gmagick', $image->draw());
@@ -82,9 +83,9 @@ class GmagickTest extends \PHPUnit_Framework_TestCase
 
     public function testCircle()
     {
-        $image = new Image\Gmagick('test.jpg', 640, 480);
-        $image->draw()->setFillColor(255, 128, 1);
-        $image->draw()->setStrokeColor(0, 0, 0);
+        $image = new Adapter\Gmagick(640, 480, 'test.jpg');
+        $image->draw()->setFillColor(new Rgb(255, 128, 1));
+        $image->draw()->setStrokeColor(new Rgb(0, 0, 0));
         $image->draw()->setStrokeWidth(5);
         $image->draw()->circle(50, 50, 150);
         $this->assertInstanceOf('Pop\Image\Draw\Gmagick', $image->draw());
@@ -92,18 +93,18 @@ class GmagickTest extends \PHPUnit_Framework_TestCase
 
     public function testArc()
     {
-        $image = new Image\Gmagick('test.jpg', 640, 480);
-        $image->draw()->setFillColor(255, 128, 1);
-        $image->draw()->setStrokeColor(0, 0, 0);
+        $image = new Adapter\Gmagick(640, 480, 'test.jpg');
+        $image->draw()->setFillColor(new Rgb(255, 128, 1));
+        $image->draw()->setStrokeColor(new Rgb(0, 0, 0));
         $image->draw()->arc(50, 50, 30, 80, 150, 150);
         $this->assertInstanceOf('Pop\Image\Draw\Gmagick', $image->draw());
     }
 
     public function testChord()
     {
-        $image = new Image\Gmagick('test.jpg', 640, 480);
-        $image->draw()->setFillColor(255, 128, 1);
-        $image->draw()->setStrokeColor(0, 0, 0);
+        $image = new Adapter\Gmagick(640, 480, 'test.jpg');
+        $image->draw()->setFillColor(new Rgb(255, 128, 1));
+        $image->draw()->setStrokeColor(new Rgb(0, 0, 0));
         $image->draw()->setStrokeWidth(5);
         $image->draw()->chord(50, 50, 30, 80, 150, 150);
         $this->assertInstanceOf('Pop\Image\Draw\Gmagick', $image->draw());
@@ -111,9 +112,9 @@ class GmagickTest extends \PHPUnit_Framework_TestCase
 
     public function testPie()
     {
-        $image = new Image\Gmagick('test.jpg', 640, 480);
-        $image->draw()->setFillColor(255, 128, 1);
-        $image->draw()->setStrokeColor(0, 0, 0);
+        $image = new Adapter\Gmagick(640, 480, 'test.jpg');
+        $image->draw()->setFillColor(new Rgb(255, 128, 1));
+        $image->draw()->setStrokeColor(new Rgb(0, 0, 0));
         $image->draw()->setStrokeWidth(5);
         $image->draw()->pie(50, 50, 30, 80, 150, 150);
         $this->assertInstanceOf('Pop\Image\Draw\Gmagick', $image->draw());
@@ -121,9 +122,9 @@ class GmagickTest extends \PHPUnit_Framework_TestCase
 
     public function testPolygon()
     {
-        $image = new Image\Gmagick('test.jpg', 640, 480);
-        $image->draw()->setFillColor(255, 128, 1);
-        $image->draw()->setStrokeColor(0, 0, 0);
+        $image = new Adapter\Gmagick(640, 480, 'test.jpg');
+        $image->draw()->setFillColor(new Rgb(255, 128, 1));
+        $image->draw()->setStrokeColor(new Rgb(0, 0, 0));
         $image->draw()->setStrokeWidth(5);
         $image->draw()->polygon([
             ['x' => 50, 'y' => 50],
