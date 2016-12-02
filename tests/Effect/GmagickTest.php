@@ -23,13 +23,6 @@ class GmagickTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('Pop\Image\Effect\Gmagick', $image->effect());
     }
 
-    public function testBorderException()
-    {
-        $this->expectException('Pop\Image\Effect\Exception');
-        $image = new Adapter\Gmagick(640, 480, 'test.jpg');
-        $image->effect()->border([255, 0], 5);
-    }
-
     public function testFill()
     {
         $image = new Adapter\Gmagick(640, 480, 'test.jpg');

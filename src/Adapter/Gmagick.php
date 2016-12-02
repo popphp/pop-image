@@ -193,7 +193,7 @@ class Gmagick extends AbstractAdapter
         }
 
         $this->resource = new \Gmagick();
-        $this->resource->newimage($this->width, $this->height, new \GmagickPixel('white'));
+        $this->resource->newimage($this->width, $this->height, (new \GmagickPixel('white'))->getcolor());
 
         if (null !== $this->name) {
             $extension = strtolower(substr($this->name, (strrpos($this->name, '.') + 1)));
@@ -594,7 +594,7 @@ class Gmagick extends AbstractAdapter
             throw new \OutOfRangeException('Error: The quality parameter must be between 0 and 100');
         }
 
-        $this->resource->setimagecompressionquality($quality);
+        $this->resource->setcompressionquality($quality);
 
         if (null === $to) {
             $to = (null !== $this->name) ? $this->name : 'pop-image.' . $this->format;
@@ -629,7 +629,7 @@ class Gmagick extends AbstractAdapter
             $this->resource->setimagecompression($this->compression);
         }
 
-        $this->resource->setimagecompressionquality($quality);
+        $this->resource->setcompressionquality($quality);
 
         if (null === $to) {
             $to = (null !== $this->name) ? $this->name : 'pop-image.' . strtolower($this->format);
@@ -675,17 +675,12 @@ class Gmagick extends AbstractAdapter
             $color = new Color\Rgb(0, 0, 0);
         }
 
-        if ($color instanceof Color\Gray) {
+        if (!($color instanceof Color\Rgb)) {
             $color = $color->toRgb();
         }
 
-        if ($color instanceof Color\Cmyk) {
-            $pixel = ((int)$alpha < 100) ?
-                new \GmagickPixel('cmyka(' . $color . ', ' . (int)$alpha . ')') : new \GmagickPixel('cmyk(' . $color . ')');
-        } else {
-            $pixel = ((int)$alpha < 100) ?
-                new \GmagickPixel('rgba(' . $color . ',' . (int)$alpha . ')') : new \GmagickPixel('rgb(' . $color . ')');
-        }
+        $pixel = ((int)$alpha < 100) ?
+            new \GmagickPixel('rgba(' . $color . ',' . (int)$alpha . ')') : new \GmagickPixel('rgb(' . $color . ')');
 
         return $pixel;
     }

@@ -673,17 +673,12 @@ class Imagick extends AbstractAdapter
             $color = new Color\Rgb(0, 0, 0);
         }
 
-        if ($color instanceof Color\Gray) {
+        if (!($color instanceof Color\Rgb)) {
             $color = $color->toRgb();
         }
 
-        if ($color instanceof Color\Cmyk) {
-            $pixel = ((int)$alpha < 100) ?
-                new \ImagickPixel('cmyka(' . $color . ', ' . (int)$alpha . ')') : new \ImagickPixel('cmyk(' . $color . ')');
-        } else {
-            $pixel = ((int)$alpha < 100) ?
-                new \ImagickPixel('rgba(' . $color . ',' . (int)$alpha . ')') : new \ImagickPixel('rgb(' . $color . ')');
-        }
+        $pixel = ((int)$alpha < 100) ?
+            new \ImagickPixel('rgba(' . $color . ',' . (int)$alpha . ')') : new \ImagickPixel('rgb(' . $color . ')');
 
         return $pixel;
     }
