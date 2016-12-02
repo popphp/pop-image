@@ -77,7 +77,7 @@ class Gray extends AbstractColor
      */
     public function toCmyk()
     {
-        return new Cmyk(0, 0, 0, $this->g);
+        return new Cmyk(0, 0, 0, $this->gray);
     }
 
     /**
@@ -87,7 +87,7 @@ class Gray extends AbstractColor
      */
     public function toRgb()
     {
-        return new Rgb($this->g, $this->g, $this->g);
+        return new Rgb($this->gray, $this->gray, $this->gray);
     }
 
     /**
@@ -97,7 +97,7 @@ class Gray extends AbstractColor
      */
     public function __toString()
     {
-        return $this->gray;
+        return (string)$this->gray;
     }
 
 }

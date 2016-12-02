@@ -4,6 +4,8 @@ namespace Pop\Image\Test\Effect;
 
 use Pop\Image\Adapter;
 use Pop\Image\Color\Rgb;
+use Pop\Image\Color\Cmyk;
+use Pop\Image\Color\Gray;
 
 class GdTest extends \PHPUnit_Framework_TestCase
 {
@@ -54,10 +56,24 @@ class GdTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('Pop\Image\Effect\Gd', $image->effect());
     }
 
-    public function testHorizontalGradient()
+    public function testHorizontalGradient1()
     {
         $image = new Adapter\Gd(640, 480, 'test.jpg');
         $image->effect()->horizontalGradient(new Rgb(255, 0, 0), new Rgb(0, 0, 255));
+        $this->assertInstanceOf('Pop\Image\Effect\Gd', $image->effect());
+    }
+
+    public function testHorizontalGradient2()
+    {
+        $image = new Adapter\Gd(640, 480, 'test.jpg');
+        $image->effect()->horizontalGradient(new Cmyk(100, 0, 0, 0), new Cmyk(0, 0, 0, 100));
+        $this->assertInstanceOf('Pop\Image\Effect\Gd', $image->effect());
+    }
+
+    public function testHorizontalGradient3()
+    {
+        $image = new Adapter\Gd(640, 480, 'test.jpg');
+        $image->effect()->horizontalGradient(new Gray(100), new Gray(0));
         $this->assertInstanceOf('Pop\Image\Effect\Gd', $image->effect());
     }
 

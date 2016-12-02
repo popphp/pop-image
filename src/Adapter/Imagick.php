@@ -132,7 +132,7 @@ class Imagick extends AbstractAdapter
         }
 
         if ((strpos($this->format, 'jp') !== false) && function_exists('exif_read_data')) {
-            $this->exif = exif_read_data($this->name);
+            $this->exif = exif_read_data('data://image/jpeg;base64,' . base64_encode($data));
         }
 
         return $this;
@@ -204,6 +204,7 @@ class Imagick extends AbstractAdapter
         }
 
         $this->resource->setImageType(\Imagick::IMGTYPE_PALETTE);
+        $this->indexed = true;
 
         return $this;
     }
@@ -595,6 +596,8 @@ class Imagick extends AbstractAdapter
 
         if (null === $to) {
             $to = (null !== $this->name) ? $this->name : 'pop-image.' . $this->format;
+        } else {
+            $this->name = $to;
         }
 
         $this->resource->writeImage($to);

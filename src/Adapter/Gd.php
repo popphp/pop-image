@@ -82,13 +82,18 @@ class Gd extends AbstractAdapter
      */
     public function loadFromString($data, $name = null)
     {
-        $this->resource = imagecreatefromstring($data);
+        $this->resource = @imagecreatefromstring($data);
 
         if ($this->resource === false) {
             throw new Exception('Error: Unable to load image resource');
         }
 
         $this->parseImage(getimagesizefromstring($data), $data);
+
+        if ((strpos($this->format, 'jp') !== false) && function_exists('exif_read_data')) {
+            $this->exif = exif_read_data('data://image/jpeg;base64,' . base64_encode($data));
+        }
+
         return $this;
     }
 
@@ -541,6 +546,8 @@ class Gd extends AbstractAdapter
 
         if (null === $to) {
             $to = (null !== $this->name) ? $this->name : 'pop-image.' . $this->format;
+        } else {
+            $this->name = $to;
         }
 
         $this->generateImage((int)$quality, $to);
