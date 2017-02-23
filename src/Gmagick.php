@@ -37,14 +37,13 @@ class Gmagick
     }
 
     /**
-     * Determine if the adapter is available
+     * Determine if the Gmagick adapter is available
      *
-     * @param  string $adapter
      * @return boolean
      */
-    public static function isAvailable($adapter)
+    public static function isAvailable()
     {
-        return Image::isAvailable($adapter);
+        return Image::isAvailable('gmagick');
     }
 
     /**

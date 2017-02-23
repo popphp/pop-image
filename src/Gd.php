@@ -37,14 +37,13 @@ class Gd
     }
 
     /**
-     * Determine if the adapter is available
+     * Determine if the GD adapter is available
      *
-     * @param  string $adapter
      * @return boolean
      */
-    public static function isAvailable($adapter)
+    public static function isAvailable()
     {
-        return Image::isAvailable($adapter);
+        return Image::isAvailable('gd');
     }
 
     /**
