@@ -61,16 +61,14 @@ class Gmagick extends AbstractAdapter
      */
     public function load($name = null)
     {
+        $filename = null;
         if (null !== $name) {
-            if ((strpos($name, '[') !== false) && (strpos($name, ']') !== false)) {
-                $this->name =  substr($name, 0, strpos($name, '['));
-                $this->name .= substr($name, (strpos($name, ']') + 1));
-            } else {
-                $this->name = $name;
-            }
+            $filename = ((strpos($name, '[') !== false) && (strpos($name, ']') !== false)) ?
+                substr($name, 0, strpos($name, '[')) : $name;
+            $this->name = $name;
         }
 
-        if ((null === $this->name) || !file_exists($this->name)) {
+        if ((null === $this->name) || ((null !== $filename) && !file_exists($filename))) {
             throw new Exception('Error: The image file has not been passed to the image adapter');
         }
 
