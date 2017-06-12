@@ -62,7 +62,12 @@ class Gmagick extends AbstractAdapter
     public function load($name = null)
     {
         if (null !== $name) {
-            $this->name = $name;
+            if ((strpos($name, '[') !== false) && (strpos($name, ']') !== false)) {
+                $this->name =  substr($name, 0, strpos($name, '['));
+                $this->name .= substr($name, (strpos($name, ']') + 1));
+            } else {
+                $this->name = $name;
+            }
         }
 
         if ((null === $this->name) || !file_exists($this->name)) {
