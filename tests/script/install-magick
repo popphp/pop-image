@@ -2,5 +2,5 @@
 if [ "$MAGICK_EXT" == "imagick" ]; then
     printf "\n" | pecl install imagick
 elif [ "$MAGICK_EXT" == "gmagick" ]; then
-    printf "\n" | pecl install gmagick-1.1.7RC3
+    printf "\n" | pecl install gmagick-2.0.4RC1
 fi
