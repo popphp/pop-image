@@ -202,7 +202,7 @@ class Image
     }
 
     /**
-     * Create a new indexde image resource and load it into a Imagick object
+     * Create a new indexed image resource and load it into a Imagick object
      *
      * @param  int    $width
      * @param  int    $height
