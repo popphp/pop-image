@@ -2,5 +2,6 @@
 if [ "$MAGICK_EXT" == "imagick" ]; then
     printf "\n" | pecl install imagick
 elif [ "$MAGICK_EXT" == "gmagick" ]; then
+    pecl channel-update pecl.php.net
     printf "\n" | pecl install gmagick-2.0.4RC1
 fi
