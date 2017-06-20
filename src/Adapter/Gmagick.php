@@ -53,6 +53,16 @@ class Gmagick extends AbstractAdapter
     protected $imageBlur = 1;
 
     /**
+     * Create the image resource
+     *
+     * @return void
+     */
+    public function createResource()
+    {
+        $this->resource = new \Gmagick();
+    }
+
+    /**
      * Load the image resource from the existing image file
      *
      * @param  string $name
@@ -72,9 +82,14 @@ class Gmagick extends AbstractAdapter
             throw new Exception('Error: The image file has not been passed to the image adapter');
         }
 
-        $this->resource = new \Gmagick($this->name);
-        $this->width    = $this->resource->getimagewidth();
-        $this->height   = $this->resource->getimageheight();
+        if (null !== $this->resource) {
+            $this->resource->readImage($this->name);
+        } else {
+            $this->resource = new \Gmagick($this->name);
+        }
+
+        $this->width  = $this->resource->getimagewidth();
+        $this->height = $this->resource->getimageheight();
 
         switch ($this->resource->getimagecolorspace()) {
             case \Gmagick::COLORSPACE_GRAY:
@@ -111,7 +126,9 @@ class Gmagick extends AbstractAdapter
      */
     public function loadFromString($data, $name = null)
     {
-        $this->resource = new \Gmagick();
+        if (null === $this->resource) {
+            $this->resource = new \Gmagick();
+        }
         $this->resource->readimageblob($data);
 
         $this->name = $name;
@@ -161,7 +178,10 @@ class Gmagick extends AbstractAdapter
             $this->name = $name;
         }
 
-        $this->resource = new \Gmagick();
+        if (null === $this->resource) {
+            $this->resource = new \Gmagick();
+        }
+
         $this->resource->newimage($this->width, $this->height, 'white');
 
         if (null !== $this->name) {
@@ -195,7 +215,10 @@ class Gmagick extends AbstractAdapter
             $this->name = $name;
         }
 
-        $this->resource = new \Gmagick();
+        if (null === $this->resource) {
+            $this->resource = new \Gmagick();
+        }
+
         $this->resource->newimage($this->width, $this->height, (new \GmagickPixel('white'))->getcolor());
 
         if (null !== $this->name) {
@@ -209,6 +232,34 @@ class Gmagick extends AbstractAdapter
         $this->resource->setimagetype(\Gmagick::IMGTYPE_PALETTE);
         $this->indexed = true;
 
+        return $this;
+    }
+
+    /**
+     * Set the image resolution
+     *
+     * @param  int $x
+     * @param  int $y
+     * @return Gmagick
+     */
+    public function setResolution($x, $y = null)
+    {
+        if (null === $y) {
+            $y = $x;
+        }
+        $this->resource->setimageresolution($x, $y);
+        return $this;
+    }
+
+    /**
+     * Set the image colorspace
+     *
+     * @param  int $colorspace
+     * @return Gmagick
+     */
+    public function setImageColorspace($colorspace)
+    {
+        $this->resource->setimagecolorspace($colorspace);
         return $this;
     }
 
@@ -589,6 +640,21 @@ class Gmagick extends AbstractAdapter
      */
     public function writeToFile($to = null, $quality = 100)
     {
+        $hasImage = false;
+
+        if (null !== $this->resource) {
+            try {
+                $format   = $this->resource->getimageformat();
+                $hasImage = true;
+            } catch (Exception $e) {
+                $hasImage = false;
+            }
+        }
+
+        if (!$hasImage) {
+            throw new Exception('Error: An image resource has not been created or loaded');
+        }
+
         if (null !== $this->compression) {
             $this->resource->setimagecompression($this->compression);
         }
@@ -620,7 +686,18 @@ class Gmagick extends AbstractAdapter
      */
     public function outputToHttp($quality = 100, $to = null, $download = false, $sendHeaders = true)
     {
-        if (null === $this->resource) {
+        $hasImage = false;
+
+        if (null !== $this->resource) {
+            try {
+                $format   = $this->resource->getimageformat();
+                $hasImage = true;
+            } catch (Exception $e) {
+                $hasImage = false;
+            }
+        }
+
+        if (!$hasImage) {
             throw new Exception('Error: An image resource has not been created or loaded');
         }
 

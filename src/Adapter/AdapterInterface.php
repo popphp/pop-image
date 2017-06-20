@@ -35,6 +35,13 @@ interface AdapterInterface
 {
 
     /**
+     * Create the image resource
+     *
+     * @return void
+     */
+    public function createResource();
+
+    /**
      * Get the image resource
      *
      * @return resource

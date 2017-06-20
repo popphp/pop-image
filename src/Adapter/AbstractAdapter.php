@@ -136,6 +136,8 @@ abstract class AbstractAdapter
     {
         $args = func_get_args();
 
+        $this->createResource();
+
         // $image
         if (isset($args[0]) && !is_numeric($args[0]) && file_exists($args[0])) {
             $this->name = $args[0];
@@ -150,6 +152,13 @@ abstract class AbstractAdapter
             $this->create();
         }
     }
+
+    /**
+     * Create the image resource
+     *
+     * @return void
+     */
+    abstract public function createResource();
 
     /**
      * Get the image resource

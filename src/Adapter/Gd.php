@@ -73,6 +73,16 @@ class Gd extends AbstractAdapter
     }
 
     /**
+     * Create the image resource
+     *
+     * @return void
+     */
+    public function createResource()
+    {
+        $this->resource = null;
+    }
+
+    /**
      * Load the image resource from data
      *
      * @param  string $data

@@ -20,7 +20,7 @@ class ImagickTest extends \PHPUnit_Framework_TestCase
     {
         $adapters = Imagick::getAvailableAdapters();
         $this->assertTrue(isset($adapters['imagick']));
-        $this->assertTrue(is_bool(Imagick::isAvailable('imagick')));
+        $this->assertTrue(is_bool(Imagick::isAvailable()));
     }
 
     public function testLoadImagick()

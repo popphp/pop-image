@@ -53,6 +53,16 @@ class Imagick extends AbstractAdapter
     protected $imageBlur = 1;
 
     /**
+     * Create the image resource
+     *
+     * @return void
+     */
+    public function createResource()
+    {
+        $this->resource = new \Imagick();
+    }
+
+    /**
      * Load the image resource from the existing image file
      *
      * @param  string $name
@@ -72,9 +82,14 @@ class Imagick extends AbstractAdapter
             throw new Exception('Error: The image file has not been passed to the image adapter');
         }
 
-        $this->resource = new \Imagick($this->name);
-        $this->width    = $this->resource->getImageWidth();
-        $this->height   = $this->resource->getImageHeight();
+        if (null !== $this->resource) {
+            $this->resource->readImage($this->name);
+        } else {
+            $this->resource = new \Imagick($this->name);
+        }
+
+        $this->width  = $this->resource->getImageWidth();
+        $this->height = $this->resource->getImageHeight();
 
         switch ($this->resource->getImageColorspace()) {
             case \Imagick::COLORSPACE_GRAY:
@@ -111,7 +126,9 @@ class Imagick extends AbstractAdapter
      */
     public function loadFromString($data, $name = null)
     {
-        $this->resource = new \Imagick();
+        if (null === $this->resource) {
+            $this->resource = new \Imagick();
+        }
         $this->resource->readImageBlob($data);
 
         $this->name = $name;
@@ -161,7 +178,10 @@ class Imagick extends AbstractAdapter
             $this->name = $name;
         }
 
-        $this->resource = new \Imagick();
+        if (null === $this->resource) {
+            $this->resource = new \Imagick();
+        }
+
         $this->resource->newImage($this->width, $this->height, new \ImagickPixel('white'));
 
         if (null !== $this->name) {
@@ -195,7 +215,10 @@ class Imagick extends AbstractAdapter
             $this->name = $name;
         }
 
-        $this->resource = new \Imagick();
+        if (null === $this->resource) {
+            $this->resource = new \Imagick();
+        }
+
         $this->resource->newImage($this->width, $this->height, new \ImagickPixel('white'));
 
         if (null !== $this->name) {
@@ -209,6 +232,34 @@ class Imagick extends AbstractAdapter
         $this->resource->setImageType(\Imagick::IMGTYPE_PALETTE);
         $this->indexed = true;
 
+        return $this;
+    }
+
+    /**
+     * Set the image resolution
+     *
+     * @param  int $x
+     * @param  int $y
+     * @return Imagick
+     */
+    public function setResolution($x, $y = null)
+    {
+        if (null === $y) {
+            $y = $x;
+        }
+        $this->resource->setResolution($x, $y);
+        return $this;
+    }
+
+    /**
+     * Set the image colorspace
+     *
+     * @param  int $colorspace
+     * @return Imagick
+     */
+    public function setImageColorspace($colorspace)
+    {
+        $this->resource->setImageColorspace($colorspace);
         return $this;
     }
 
@@ -587,6 +638,10 @@ class Imagick extends AbstractAdapter
      */
     public function writeToFile($to = null, $quality = 100)
     {
+        if ((null === $this->resource) || ((null !== $this->resource) && ($this->resource->count() == 0))) {
+            throw new Exception('Error: An image resource has not been created or loaded');
+        }
+
         if (null !== $this->compression) {
             $this->resource->setImageCompression($this->compression);
         }
@@ -618,7 +673,7 @@ class Imagick extends AbstractAdapter
      */
     public function outputToHttp($quality = 100, $to = null, $download = false, $sendHeaders = true)
     {
-        if (null === $this->resource) {
+        if ((null === $this->resource) || ((null !== $this->resource) && ($this->resource->count() == 0))) {
             throw new Exception('Error: An image resource has not been created or loaded');
         }
 

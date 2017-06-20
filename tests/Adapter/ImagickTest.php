@@ -352,9 +352,6 @@ class ImagickTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('ImagickPixel', $color);
     }
 
-    /**
-     * @runInSeparateProcess
-     */
     public function testOutputToHttpNotCreatedException()
     {
         $this->expectException('Pop\Image\Adapter\Exception');
@@ -362,9 +359,6 @@ class ImagickTest extends \PHPUnit_Framework_TestCase
         $image->outputToHttp(__DIR__ . '/../tmp/test-240.jpg');
     }
 
-    /**
-     * @runInSeparateProcess
-     */
     public function testOutputToHttpOutOfRangeException()
     {
         $this->expectException('OutOfRangeException');
@@ -372,9 +366,6 @@ class ImagickTest extends \PHPUnit_Framework_TestCase
         $image->outputToHttp(150);
     }
 
-    /**
-     * @runInSeparateProcess
-     */
     public function testOutputToHttp()
     {
         $image = new Imagick(__DIR__ . '/../tmp/test.jpg');
@@ -393,9 +384,6 @@ class ImagickTest extends \PHPUnit_Framework_TestCase
         $this->assertFileNotExists(__DIR__ . '/../tmp/test-240.jpg');
     }
 
-    /**
-     * @runInSeparateProcess
-     */
     public function testToString()
     {
         $image = new Imagick(__DIR__ . '/../tmp/test.jpg');
@@ -404,5 +392,5 @@ class ImagickTest extends \PHPUnit_Framework_TestCase
         $result = ob_get_clean();
         $this->assertFalse(ctype_print($result));
     }
-    
+
 }

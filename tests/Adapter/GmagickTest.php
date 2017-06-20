@@ -352,19 +352,13 @@ class GmagickTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('GmagickPixel', $color);
     }
 
-    /**
-     * @runInSeparateProcess
-     */
     public function testOutputToHttpNotCreatedException()
     {
-        $this->expectException('Pop\Image\Adapter\Exception');
+        $this->expectException('GmagickException');
         $image = new Gmagick();
         $image->outputToHttp(__DIR__ . '/../tmp/test-240.jpg');
     }
 
-    /**
-     * @runInSeparateProcess
-     */
     public function testOutputToHttpOutOfRangeException()
     {
         $this->expectException('OutOfRangeException');
@@ -372,9 +366,6 @@ class GmagickTest extends \PHPUnit_Framework_TestCase
         $image->outputToHttp(150);
     }
 
-    /**
-     * @runInSeparateProcess
-     */
     public function testOutputToHttp()
     {
         $image = new Gmagick(__DIR__ . '/../tmp/test.jpg');
@@ -393,9 +384,6 @@ class GmagickTest extends \PHPUnit_Framework_TestCase
         $this->assertFileNotExists(__DIR__ . '/../tmp/test-240.jpg');
     }
 
-    /**
-     * @runInSeparateProcess
-     */
     public function testToString()
     {
         $image = new Gmagick(__DIR__ . '/../tmp/test.jpg');

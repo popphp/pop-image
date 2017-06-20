@@ -330,9 +330,6 @@ class GdTest extends \PHPUnit_Framework_TestCase
         $color = $image->createColor(new \Pop\Image\Color\Rgb(100, 80, 60), 200);
     }
 
-    /**
-     * @runInSeparateProcess
-     */
     public function testOutputToHttpNotCreatedException()
     {
         $this->expectException('Pop\Image\Adapter\Exception');
@@ -340,9 +337,6 @@ class GdTest extends \PHPUnit_Framework_TestCase
         $image->outputToHttp(__DIR__ . '/../tmp/test-240.jpg');
     }
 
-    /**
-     * @runInSeparateProcess
-     */
     public function testOutputToHttpOutOfRangeException()
     {
         $this->expectException('OutOfRangeException');
@@ -350,9 +344,6 @@ class GdTest extends \PHPUnit_Framework_TestCase
         $image->outputToHttp(150);
     }
 
-    /**
-     * @runInSeparateProcess
-     */
     public function testOutputToHttp()
     {
         $image = new Gd(__DIR__ . '/../tmp/test.jpg');
@@ -370,9 +361,6 @@ class GdTest extends \PHPUnit_Framework_TestCase
         $this->assertFileNotExists(__DIR__ . '/../tmp/test-240.jpg');
     }
 
-    /**
-     * @runInSeparateProcess
-     */
     public function testToString()
     {
         $image = new Gd(__DIR__ . '/../tmp/test.jpg');

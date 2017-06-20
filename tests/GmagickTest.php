@@ -20,7 +20,7 @@ class GmagickTest extends \PHPUnit_Framework_TestCase
     {
         $adapters = Gmagick::getAvailableAdapters();
         $this->assertTrue(isset($adapters['imagick']));
-        $this->assertTrue(is_bool(Gmagick::isAvailable('imagick')));
+        $this->assertTrue(is_bool(Gmagick::isAvailable()));
     }
 
     public function testLoadGmagick()
