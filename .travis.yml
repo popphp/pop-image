@@ -4,6 +4,7 @@ env:
 before_script:
     - composer self-update
     - composer install
+    - apt-get install graphicsmagick libgraphicsmagick-dev
     - chmod 755 ./tests/script/install-magick
     - ./tests/script/install-magick
 language: php
