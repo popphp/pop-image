@@ -79,6 +79,7 @@ class Captcha
      * @var array
      */
     protected $config = [
+        'adapter'     => 'Gd',
         'width'       => 71,
         'height'      => 26,
         'lineSpacing' => 5,
@@ -208,6 +209,9 @@ class Captcha
      */
     public function setConfig(array $config)
     {
+        if (isset($config['adapter'])) {
+            $this->config['adapter'] = $config['adapter'];
+        }
         if (isset($config['width'])) {
             $this->config['width'] = $config['width'];
         }
@@ -371,32 +375,46 @@ class Captcha
      */
     public function createImage()
     {
-        $this->image = Gd::create($this->config['width'], $this->config['height'], 'captcha.gif');
+        if (($this->config['adapter'] == 'Gmagick') || ($this->config['adapter'] == 'Imagick')) {
+            $adapterClass = 'Pop\Image\\' . $this->config['adapter'];
+            $borderSize   = 1.0;
+            $fontSize     = 14;
+            $xyAdjust     = 1;
+        } else {
+            $adapterClass = 'Pop\Image\Gd';
+            $borderSize   = 0.5;
+            $fontSize     = 5;
+            $xyAdjust     = 0;
+        }
+
+        $this->image = $adapterClass::create($this->config['width'], $this->config['height'], 'captcha.gif');
         $this->image->effect()->fill(new Color\Rgb(255, 255, 255));
         $this->image->draw()->setStrokeColor(new Color\Rgb($this->config['lineColor'][0], $this->config['lineColor'][1], $this->config['lineColor'][2]));
 
         // Draw background grid
         for ($y = $this->config['lineSpacing']; $y <= $this->config['height']; $y += $this->config['lineSpacing']) {
-            $this->image->draw()->line(0, $y, $this->config['width'], $y);
+            $this->image->draw()->line(0, $y -  $xyAdjust, $this->config['width'], $y -  $xyAdjust);
         }
 
         for ($x = $this->config['lineSpacing']; $x <= $this->config['width']; $x += $this->config['lineSpacing']) {
-            $this->image->draw()->line($x, 0, $x, $this->config['height']);
+            $this->image->draw()->line($x -  $xyAdjust, 0, $x -  $xyAdjust, $this->config['height']);
         }
 
-        $this->image->effect()->border(new Color\Rgb($this->config['textColor'][0], $this->config['textColor'][1], $this->config['textColor'][2]), 0.5);
+        $this->image->effect()->border(new Color\Rgb($this->config['textColor'][0], $this->config['textColor'][1], $this->config['textColor'][2]), $borderSize);
         $this->image->type()->setFillColor(new Color\Rgb($this->config['textColor'][0], $this->config['textColor'][1], $this->config['textColor'][2]));
 
         if (null === $this->config['font']) {
-            $this->image->type()->size(5);
+            $this->image->type()->size($fontSize);
             $textX = round(($this->config['width'] - ($this->length * 10)) / 2);
-            $textY = round(($this->config['height'] - 16) / 2);
+            $textY = ($adapterClass != 'Pop\Image\Gd') ?
+                $this->config['height'] - (round(($this->config['height'] - $fontSize) / 2)) : round(($this->config['height'] - 16) / 2);
         } else {
             $this->image->type()->font($this->config['font'])
-                  ->size($this->config['size']);
+                 ->size($this->config['size']);
             $textX = round(($this->config['width'] - ($this->length * ($this->config['size'] / 1.5))) / 2);
             $textY = round($this->config['height'] - (($this->config['height'] - $this->config['size']) / 2) + ((int)$this->config['rotate'] / 2));
         }
+
         $this->image->type()->xy($textX, $textY)
              ->text($this->token['answer']);
 
