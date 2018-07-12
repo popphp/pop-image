@@ -110,7 +110,10 @@ class Gmagick extends AbstractAdapter
         }
 
         if ((strpos($this->format, 'jp') !== false) && function_exists('exif_read_data')) {
-            $this->exif = exif_read_data($this->name);
+            $exif = @exif_read_data($this->name);
+            if ($exif !== false) {
+                $this->exif = $exif;
+            }
         }
 
         return $this;
@@ -152,7 +155,10 @@ class Gmagick extends AbstractAdapter
         }
 
         if ((strpos($this->format, 'jp') !== false) && function_exists('exif_read_data')) {
-            $this->exif = exif_read_data('data://image/jpeg;base64,' . base64_encode($data));
+            $exif = @exif_read_data('data://image/jpeg;base64,' . base64_encode($data));
+            if ($exif !== false) {
+                $this->exif = $exif;
+            }
         }
 
         return $this;

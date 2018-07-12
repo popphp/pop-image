@@ -66,7 +66,10 @@ class Gd extends AbstractAdapter
         } else if (stripos($this->name, '.jp') !== false) {
             $this->resource = imagecreatefromjpeg($this->name);
             if (function_exists('exif_read_data')) {
-                $this->exif = exif_read_data($this->name);
+                $exif = @exif_read_data($this->name);
+                if ($exif !== false) {
+                    $this->exif = $exif;
+                }
             }
         } else if (stripos($this->name, '.png') !== false) {
             $this->resource = imagecreatefrompng($this->name);
@@ -101,7 +104,10 @@ class Gd extends AbstractAdapter
         $this->parseImage(getimagesizefromstring($data), $data);
 
         if ((strpos($this->format, 'jp') !== false) && function_exists('exif_read_data')) {
-            $this->exif = exif_read_data('data://image/jpeg;base64,' . base64_encode($data));
+            $exif = @exif_read_data('data://image/jpeg;base64,' . base64_encode($data));
+            if ($exif !== false) {
+                $this->exif = $exif;
+            }
         }
 
         return $this;
