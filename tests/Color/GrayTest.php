@@ -3,8 +3,9 @@
 namespace Pop\Image\Test\Color;
 
 use Pop\Image\Color;
+use PHPUnit\Framework\TestCase;
 
-class GrayTest extends \PHPUnit_Framework_TestCase
+class GrayTest extends TestCase
 {
 
     public function testGray()

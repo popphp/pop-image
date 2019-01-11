@@ -4,8 +4,9 @@ namespace Pop\Image\Test\Adapter;
 
 use Pop\Image;
 use Pop\Image\Adapter\Gmagick;
+use PHPUnit\Framework\TestCase;
 
-class GmagickTest extends \PHPUnit_Framework_TestCase
+class GmagickTest extends TestCase
 {
     protected function setUp()
     {

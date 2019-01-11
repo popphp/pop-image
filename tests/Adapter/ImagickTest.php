@@ -4,8 +4,9 @@ namespace Pop\Image\Test\Adapter;
 
 use Pop\Image;
 use Pop\Image\Adapter\Imagick;
+use PHPUnit\Framework\TestCase;
 
-class ImagickTest extends \PHPUnit_Framework_TestCase
+class ImagickTest extends TestCase
 {
     protected function setUp()
     {

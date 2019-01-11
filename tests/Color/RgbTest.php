@@ -3,8 +3,9 @@
 namespace Pop\Image\Test\Color;
 
 use Pop\Image\Color;
+use PHPUnit\Framework\TestCase;
 
-class RgbTest extends \PHPUnit_Framework_TestCase
+class RgbTest extends TestCase
 {
 
     public function testRgb()

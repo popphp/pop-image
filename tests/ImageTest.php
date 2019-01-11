@@ -4,8 +4,9 @@ namespace Pop\Image\Test;
 
 use Pop\Image\Image;
 use Pop\Image\Gd;
+use PHPUnit\Framework\TestCase;
 
-class ImageTest extends \PHPUnit_Framework_TestCase
+class ImageTest extends TestCase
 {
 
     public function testAdapters()

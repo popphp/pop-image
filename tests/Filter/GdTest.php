@@ -4,8 +4,9 @@ namespace Pop\Image\Test\Filter;
 
 use Pop\Image\Adapter;
 use Pop\Image\Color\Rgb;
+use PHPUnit\Framework\TestCase;
 
-class GdTest extends \PHPUnit_Framework_TestCase
+class GdTest extends TestCase
 {
 
     public function testBlur()

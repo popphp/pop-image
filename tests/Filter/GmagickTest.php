@@ -3,8 +3,9 @@
 namespace Pop\Image\Test\Filter;
 
 use Pop\Image\Adapter;
+use PHPUnit\Framework\TestCase;
 
-class GmagickTest extends \PHPUnit_Framework_TestCase
+class GmagickTest extends TestCase
 {
     protected function setUp()
     {

@@ -4,8 +4,9 @@ namespace Pop\Image\Test\Adapter;
 
 use Pop\Image;
 use Pop\Image\Adapter\Gd;
+use PHPUnit\Framework\TestCase;
 
-class GdTest extends \PHPUnit_Framework_TestCase
+class GdTest extends TestCase
 {
 
     public function testLoadJpg()

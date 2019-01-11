@@ -24,10 +24,10 @@
         }
     ],
     "require": {
-        "php": ">=5.6.0"
+        "php": ">=7.1.0"
     },
     "require-dev": {
-        "phpunit/phpunit": "5.5.*"
+        "phpunit/phpunit": "^7.0.0"
     },
     "suggest": {
         "ext-gd": "To use the Gd image adapter",
@@ -46,7 +46,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "3.2.x-dev"
+            "dev-master": "3.3.x-dev"
         }
     }
 }

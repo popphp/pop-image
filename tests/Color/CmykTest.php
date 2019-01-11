@@ -3,8 +3,9 @@
 namespace Pop\Image\Test\Color;
 
 use Pop\Image\Color;
+use PHPUnit\Framework\TestCase;
 
-class CmykTest extends \PHPUnit_Framework_TestCase
+class CmykTest extends TestCase
 {
 
     public function testCmyk()

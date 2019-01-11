@@ -6,8 +6,9 @@ use Pop\Image\Adapter;
 use Pop\Image\Color\Rgb;
 use Pop\Image\Color\Cmyk;
 use Pop\Image\Color\Gray;
+use PHPUnit\Framework\TestCase;
 
-class GdTest extends \PHPUnit_Framework_TestCase
+class GdTest extends TestCase
 {
 
     public function testBorder()

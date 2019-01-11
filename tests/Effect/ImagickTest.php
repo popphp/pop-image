@@ -6,8 +6,9 @@ use Pop\Image\Adapter;
 use Pop\Image\Color\Rgb;
 use Pop\Image\Color\Cmyk;
 use Pop\Image\Color\Gray;
+use PHPUnit\Framework\TestCase;
 
-class ImagickTest extends \PHPUnit_Framework_TestCase
+class ImagickTest extends TestCase
 {
 
     protected function setUp()
