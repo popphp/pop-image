@@ -48,4 +48,10 @@ class ImagickTest extends TestCase
         $this->assertInstanceOf('Pop\Image\Adapter\Imagick', $image);
     }
 
+    public function testGetNumberImages()
+    {
+        $image = Imagick::create(640, 480, 'test.jpg');
+        $this->assertEquals(1, $image->getNumberOfImages());
+    }
+
 }

@@ -306,6 +306,17 @@ class Gmagick extends AbstractAdapter
     }
 
     /**
+     * Get number of images
+     *
+     * @return int
+     */
+    public function getNumberOfImages()
+    {
+        return (method_exists($this->resource, 'getnumberimages')) ?
+            $this->resource->getnumberimages() : 0;
+    }
+
+    /**
      * Get the image compression
      *
      * @return int

@@ -207,7 +207,6 @@ class Imagick extends AbstractAdapter
      * @param  int    $width
      * @param  int    $height
      * @param  string $name
-     * @throws Exception
      * @return Imagick
      */
     public function createIndex($width = null, $height = null, $name = null)
@@ -303,6 +302,16 @@ class Imagick extends AbstractAdapter
     {
         $this->imageBlur = $blur;
         return $this;
+    }
+
+    /**
+     * Get number of images
+     *
+     * @return int
+     */
+    public function getNumberOfImages()
+    {
+        return $this->resource->getNumberImages();
     }
 
     /**

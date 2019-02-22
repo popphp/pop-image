@@ -48,4 +48,10 @@ class GmagickTest extends TestCase
         $this->assertInstanceOf('Pop\Image\Adapter\Gmagick', $image);
     }
 
+    public function testGetNumberImages()
+    {
+        $image = Gmagick::create(640, 480, 'test.jpg');
+        $this->assertEquals(1, $image->getNumberOfImages());
+    }
+
 }
