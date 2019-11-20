@@ -8,9 +8,9 @@ pop-image
 OVERVIEW
 --------
 `pop-image` is a powerful and robust image processing component that's simple to use.
-It supports the GD, Imagick and Gmagick extensions, as well as the SVG image format.
-The API is Photoshop-like with calls to manipulation objects that can be extended
-with addition image processing functionality if needed
+It supports the GD, Imagick and Gmagick extensions. The API is similar to the more
+popular image editing application on the market,  with calls to manipulation objects
+that can be extended with additional image processing functionality if needed
 
 `pop-image` is a component of the [Pop PHP Framework](http://www.popphp.org/).
 
