@@ -45,13 +45,6 @@ class ImagickTest extends TestCase
         $this->assertInstanceOf('Pop\Image\Filter\Imagick', $image->filter());
     }
 
-    public function testRadialBlur()
-    {
-        $image = new Adapter\Imagick(640, 480, 'test.jpg');
-        $image->filter()->radialBlur(10);
-        $this->assertInstanceOf('Pop\Image\Filter\Imagick', $image->filter());
-    }
-
     public function testSharpen()
     {
         $image = new Adapter\Imagick(640, 480, 'test.jpg');
