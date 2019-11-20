@@ -362,7 +362,7 @@ abstract class AbstractAdapter
     public function sendHeaders($to = null, $download = false, array $additionalHeaders = [])
     {
         if (null === $to) {
-            $to = (null !== $this->name) ? $this->name : 'pop-image.' . $this->format;
+            $to = (null !== $this->name) ? basename($this->name) : 'pop-image.' . $this->format;
         }
 
         // Determine if the force download argument has been passed.

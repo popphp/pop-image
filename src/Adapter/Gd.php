@@ -565,7 +565,7 @@ class Gd extends AbstractAdapter
         $this->format = strtolower($this->format);
 
         if (null === $to) {
-            $to = (null !== $this->name) ? $this->name : 'pop-image.' . $this->format;
+            $to = (null !== $this->name) ? basename($this->name) : 'pop-image.' . $this->format;
         } else {
             $this->name = $to;
         }
@@ -597,7 +597,7 @@ class Gd extends AbstractAdapter
         $this->format = strtolower($this->format);
 
         if (null === $to) {
-            $to = (null !== $this->name) ? $this->name : 'pop-image.' . $this->format;
+            $to = (null !== $this->name) ? basename($this->name) : 'pop-image.' . $this->format;
         }
 
         $this->sendHeaders($to, $download, $headers);

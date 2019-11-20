@@ -682,7 +682,7 @@ class Gmagick extends AbstractAdapter
         $this->resource->setcompressionquality($quality);
 
         if (null === $to) {
-            $to = (null !== $this->name) ? $this->name : 'pop-image.' . $this->format;
+            $to = (null !== $this->name) ? basename($this->name) : 'pop-image.' . $this->format;
         } else {
             $this->name = $to;
         }
@@ -729,7 +729,7 @@ class Gmagick extends AbstractAdapter
         $this->resource->setcompressionquality($quality);
 
         if (null === $to) {
-            $to = (null !== $this->name) ? $this->name : 'pop-image.' . strtolower($this->format);
+            $to = (null !== $this->name) ? basename($this->name) : 'pop-image.' . strtolower($this->format);
         }
 
         $this->sendHeaders($to, $download, $headers);

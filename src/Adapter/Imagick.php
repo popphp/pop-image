@@ -667,7 +667,7 @@ class Imagick extends AbstractAdapter
         $this->resource->setImageCompressionQuality($quality);
 
         if (null === $to) {
-            $to = (null !== $this->name) ? $this->name : 'pop-image.' . $this->format;
+            $to = (null !== $this->name) ? basename($this->name) : 'pop-image.' . $this->format;
         } else {
             $this->name = $to;
         }
@@ -703,7 +703,7 @@ class Imagick extends AbstractAdapter
         $this->resource->setImageCompressionQuality($quality);
 
         if (null === $to) {
-            $to = (null !== $this->name) ? $this->name : 'pop-image.' . strtolower($this->format);
+            $to = (null !== $this->name) ? basename($this->name) : 'pop-image.' . strtolower($this->format);
         }
 
         $this->sendHeaders($to, $download, $headers);
