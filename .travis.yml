@@ -4,7 +4,7 @@ env:
 before_script:
     - composer self-update
     - composer install
-    - sudo apt-get install graphicsmagick libgraphicsmagick-dev libfreetype6 libfreetype6-dev
+    - sudo apt-get install graphicsmagick libgraphicsmagick-dev libfreetype6 libfreetype6-dev ghostscript
     - chmod 755 ./tests/script/install-magick
     - ./tests/script/install-magick
 language: php
