@@ -140,7 +140,7 @@ abstract class AbstractAdapter
 
         // $image
         if (isset($args[0]) && !is_numeric($args[0]) && file_exists($args[0])) {
-            $this->name = basename($args[0]);
+            $this->name = $args[0];
             $this->load();
         // $width, $height, $name
         } else if ((count($args) >= 2) && is_numeric($args[0]) && is_numeric($args[1])) {
