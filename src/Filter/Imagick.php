@@ -94,21 +94,6 @@ class Imagick extends AbstractFilter
     }
 
     /**
-     * Blur the image.
-     *
-     * @param  int $angle
-     * @param  int $channel
-     * @return Imagick
-     */
-    public function radialBlur($angle = 0, $channel = \Imagick::CHANNEL_ALL)
-    {
-        if ($this->hasImage()) {
-            $this->image->getResource()->radialBlurImage($angle, $channel);
-        }
-        return $this;
-    }
-
-    /**
      * Sharpen the image
      *
      * @param  mixed $radius

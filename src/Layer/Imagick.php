@@ -72,10 +72,6 @@ class Imagick extends AbstractLayer
     {
         if ($this->hasImage()) {
             $overlayImage = new \Imagick($image);
-            if ($this->opacity < 1) {
-                $overlayImage->setImageOpacity($this->opacity);
-            }
-
             $this->image->getResource()->compositeImage($overlayImage, $this->overlay, $x, $y);
         }
 
