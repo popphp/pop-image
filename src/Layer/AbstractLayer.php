@@ -4,7 +4,7 @@
  *
  * @link       https://github.com/popphp/popphp-framework
  * @author     Nick Sagona, III <dev@nolainteractive.com>
- * @copyright  Copyright (c) 2009-2019 NOLA Interactive, LLC. (http://www.nolainteractive.com)
+ * @copyright  Copyright (c) 2009-2020 NOLA Interactive, LLC. (http://www.nolainteractive.com)
  * @license    http://www.popphp.org/license     New BSD License
  */
 
@@ -21,9 +21,9 @@ use Pop\Image\AbstractEditObject;
  * @category   Pop
  * @package    Pop\Image
  * @author     Nick Sagona, III <dev@nolainteractive.com>
- * @copyright  Copyright (c) 2009-2019 NOLA Interactive, LLC. (http://www.nolainteractive.com)
+ * @copyright  Copyright (c) 2009-2020 NOLA Interactive, LLC. (http://www.nolainteractive.com)
  * @license    http://www.popphp.org/license     New BSD License
- * @version    3.3.0
+ * @version    3.3.2
  */
 abstract class AbstractLayer extends AbstractEditObject implements LayerInterface
 {
@@ -47,7 +47,7 @@ abstract class AbstractLayer extends AbstractEditObject implements LayerInterfac
     /**
      * Set the image opacity.
      *
-     * @param  int $opacity
+     * @param  int|float $opacity
      * @return AbstractLayer
      */
     public function setOpacity($opacity)

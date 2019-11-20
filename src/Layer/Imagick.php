@@ -4,7 +4,7 @@
  *
  * @link       https://github.com/popphp/popphp-framework
  * @author     Nick Sagona, III <dev@nolainteractive.com>
- * @copyright  Copyright (c) 2009-2019 NOLA Interactive, LLC. (http://www.nolainteractive.com)
+ * @copyright  Copyright (c) 2009-2020 NOLA Interactive, LLC. (http://www.nolainteractive.com)
  * @license    http://www.popphp.org/license     New BSD License
  */
 
@@ -19,9 +19,9 @@ namespace Pop\Image\Layer;
  * @category   Pop
  * @package    Pop\Image
  * @author     Nick Sagona, III <dev@nolainteractive.com>
- * @copyright  Copyright (c) 2009-2019 NOLA Interactive, LLC. (http://www.nolainteractive.com)
+ * @copyright  Copyright (c) 2009-2020 NOLA Interactive, LLC. (http://www.nolainteractive.com)
  * @license    http://www.popphp.org/license     New BSD License
- * @version    3.3.0
+ * @version    3.3.2
  */
 class Imagick extends AbstractLayer
 {
@@ -61,18 +61,6 @@ class Imagick extends AbstractLayer
     }
 
     /**
-     * Set the opacity
-     *
-     * @param  float $opacity
-     * @return Imagick
-     */
-    public function setOpacity($opacity)
-    {
-        $this->opacity = $opacity;
-        return $this;
-    }
-
-    /**
      * Overlay an image onto the current image.
      *
      * @param  string $image
@@ -82,12 +70,15 @@ class Imagick extends AbstractLayer
      */
     public function overlay($image, $x = 0, $y = 0)
     {
-        $overlayImage = new \Imagick($image);
-        if ($this->opacity < 1) {
-            $overlayImage->setImageOpacity($this->opacity);
+        if ($this->hasImage()) {
+            $overlayImage = new \Imagick($image);
+            if ($this->opacity < 1) {
+                $overlayImage->setImageOpacity($this->opacity);
+            }
+
+            $this->image->getResource()->compositeImage($overlayImage, $this->overlay, $x, $y);
         }
 
-        $this->image->getResource()->compositeImage($overlayImage, $this->overlay, $x, $y);
         return $this;
     }
 
@@ -99,7 +90,9 @@ class Imagick extends AbstractLayer
      */
     public function flatten($method = \Imagick::LAYERMETHOD_FLATTEN)
     {
-        $this->image->getResource()->mergeImageLayers($method);
+        if ($this->hasImage()) {
+            $this->image->getResource()->mergeImageLayers($method);
+        }
         return $this;
     }
 

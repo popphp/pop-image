@@ -78,3 +78,37 @@ $img->type->font('myfont.ttf')
     ->xy(50, 100)
     ->text('Hello World!');
 ```
+
+### CAPTCHA
+
+The `pop-image` component comes with a CAPTCHA tool to create a CAPTCHA image and store
+the token value in session to validate the user's CAPTCHA input.
+
+```php
+$captcha = new Pop\Image\Captcha('/captcha.php');
+header('Content-Type: image/gif');
+echo $captcha;
+```
+
+The script above will generate the following image:
+
+![CAPTCHA](tests/tmp/captcha.gif)
+
+And with it, the `$_SESSION` variable will store a `pop_captcha` key with a serialized
+value in it. When you unserialized the `$_SESSION['pop_captcha']` value, it will give you
+this array:
+
+```php  
+Array
+(
+    [captcha] => <img id="pop-captcha-image" class="pop-captcha-image" src="/captcha.php" /><a class="pop-captcha-reload" href="#" onclick="document.getElementById('pop-captcha-image').src = '/captcha.php?captcha=1'; return false;">Reload</a>
+    [answer]  => DWB6
+    [expire]  => 300
+    [start]   => 1574265980
+)
+```
+
+You can use the `captcha` value to display the image in an HTML page and the `answer` value
+to validate the user's CAPTCHA input.
+
+

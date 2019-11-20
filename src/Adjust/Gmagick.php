@@ -4,7 +4,7 @@
  *
  * @link       https://github.com/popphp/popphp-framework
  * @author     Nick Sagona, III <dev@nolainteractive.com>
- * @copyright  Copyright (c) 2009-2019 NOLA Interactive, LLC. (http://www.nolainteractive.com)
+ * @copyright  Copyright (c) 2009-2020 NOLA Interactive, LLC. (http://www.nolainteractive.com)
  * @license    http://www.popphp.org/license     New BSD License
  */
 
@@ -19,9 +19,9 @@ namespace Pop\Image\Adjust;
  * @category   Pop
  * @package    Pop\Image
  * @author     Nick Sagona, III <dev@nolainteractive.com>
- * @copyright  Copyright (c) 2009-2019 NOLA Interactive, LLC. (http://www.nolainteractive.com)
+ * @copyright  Copyright (c) 2009-2020 NOLA Interactive, LLC. (http://www.nolainteractive.com)
  * @license    http://www.popphp.org/license     New BSD License
- * @version    3.3.0
+ * @version    3.3.2
  */
 class Gmagick extends AbstractAdjust
 {
@@ -34,7 +34,9 @@ class Gmagick extends AbstractAdjust
      */
     public function hue($amount)
     {
-        $this->image->getResource()->modulateimage(100, 100, $amount);
+        if ($this->hasImage()) {
+            $this->image->getResource()->modulateimage(100, 100, $amount);
+        }
         return $this;
     }
 
@@ -46,7 +48,9 @@ class Gmagick extends AbstractAdjust
      */
     public function saturation($amount)
     {
-        $this->image->getResource()->modulateimage(100, $amount, 100);
+        if ($this->hasImage()) {
+            $this->image->getResource()->modulateimage(100, $amount, 100);
+        }
         return $this;
     }
 
@@ -58,7 +62,9 @@ class Gmagick extends AbstractAdjust
      */
     public function brightness($amount)
     {
-        $this->image->getResource()->modulateimage($amount, 100, 100);
+        if ($this->hasImage()) {
+            $this->image->getResource()->modulateimage($amount, 100, 100);
+        }
         return $this;
     }
 
@@ -72,7 +78,9 @@ class Gmagick extends AbstractAdjust
      */
     public function hsb($h, $s, $b)
     {
-        $this->image->getResource()->modulateimage($h, $s, $b);
+        if ($this->hasImage()) {
+            $this->image->getResource()->modulateimage($h, $s, $b);
+        }
         return $this;
     }
 
@@ -86,7 +94,9 @@ class Gmagick extends AbstractAdjust
      */
     public function level($black, $gamma, $white)
     {
-        $this->image->getResource()->levelimage($black, $gamma, $white);
+        if ($this->hasImage()) {
+            $this->image->getResource()->levelimage($black, $gamma, $white);
+        }
         return $this;
     }
 
@@ -98,9 +108,11 @@ class Gmagick extends AbstractAdjust
      */
     public function contrast($amount)
     {
-        if ($amount > 0) {
-            for ($i = 1; $i <= $amount; $i++) {
-                $this->image->getResource()->normalizeimage(\Gmagick::CHANNEL_ALL);
+        if ($this->hasImage()) {
+            if ($amount > 0) {
+                for ($i = 1; $i <= $amount; $i++) {
+                    $this->image->getResource()->normalizeimage(\Gmagick::CHANNEL_ALL);
+                }
             }
         }
 
@@ -114,7 +126,9 @@ class Gmagick extends AbstractAdjust
      */
     public function desaturate()
     {
-        $this->image->getResource()->modulateimage(100, 0, 100);
+        if ($this->hasImage()) {
+            $this->image->getResource()->modulateimage(100, 0, 100);
+        }
         return $this;
     }
 

@@ -4,7 +4,7 @@
  *
  * @link       https://github.com/popphp/popphp-framework
  * @author     Nick Sagona, III <dev@nolainteractive.com>
- * @copyright  Copyright (c) 2009-2019 NOLA Interactive, LLC. (http://www.nolainteractive.com)
+ * @copyright  Copyright (c) 2009-2020 NOLA Interactive, LLC. (http://www.nolainteractive.com)
  * @license    http://www.popphp.org/license     New BSD License
  */
 
@@ -27,9 +27,9 @@ use Pop\Image\Type;
  * @category   Pop
  * @package    Pop\Image
  * @author     Nick Sagona, III <dev@nolainteractive.com>
- * @copyright  Copyright (c) 2009-2019 NOLA Interactive, LLC. (http://www.nolainteractive.com)
+ * @copyright  Copyright (c) 2009-2020 NOLA Interactive, LLC. (http://www.nolainteractive.com)
  * @license    http://www.popphp.org/license     New BSD License
- * @version    3.3.0
+ * @version    3.3.2
  */
 class Gd extends AbstractAdapter
 {
@@ -275,7 +275,9 @@ class Gd extends AbstractAdapter
     public function crop($w, $h, $x = 0, $y = 0)
     {
         $result = imagecreatetruecolor($w, $h);
-        imagecopyresampled($result, $this->resource, 0, 0, $x, $y, $this->width, $this->height, $this->width, $this->height);
+        imagecopyresampled(
+            $result, $this->resource, 0, 0, $x, $y, $this->width, $this->height, $this->width, $this->height
+        );
 
         if ($this->indexed) {
             imagetruecolortopalette($result, false, 255);
@@ -527,7 +529,9 @@ class Gd extends AbstractAdapter
         }
 
         $result = imagecreatetruecolor($this->width, $this->height);
-        imagecopyresampled($result, $this->resource, 0, 0, 0, 0, $this->width, $this->height, $this->width, $this->height);
+        imagecopyresampled(
+            $result, $this->resource, 0, 0, 0, 0, $this->width, $this->height, $this->width, $this->height
+        );
 
         if ($this->indexed) {
             imagetruecolortopalette($result, false, 255);
@@ -576,10 +580,11 @@ class Gd extends AbstractAdapter
      * @param  string  $to
      * @param  boolean $download
      * @param  boolean $sendHeaders
+     * @param  array   $headers
      * @throws Exception
      * @return void
      */
-    public function outputToHttp($quality = 100, $to = null, $download = false, $sendHeaders = true)
+    public function outputToHttp($quality = 100, $to = null, $download = false, $sendHeaders = true, array $headers = [])
     {
         if (null === $this->resource) {
             throw new Exception('Error: An image resource has not been created or loaded');
@@ -595,7 +600,7 @@ class Gd extends AbstractAdapter
             $to = (null !== $this->name) ? $this->name : 'pop-image.' . $this->format;
         }
 
-        $this->sendHeaders($to, $download);
+        $this->sendHeaders($to, $download, $headers);
         $this->generateImage((int)$quality);
     }
 
@@ -718,20 +723,16 @@ class Gd extends AbstractAdapter
         } else if ($size[2] == IMAGETYPE_PNG) {
             switch (ord($data[25])) {
                 case 0:
+                case 4:
                     $this->colorspace = self::IMAGE_GRAY;
                     break;
                 case 2:
+                case 6:
                     $this->colorspace = self::IMAGE_RGB;
                     break;
                 case 3:
                     $this->colorspace = self::IMAGE_RGB;
                     $this->indexed    = true;
-                    break;
-                case 4:
-                    $this->colorspace = self::IMAGE_GRAY;
-                    break;
-                case 6:
-                    $this->colorspace = self::IMAGE_RGB;
                     break;
             }
             $this->format = 'png';

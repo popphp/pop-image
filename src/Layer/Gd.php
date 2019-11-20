@@ -4,7 +4,7 @@
  *
  * @link       https://github.com/popphp/popphp-framework
  * @author     Nick Sagona, III <dev@nolainteractive.com>
- * @copyright  Copyright (c) 2009-2019 NOLA Interactive, LLC. (http://www.nolainteractive.com)
+ * @copyright  Copyright (c) 2009-2020 NOLA Interactive, LLC. (http://www.nolainteractive.com)
  * @license    http://www.popphp.org/license     New BSD License
  */
 
@@ -19,9 +19,9 @@ namespace Pop\Image\Layer;
  * @category   Pop
  * @package    Pop\Image
  * @author     Nick Sagona, III <dev@nolainteractive.com>
- * @copyright  Copyright (c) 2009-2019 NOLA Interactive, LLC. (http://www.nolainteractive.com)
+ * @copyright  Copyright (c) 2009-2020 NOLA Interactive, LLC. (http://www.nolainteractive.com)
  * @license    http://www.popphp.org/license     New BSD License
- * @version    3.3.0
+ * @version    3.3.2
  */
 class Gd extends AbstractLayer
 {
@@ -43,24 +43,28 @@ class Gd extends AbstractLayer
      */
     public function overlay($image, $x = 0, $y = 0)
     {
-        imagealphablending($this->image->getResource(), true);
+        if ($this->hasImage()) {
+            imagealphablending($this->image->getResource(), true);
 
-        // Create an image resource from the overlay image.
-        if (stripos($image, '.gif') !== false) {
-            $overlay = imagecreatefromgif($image);
-        } else if (stripos($image, '.png') !== false) {
-            $overlay = imagecreatefrompng($image);
-        } else if (stripos($image, '.jp') !== false) {
-            $overlay = imagecreatefromjpeg($image);
-        } else {
-            throw new Exception('Error: The overlay image must be either a JPG, GIF or PNG.');
-        }
+            // Create an image resource from the overlay image.
+            if (stripos($image, '.gif') !== false) {
+                $overlay = imagecreatefromgif($image);
+            } else if (stripos($image, '.png') !== false) {
+                $overlay = imagecreatefrompng($image);
+            } else if (stripos($image, '.jp') !== false) {
+                $overlay = imagecreatefromjpeg($image);
+            } else {
+                throw new Exception('Error: The overlay image must be either a JPG, GIF or PNG.');
+            }
 
-        if ($this->opacity > 0) {
-            if ($this->opacity == 100) {
-                imagecopy($this->image->getResource(), $overlay, $x, $y, 0, 0, imagesx($overlay), imagesy($overlay));
-            } else{
-                imagecopymerge($this->image->getResource(), $overlay, $x, $y, 0, 0, imagesx($overlay), imagesy($overlay), $this->opacity);
+            if ($this->opacity > 0) {
+                if ($this->opacity == 100) {
+                    imagecopy($this->image->getResource(), $overlay, $x, $y, 0, 0, imagesx($overlay), imagesy($overlay));
+                } else {
+                    imagecopymerge(
+                        $this->image->getResource(), $overlay, $x, $y, 0, 0, imagesx($overlay), imagesy($overlay), $this->opacity
+                    );
+                }
             }
         }
 

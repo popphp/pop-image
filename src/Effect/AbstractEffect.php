@@ -4,7 +4,7 @@
  *
  * @link       https://github.com/popphp/popphp-framework
  * @author     Nick Sagona, III <dev@nolainteractive.com>
- * @copyright  Copyright (c) 2009-2019 NOLA Interactive, LLC. (http://www.nolainteractive.com)
+ * @copyright  Copyright (c) 2009-2020 NOLA Interactive, LLC. (http://www.nolainteractive.com)
  * @license    http://www.popphp.org/license     New BSD License
  */
 
@@ -22,9 +22,9 @@ use Pop\Image\Color;
  * @category   Pop
  * @package    Pop\Image
  * @author     Nick Sagona, III <dev@nolainteractive.com>
- * @copyright  Copyright (c) 2009-2019 NOLA Interactive, LLC. (http://www.nolainteractive.com)
+ * @copyright  Copyright (c) 2009-2020 NOLA Interactive, LLC. (http://www.nolainteractive.com)
  * @license    http://www.popphp.org/license     New BSD License
- * @version    3.3.0
+ * @version    3.3.2
  */
 abstract class AbstractEffect extends AbstractEditObject implements EffectInterface
 {
@@ -35,10 +35,9 @@ abstract class AbstractEffect extends AbstractEditObject implements EffectInterf
      * @param  Color\ColorInterface $color1
      * @param  Color\ColorInterface $color2
      * @param  int                  $tween
-     * @throws Exception
      * @return array
      */
-    protected function getBlend(Color\ColorInterface $color1, Color\ColorInterface $color2, $tween)
+    public function getBlend(Color\ColorInterface $color1, Color\ColorInterface $color2, $tween)
     {
         if (!($color1 instanceof Color\Rgb)) {
             $color1 = $color1->toRgb();
@@ -79,7 +78,7 @@ abstract class AbstractEffect extends AbstractEditObject implements EffectInterf
      * @param  int $totalSteps
      * @return int
      */
-    protected function calculateSteps($curStep, $start, $end, $totalSteps)
+    public function calculateSteps($curStep, $start, $end, $totalSteps)
     {
         return ($end * ($curStep / $totalSteps)) + $start;
     }

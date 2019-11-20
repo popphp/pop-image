@@ -4,7 +4,7 @@
  *
  * @link       https://github.com/popphp/popphp-framework
  * @author     Nick Sagona, III <dev@nolainteractive.com>
- * @copyright  Copyright (c) 2009-2019 NOLA Interactive, LLC. (http://www.nolainteractive.com)
+ * @copyright  Copyright (c) 2009-2020 NOLA Interactive, LLC. (http://www.nolainteractive.com)
  * @license    http://www.popphp.org/license     New BSD License
  */
 
@@ -27,9 +27,9 @@ use Pop\Image\Type;
  * @category   Pop
  * @package    Pop\Image
  * @author     Nick Sagona, III <dev@nolainteractive.com>
- * @copyright  Copyright (c) 2009-2019 NOLA Interactive, LLC. (http://www.nolainteractive.com)
+ * @copyright  Copyright (c) 2009-2020 NOLA Interactive, LLC. (http://www.nolainteractive.com)
  * @license    http://www.popphp.org/license     New BSD License
- * @version    3.3.0
+ * @version    3.3.2
  */
 class Gmagick extends AbstractAdapter
 {
@@ -207,7 +207,6 @@ class Gmagick extends AbstractAdapter
      * @param  int    $width
      * @param  int    $height
      * @param  string $name
-     * @throws Exception
      * @return Gmagick
      */
     public function createIndex($width = null, $height = null, $name = null)
@@ -698,10 +697,11 @@ class Gmagick extends AbstractAdapter
      * @param  string  $to
      * @param  boolean $download
      * @param  boolean $sendHeaders
+     * @param  array   $headers
      * @throws Exception
      * @return void
      */
-    public function outputToHttp($quality = 100, $to = null, $download = false, $sendHeaders = true)
+    public function outputToHttp($quality = 100, $to = null, $download = false, $sendHeaders = true, array $headers = [])
     {
         $hasImage = false;
 
@@ -732,7 +732,7 @@ class Gmagick extends AbstractAdapter
             $to = (null !== $this->name) ? $this->name : 'pop-image.' . strtolower($this->format);
         }
 
-        $this->sendHeaders($to, $download);
+        $this->sendHeaders($to, $download, $headers);
         echo $this->resource;
     }
 

@@ -4,7 +4,7 @@
  *
  * @link       https://github.com/popphp/popphp-framework
  * @author     Nick Sagona, III <dev@nolainteractive.com>
- * @copyright  Copyright (c) 2009-2019 NOLA Interactive, LLC. (http://www.nolainteractive.com)
+ * @copyright  Copyright (c) 2009-2020 NOLA Interactive, LLC. (http://www.nolainteractive.com)
  * @license    http://www.popphp.org/license     New BSD License
  */
 
@@ -19,9 +19,9 @@ namespace Pop\Image\Adjust;
  * @category   Pop
  * @package    Pop\Image
  * @author     Nick Sagona, III <dev@nolainteractive.com>
- * @copyright  Copyright (c) 2009-2019 NOLA Interactive, LLC. (http://www.nolainteractive.com)
+ * @copyright  Copyright (c) 2009-2020 NOLA Interactive, LLC. (http://www.nolainteractive.com)
  * @license    http://www.popphp.org/license     New BSD License
- * @version    3.3.0
+ * @version    3.3.2
  */
 class Gd extends AbstractAdjust
 {
@@ -34,7 +34,9 @@ class Gd extends AbstractAdjust
      */
     public function brightness($amount)
     {
-        imagefilter($this->image->getResource(), IMG_FILTER_BRIGHTNESS, $amount);
+        if ($this->hasImage()) {
+            imagefilter($this->image->getResource(), IMG_FILTER_BRIGHTNESS, $amount);
+        }
         return $this;
     }
 
@@ -46,7 +48,9 @@ class Gd extends AbstractAdjust
      */
     public function contrast($amount)
     {
-        imagefilter($this->image->getResource(), IMG_FILTER_CONTRAST, (0 - $amount));
+        if ($this->hasImage()) {
+            imagefilter($this->image->getResource(), IMG_FILTER_CONTRAST, (0 - $amount));
+        }
         return $this;
     }
 
@@ -57,7 +61,9 @@ class Gd extends AbstractAdjust
      */
     public function desaturate()
     {
-        imagefilter($this->image->getResource(), IMG_FILTER_GRAYSCALE);
+        if ($this->hasImage()) {
+            imagefilter($this->image->getResource(), IMG_FILTER_GRAYSCALE);
+        }
         return $this;
     }
 

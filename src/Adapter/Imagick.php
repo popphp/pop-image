@@ -4,7 +4,7 @@
  *
  * @link       https://github.com/popphp/popphp-framework
  * @author     Nick Sagona, III <dev@nolainteractive.com>
- * @copyright  Copyright (c) 2009-2019 NOLA Interactive, LLC. (http://www.nolainteractive.com)
+ * @copyright  Copyright (c) 2009-2020 NOLA Interactive, LLC. (http://www.nolainteractive.com)
  * @license    http://www.popphp.org/license     New BSD License
  */
 
@@ -27,9 +27,9 @@ use Pop\Image\Type;
  * @category   Pop
  * @package    Pop\Image
  * @author     Nick Sagona, III <dev@nolainteractive.com>
- * @copyright  Copyright (c) 2009-2019 NOLA Interactive, LLC. (http://www.nolainteractive.com)
+ * @copyright  Copyright (c) 2009-2020 NOLA Interactive, LLC. (http://www.nolainteractive.com)
  * @license    http://www.popphp.org/license     New BSD License
- * @version    3.3.0
+ * @version    3.3.2
  */
 class Imagick extends AbstractAdapter
 {
@@ -170,7 +170,6 @@ class Imagick extends AbstractAdapter
      * @param  int    $width
      * @param  int    $height
      * @param  string $name
-     * @throws Exception
      * @return Imagick
      */
     public function create($width = null, $height = null, $name = null)
@@ -683,10 +682,11 @@ class Imagick extends AbstractAdapter
      * @param  string  $to
      * @param  boolean $download
      * @param  boolean $sendHeaders
+     * @param  array   $headers
      * @throws Exception
      * @return void
      */
-    public function outputToHttp($quality = 100, $to = null, $download = false, $sendHeaders = true)
+    public function outputToHttp($quality = 100, $to = null, $download = false, $sendHeaders = true, array $headers = [])
     {
         if ((null === $this->resource) || ((null !== $this->resource) && ($this->resource->count() == 0))) {
             throw new Exception('Error: An image resource has not been created or loaded');
@@ -706,7 +706,7 @@ class Imagick extends AbstractAdapter
             $to = (null !== $this->name) ? $this->name : 'pop-image.' . strtolower($this->format);
         }
 
-        $this->sendHeaders($to, $download);
+        $this->sendHeaders($to, $download, $headers);
         echo $this->resource;
     }
 
@@ -737,7 +737,6 @@ class Imagick extends AbstractAdapter
      *
      * @param  Color\ColorInterface $color
      * @param  int                  $alpha
-     * @throws Exception
      * @return \ImagickPixel
      */
     public function createColor(Color\ColorInterface $color = null, $alpha = 100)

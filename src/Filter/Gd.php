@@ -4,7 +4,7 @@
  *
  * @link       https://github.com/popphp/popphp-framework
  * @author     Nick Sagona, III <dev@nolainteractive.com>
- * @copyright  Copyright (c) 2009-2019 NOLA Interactive, LLC. (http://www.nolainteractive.com)
+ * @copyright  Copyright (c) 2009-2020 NOLA Interactive, LLC. (http://www.nolainteractive.com)
  * @license    http://www.popphp.org/license     New BSD License
  */
 
@@ -21,9 +21,9 @@ use Pop\Image\Color;
  * @category   Pop
  * @package    Pop\Image
  * @author     Nick Sagona, III <dev@nolainteractive.com>
- * @copyright  Copyright (c) 2009-2019 NOLA Interactive, LLC. (http://www.nolainteractive.com)
+ * @copyright  Copyright (c) 2009-2020 NOLA Interactive, LLC. (http://www.nolainteractive.com)
  * @license    http://www.popphp.org/license     New BSD License
- * @version    3.3.0
+ * @version    3.3.2
  */
 class Gd extends AbstractFilter
 {
@@ -37,8 +37,10 @@ class Gd extends AbstractFilter
      */
     public function blur($amount, $type = IMG_FILTER_GAUSSIAN_BLUR)
     {
-        for ($i = 1; $i <= $amount; $i++) {
-            imagefilter($this->image->getResource(), $type);
+        if ($this->hasImage()) {
+            for ($i = 1; $i <= $amount; $i++) {
+                imagefilter($this->image->getResource(), $type);
+            }
         }
 
         return $this;
@@ -52,7 +54,9 @@ class Gd extends AbstractFilter
      */
     public function sharpen($amount)
     {
-        imagefilter($this->image->getResource(), IMG_FILTER_SMOOTH, (0 - $amount));
+        if ($this->hasImage()) {
+            imagefilter($this->image->getResource(), IMG_FILTER_SMOOTH, (0 - $amount));
+        }
         return $this;
     }
 
@@ -63,7 +67,9 @@ class Gd extends AbstractFilter
      */
     public function negate()
     {
-        imagefilter($this->image->getResource(), IMG_FILTER_NEGATE);
+        if ($this->hasImage()) {
+            imagefilter($this->image->getResource(), IMG_FILTER_NEGATE);
+        }
         return $this;
     }
 
@@ -75,7 +81,9 @@ class Gd extends AbstractFilter
      */
     public function colorize(Color\Rgb $color)
     {
-        imagefilter($this->image->getResource(), IMG_FILTER_COLORIZE, $color->getR(), $color->getG(), $color->getB());
+        if ($this->hasImage()) {
+            imagefilter($this->image->getResource(), IMG_FILTER_COLORIZE, $color->getR(), $color->getG(), $color->getB());
+        }
         return $this;
     }
 
@@ -87,7 +95,9 @@ class Gd extends AbstractFilter
      */
     public function pixelate($px)
     {
-        imagefilter($this->image->getResource(), IMG_FILTER_PIXELATE, $px, true);
+        if ($this->hasImage()) {
+            imagefilter($this->image->getResource(), IMG_FILTER_PIXELATE, $px, true);
+        }
         return $this;
     }
 
@@ -98,7 +108,9 @@ class Gd extends AbstractFilter
      */
     public function pencil()
     {
-        imagefilter($this->image->getResource(), IMG_FILTER_MEAN_REMOVAL);
+        if ($this->hasImage()) {
+            imagefilter($this->image->getResource(), IMG_FILTER_MEAN_REMOVAL);
+        }
         return $this;
     }
 

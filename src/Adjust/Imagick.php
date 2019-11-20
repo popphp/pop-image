@@ -4,7 +4,7 @@
  *
  * @link       https://github.com/popphp/popphp-framework
  * @author     Nick Sagona, III <dev@nolainteractive.com>
- * @copyright  Copyright (c) 2009-2019 NOLA Interactive, LLC. (http://www.nolainteractive.com)
+ * @copyright  Copyright (c) 2009-2020 NOLA Interactive, LLC. (http://www.nolainteractive.com)
  * @license    http://www.popphp.org/license     New BSD License
  */
 
@@ -19,9 +19,9 @@ namespace Pop\Image\Adjust;
  * @category   Pop
  * @package    Pop\Image
  * @author     Nick Sagona, III <dev@nolainteractive.com>
- * @copyright  Copyright (c) 2009-2019 NOLA Interactive, LLC. (http://www.nolainteractive.com)
+ * @copyright  Copyright (c) 2009-2020 NOLA Interactive, LLC. (http://www.nolainteractive.com)
  * @license    http://www.popphp.org/license     New BSD License
- * @version    3.3.0
+ * @version    3.3.2
  */
 class Imagick extends AbstractAdjust
 {
@@ -34,7 +34,9 @@ class Imagick extends AbstractAdjust
      */
     public function hue($amount)
     {
-        $this->image->getResource()->modulateImage(100, 100, $amount);
+        if ($this->hasImage()) {
+            $this->image->getResource()->modulateImage(100, 100, $amount);
+        }
         return $this;
     }
 
@@ -46,7 +48,9 @@ class Imagick extends AbstractAdjust
      */
     public function saturation($amount)
     {
-        $this->image->getResource()->modulateImage(100, $amount, 100);
+        if ($this->hasImage()) {
+            $this->image->getResource()->modulateImage(100, $amount, 100);
+        }
         return $this;
     }
 
@@ -58,7 +62,9 @@ class Imagick extends AbstractAdjust
      */
     public function brightness($amount)
     {
-        $this->image->getResource()->modulateImage($amount, 100, 100);
+        if ($this->hasImage()) {
+            $this->image->getResource()->modulateImage($amount, 100, 100);
+        }
         return $this;
     }
 
@@ -72,7 +78,9 @@ class Imagick extends AbstractAdjust
      */
     public function hsb($h, $s, $b)
     {
-        $this->image->getResource()->modulateImage($h, $s, $b);
+        if ($this->hasImage()) {
+            $this->image->getResource()->modulateImage($h, $s, $b);
+        }
         return $this;
     }
 
@@ -86,19 +94,21 @@ class Imagick extends AbstractAdjust
      */
     public function level($black, $gamma, $white)
     {
-        $quantumRange = $this->image->getResource()->getQuantumRange();
+        if ($this->hasImage()) {
+            $quantumRange = $this->image->getResource()->getQuantumRange();
 
-        if ($black < 0) {
-            $black = 0;
+            if ($black < 0) {
+                $black = 0;
+            }
+            if ($white > 255) {
+                $white = 255;
+            }
+
+            $blackPoint = ($black / 255) * $quantumRange['quantumRangeLong'];
+            $whitePoint = ($white / 255) * $quantumRange['quantumRangeLong'];
+
+            $this->image->getResource()->levelImage($blackPoint, $gamma, $whitePoint);
         }
-        if ($white > 255) {
-            $white = 255;
-        }
-
-        $blackPoint = ($black / 255) * $quantumRange['quantumRangeLong'];
-        $whitePoint = ($white / 255) * $quantumRange['quantumRangeLong'];
-
-        $this->image->getResource()->levelImage($blackPoint, $gamma, $whitePoint);
 
         return $this;
     }
@@ -111,16 +121,17 @@ class Imagick extends AbstractAdjust
      */
     public function contrast($amount)
     {
-        if ($amount > 0) {
-            for ($i = 1; $i <= $amount; $i++) {
-                $this->image->getResource()->contrastImage(1);
-            }
-        } else if ($amount < 0) {
-            for ($i = -1; $i >= $amount; $i--) {
-                $this->image->getResource()->contrastImage(0);
+        if ($this->hasImage()) {
+            if ($amount > 0) {
+                for ($i = 1; $i <= $amount; $i++) {
+                    $this->image->getResource()->contrastImage(1);
+                }
+            } else if ($amount < 0) {
+                for ($i = -1; $i >= $amount; $i--) {
+                    $this->image->getResource()->contrastImage(0);
+                }
             }
         }
-
         return $this;
     }
 
@@ -131,7 +142,9 @@ class Imagick extends AbstractAdjust
      */
     public function desaturate()
     {
-        $this->image->getResource()->modulateImage(100, 0, 100);
+        if ($this->hasImage()) {
+            $this->image->getResource()->modulateImage(100, 0, 100);
+        }
         return $this;
     }
 

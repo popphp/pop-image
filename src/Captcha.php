@@ -4,7 +4,7 @@
  *
  * @link       https://github.com/popphp/popphp-framework
  * @author     Nick Sagona, III <dev@nolainteractive.com>
- * @copyright  Copyright (c) 2009-2019 NOLA Interactive, LLC. (http://www.nolainteractive.com)
+ * @copyright  Copyright (c) 2009-2020 NOLA Interactive, LLC. (http://www.nolainteractive.com)
  * @license    http://www.popphp.org/license     New BSD License
  */
 
@@ -19,9 +19,9 @@ namespace Pop\Image;
  * @category   Pop
  * @package    Pop\Image
  * @author     Nick Sagona, III <dev@nolainteractive.com>
- * @copyright  Copyright (c) 2009-2019 NOLA Interactive, LLC. (http://www.nolainteractive.com)
+ * @copyright  Copyright (c) 2009-2020 NOLA Interactive, LLC. (http://www.nolainteractive.com)
  * @license    http://www.popphp.org/license     New BSD License
- * @version    3.3.0
+ * @version    3.3.2
  */
 class Captcha
 {
@@ -389,7 +389,9 @@ class Captcha
 
         $this->image = $adapterClass::create($this->config['width'], $this->config['height'], 'captcha.gif');
         $this->image->effect()->fill(new Color\Rgb(255, 255, 255));
-        $this->image->draw()->setStrokeColor(new Color\Rgb($this->config['lineColor'][0], $this->config['lineColor'][1], $this->config['lineColor'][2]));
+        $this->image->draw()->setStrokeColor(
+            new Color\Rgb($this->config['lineColor'][0], $this->config['lineColor'][1], $this->config['lineColor'][2])
+        );
 
         // Draw background grid
         for ($y = $this->config['lineSpacing']; $y <= $this->config['height']; $y += $this->config['lineSpacing']) {
@@ -400,19 +402,25 @@ class Captcha
             $this->image->draw()->line($x -  $xyAdjust, 0, $x -  $xyAdjust, $this->config['height']);
         }
 
-        $this->image->effect()->border(new Color\Rgb($this->config['textColor'][0], $this->config['textColor'][1], $this->config['textColor'][2]), $borderSize);
-        $this->image->type()->setFillColor(new Color\Rgb($this->config['textColor'][0], $this->config['textColor'][1], $this->config['textColor'][2]));
+        $this->image->effect()->border(
+            new Color\Rgb($this->config['textColor'][0], $this->config['textColor'][1], $this->config['textColor'][2]), $borderSize
+        );
+        $this->image->type()->setFillColor(
+            new Color\Rgb($this->config['textColor'][0], $this->config['textColor'][1], $this->config['textColor'][2])
+        );
 
         if (null === $this->config['font']) {
             $this->image->type()->size($fontSize);
             $textX = round(($this->config['width'] - ($this->length * 10)) / 2);
             $textY = ($adapterClass != 'Pop\Image\Gd') ?
-                $this->config['height'] - (round(($this->config['height'] - $fontSize) / 2)) : round(($this->config['height'] - 16) / 2);
+                $this->config['height'] - (round(($this->config['height'] - $fontSize) / 2)) :
+                round(($this->config['height'] - 16) / 2);
         } else {
             $this->image->type()->font($this->config['font'])
                  ->size($this->config['size']);
             $textX = round(($this->config['width'] - ($this->length * ($this->config['size'] / 1.5))) / 2);
-            $textY = round($this->config['height'] - (($this->config['height'] - $this->config['size']) / 2) + ((int)$this->config['rotate'] / 2));
+            $textY = round($this->config['height'] -
+                (($this->config['height'] - $this->config['size']) / 2) + ((int)$this->config['rotate'] / 2));
         }
 
         $this->image->type()->xy($textX, $textY)

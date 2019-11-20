@@ -4,7 +4,7 @@
  *
  * @link       https://github.com/popphp/popphp-framework
  * @author     Nick Sagona, III <dev@nolainteractive.com>
- * @copyright  Copyright (c) 2009-2019 NOLA Interactive, LLC. (http://www.nolainteractive.com)
+ * @copyright  Copyright (c) 2009-2020 NOLA Interactive, LLC. (http://www.nolainteractive.com)
  * @license    http://www.popphp.org/license     New BSD License
  */
 
@@ -21,9 +21,9 @@ use Pop\Image\Color;
  * @category   Pop
  * @package    Pop\Image
  * @author     Nick Sagona, III <dev@nolainteractive.com>
- * @copyright  Copyright (c) 2009-2019 NOLA Interactive, LLC. (http://www.nolainteractive.com)
+ * @copyright  Copyright (c) 2009-2020 NOLA Interactive, LLC. (http://www.nolainteractive.com)
  * @license    http://www.popphp.org/license     New BSD License
- * @version    3.3.0
+ * @version    3.3.2
  */
 class Gmagick extends AbstractEffect
 {
@@ -34,13 +34,14 @@ class Gmagick extends AbstractEffect
      * @param  Color\ColorInterface $color
      * @param  int                  $w
      * @param  int                  $h
-     * @throws Exception
      * @return Gmagick
      */
     public function border(Color\ColorInterface $color, $w = 1, $h = null)
     {
-        $h = (null === $h) ? $w : $h;
-        $this->image->getResource()->borderImage($this->image->createColor($color), $w, $h);
+        if ($this->hasImage()) {
+            $h = (null === $h) ? $w : $h;
+            $this->image->getResource()->borderImage($this->image->createColor($color), $w, $h);
+        }
         return $this;
     }
 
@@ -52,10 +53,12 @@ class Gmagick extends AbstractEffect
      */
     public function fill(Color\ColorInterface $color)
     {
-        $draw = new \GmagickDraw();
-        $draw->setfillcolor($this->image->createColor($color));
-        $draw->rectangle(0, 0, $this->image->getWidth(), $this->image->getHeight());
-        $this->image->getResource()->drawImage($draw);
+        if ($this->hasImage()) {
+            $draw = new \GmagickDraw();
+            $draw->setfillcolor($this->image->createColor($color));
+            $draw->rectangle(0, 0, $this->image->getWidth(), $this->image->getHeight());
+            $this->image->getResource()->drawImage($draw);
+        }
         return $this;
     }
 

@@ -4,7 +4,7 @@
  *
  * @link       https://github.com/popphp/popphp-framework
  * @author     Nick Sagona, III <dev@nolainteractive.com>
- * @copyright  Copyright (c) 2009-2019 NOLA Interactive, LLC. (http://www.nolainteractive.com)
+ * @copyright  Copyright (c) 2009-2020 NOLA Interactive, LLC. (http://www.nolainteractive.com)
  * @license    http://www.popphp.org/license     New BSD License
  */
 
@@ -27,9 +27,9 @@ use Pop\Image\Type;
  * @category   Pop
  * @package    Pop\Image
  * @author     Nick Sagona, III <dev@nolainteractive.com>
- * @copyright  Copyright (c) 2009-2019 NOLA Interactive, LLC. (http://www.nolainteractive.com)
+ * @copyright  Copyright (c) 2009-2020 NOLA Interactive, LLC. (http://www.nolainteractive.com)
  * @license    http://www.popphp.org/license     New BSD License
- * @version    3.3.0
+ * @version    3.3.2
  */
 abstract class AbstractAdapter
 {
@@ -140,7 +140,7 @@ abstract class AbstractAdapter
 
         // $image
         if (isset($args[0]) && !is_numeric($args[0]) && file_exists($args[0])) {
-            $this->name = $args[0];
+            $this->name = basename($args[0]);
             $this->load();
         // $width, $height, $name
         } else if ((count($args) >= 2) && is_numeric($args[0]) && is_numeric($args[1])) {
@@ -356,9 +356,10 @@ abstract class AbstractAdapter
      *
      * @param  string  $to
      * @param  boolean $download
+     * @param  array   $additionalHeaders
      * @return void
      */
-    public function sendHeaders($to = null, $download = false)
+    public function sendHeaders($to = null, $download = false, array $additionalHeaders = [])
     {
         if (null === $to) {
             $to = (null !== $this->name) ? $this->name : 'pop-image.' . $this->format;
@@ -370,10 +371,8 @@ abstract class AbstractAdapter
             'Content-disposition' => (($download) ? 'attachment; ' : null) . 'filename=' . $to
         ];
 
-        if (isset($_SERVER['SERVER_PORT']) && ($_SERVER['SERVER_PORT'] == 443)) {
-            $headers['Expires']       = 0;
-            $headers['Cache-Control'] = 'private, must-revalidate';
-            $headers['Pragma']        = 'cache';
+        if (!empty($additionalHeaders)) {
+            $headers = $headers + $additionalHeaders;
         }
 
         // Send the headers and output the image
