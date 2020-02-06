@@ -1,6 +1,5 @@
 env:
     - $MAGICK_EXT=imagick
-    - $MAGICK_EXT=gmagick
 before_script:
     - composer self-update
     - composer install
