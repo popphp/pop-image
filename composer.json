@@ -31,8 +31,7 @@
     },
     "suggest": {
         "ext-gd": "To use the Gd image adapter",
-        "ext-imagick": "To use the Imagick image adapter",
-        "ext-gmagick": "To use the Gmagick image adapter"
+        "ext-imagick": "To use the Imagick image adapter"
     },
     "autoload": {
         "psr-4": {
@@ -46,7 +45,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "3.3.x-dev"
+            "dev-master": "3.4.x-dev"
         }
     }
 }

@@ -29,7 +29,7 @@ use Pop\Image\Type;
  * @author     Nick Sagona, III <dev@nolainteractive.com>
  * @copyright  Copyright (c) 2009-2020 NOLA Interactive, LLC. (http://www.nolainteractive.com)
  * @license    http://www.popphp.org/license     New BSD License
- * @version    3.3.2
+ * @version    3.4.0
  */
 class Imagick extends AbstractAdapter
 {
@@ -124,7 +124,6 @@ class Imagick extends AbstractAdapter
      *
      * @param  string $data
      * @param  string $name
-     * @throws Exception
      * @return Imagick
      */
     public function loadFromString($data, $name = null)
@@ -236,6 +235,57 @@ class Imagick extends AbstractAdapter
         $this->resource->setImageType(\Imagick::IMGTYPE_PALETTE);
         $this->indexed = true;
 
+        return $this;
+    }
+
+    /**
+     * Add image to the image resource
+     *
+     * @param  mixed $image
+     * @param  int   $delay
+     * @return Imagick
+     */
+    public function addImage($image, $delay = null)
+    {
+        if (!($image instanceof \Imagick)) {
+            $image = new \Imagick($image);
+        }
+        if (null !== $delay) {
+            $image->setImageDelay($delay);
+        }
+        $this->resource->addImage($image);
+        return $this;
+    }
+
+    /**
+     * Does image have images
+     *
+     * @return boolean
+     */
+    public function hasImages()
+    {
+        return ($this->resource->getNumberImages() > 0);
+    }
+
+    /**
+     * Get images
+     *
+     * @return array
+     */
+    public function getImages()
+    {
+        return $this->resource->coalesceImages();
+    }
+
+    /**
+     * Get images
+     *
+     * @param  \Imagick $images
+     * @return Imagick
+     */
+    public function rebuildImages(\Imagick $images)
+    {
+        $this->resource = $images->deconstructImages();
         return $this;
     }
 
@@ -355,8 +405,7 @@ class Imagick extends AbstractAdapter
         $this->width  = $w;
         $this->height = round($this->height * $scale);
 
-        $this->resource->resizeImage($this->width, $this->height, $this->imageFilter, $this->imageBlur);
-        return $this;
+        return $this->resizeImage($this->width, $this->height, $this->imageFilter, $this->imageBlur);
     }
 
     /**
@@ -371,8 +420,7 @@ class Imagick extends AbstractAdapter
         $this->height = $h;
         $this->width  = round($this->width * $scale);
 
-        $this->resource->resizeImage($this->width, $this->height, $this->imageFilter, $this->imageBlur);
-        return $this;
+        return $this->resizeImage($this->width, $this->height, $this->imageFilter, $this->imageBlur);
     }
 
     /**
@@ -388,8 +436,7 @@ class Imagick extends AbstractAdapter
         $this->width  = round($this->width * $scale);
         $this->height = round($this->height * $scale);
 
-        $this->resource->resizeImage($this->width, $this->height, $this->imageFilter, $this->imageBlur);
-        return $this;
+        return $this->resizeImage($this->width, $this->height, $this->imageFilter, $this->imageBlur);
     }
 
     /**
@@ -404,7 +451,36 @@ class Imagick extends AbstractAdapter
         $this->width  = round($this->width * $scale);
         $this->height = round($this->height * $scale);
 
-        $this->resource->resizeImage($this->width, $this->height, $this->imageFilter, $this->imageBlur);
+        return $this->resizeImage($this->width, $this->height, $this->imageFilter, $this->imageBlur);
+    }
+
+    /**
+     * Resize image, checking for multiple frames
+     *
+     * @param  int $width
+     * @param  int $height
+     * @param  int $filter
+     * @param  int $blur
+     * @return Imagick
+     */
+    public function resizeImage($width, $height, $filter = null, $blur = null)
+    {
+        if (null === $filter) {
+            $filter = $this->imageFilter;
+        }
+        if (null === $blur) {
+            $blur = $this->imageBlur;
+        }
+        if ($this->resource->getNumberImages() > 0) {
+            $frames = $this->resource->coalesceImages();
+            foreach ($frames as $frame) {
+                $frame->resizeImage($width, $height, $filter, $blur);
+            }
+            $this->resource = $frames->deconstructImages();
+        } else {
+            $this->resource->resizeImage($width, $height, $filter, $blur);
+        }
+
         return $this;
     }
 
@@ -424,8 +500,7 @@ class Imagick extends AbstractAdapter
     {
         $this->width  = $w;
         $this->height = $h;
-        $this->resource->cropImage($this->width, $this->height, $x, $y);
-        return $this;
+        return $this->cropImage($this->width, $this->height, $x, $y);
     }
 
     /**
@@ -459,10 +534,10 @@ class Imagick extends AbstractAdapter
 
         // Create a new image output resource.
         if (null !== $offset) {
-            $this->resource->resizeImage($wid, $hgt, $this->imageFilter, $this->imageBlur);
-            $this->resource->cropImage($px, $px, $xOffset, $yOffset);
+            $this->resizeImage($wid, $hgt, $this->imageFilter, $this->imageBlur);
+            $this->cropImage($px, $px, $xOffset, $yOffset);
         } else {
-            $this->resource->cropThumbnailImage($px, $px);
+            $this->cropThumbnailImage($px, $px);
         }
 
         $this->width  = $px;
@@ -471,11 +546,63 @@ class Imagick extends AbstractAdapter
     }
 
     /**
+     * Crop image, checking for multiple frames
+     *
+     * @param  int $width
+     * @param  int $height
+     * @param  int $x
+     * @param  int $y
+     * @return Imagick
+     */
+    public function cropImage($width, $height, $x, $y)
+    {
+        if ($this->resource->getNumberImages() > 0) {
+            $frames = $this->resource->coalesceImages();
+            foreach ($frames as $frame) {
+                $frame->setImageBackgroundColor('none');
+                $frame->cropImage($width, $height, $x, $y);
+                $frame->thumbnailImage($width, $height);
+                $frame->setImagePage($width, $height, 0, 0);
+            }
+            $this->resource = $frames->deconstructImages();
+            $this->resource->resizeImage($width, $height, $this->imageFilter, $this->imageBlur);
+        } else {
+            $this->resource->cropImage($width, $height, $x, $y);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Crop image, checking for multiple frames
+     *
+     * @param  int $width
+     * @param  int $height
+     * @return Imagick
+     */
+    public function cropThumbnailImage($width, $height)
+    {
+        if ($this->resource->getNumberImages() > 0) {
+            $frames = $this->resource->coalesceImages();
+            foreach ($frames as $frame) {
+                $frame->setImageBackgroundColor('none');
+                $frame->cropThumbnailImage($width, $height);
+                $frame->thumbnailImage($width, $height);
+                $frame->setImagePage($width, $height, 0, 0);
+            }
+            $this->resource = $frames->deconstructImages();
+        } else {
+            $this->resource->cropThumbnailImage($width, $height);
+        }
+
+        return $this;
+    }
+
+    /**
      * Rotate the image object
      *
      * @param  int                  $degrees
      * @param  Color\ColorInterface $bgColor
-     * @throws Exception
      * @return Imagick
      */
     public function rotate($degrees, Color\ColorInterface $bgColor = null)
@@ -707,7 +834,7 @@ class Imagick extends AbstractAdapter
         }
 
         $this->sendHeaders($to, $download, $headers);
-        echo $this->resource;
+        echo ($this->resource->getNumberImages() > 0) ? $this->resource->getImagesBlob() : $this->resource;
     }
 
     /**
@@ -749,10 +876,8 @@ class Imagick extends AbstractAdapter
             $color = $color->toRgb();
         }
 
-        $pixel = ((int)$alpha < 100) ?
+        return ((int)$alpha < 100) ?
             new \ImagickPixel('rgba(' . $color . ',' . (int)$alpha . ')') : new \ImagickPixel('rgb(' . $color . ')');
-
-        return $pixel;
     }
 
     /**
@@ -763,7 +888,7 @@ class Imagick extends AbstractAdapter
     public function __toString()
     {
         $this->sendHeaders();
-        echo $this->resource;
+        echo ($this->resource->getNumberImages() > 0) ? $this->resource->getImagesBlob() : $this->resource;
         return '';
     }
 

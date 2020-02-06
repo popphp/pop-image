@@ -63,6 +63,8 @@ class ImagickTest extends TestCase
     {
         $image = new Imagick();
         $image->create(640, 480, 'test2.jpg');
+        $image->setResolution(640);
+        $image->setImageColorspace(\Imagick::COLORSPACE_RGB);
         $image->writeToFile(__DIR__ . '/../tmp/test2.jpg');
         $this->assertFileExists(__DIR__ . '/../tmp/test2.jpg');
         unlink(__DIR__ . '/../tmp/test2.jpg');
@@ -97,6 +99,31 @@ class ImagickTest extends TestCase
         $image->writeToFile(__DIR__ . '/../tmp/test.gif');
         $this->assertFileExists(__DIR__ . '/../tmp/test.gif');
         unlink(__DIR__ . '/../tmp/test.gif');
+    }
+
+    public function testAddImage()
+    {
+        $image = new Imagick(100, 100, 'test.gif');
+        $image->addImage(__DIR__ . '/../tmp/frame1.gif', 50)
+            ->addImage(__DIR__ . '/../tmp/frame2.gif', 50)
+            ->addImage(__DIR__ . '/../tmp/frame3.gif', 50);
+
+        $this->assertTrue($image->hasImages());
+        $this->assertEquals(4, $image->getNumberOfImages());
+    }
+
+    public function testRebuildImages()
+    {
+        $image = new Imagick(__DIR__ . '/../tmp/ani.gif');
+
+        $frames = $image->getImages();
+
+        $this->assertEquals(4, count($frames));
+        foreach ($frames as $frame) {
+            $frame->setImageDelay(100);
+        }
+        $image->rebuildImages($frames);
+        $this->assertEquals(4, count($frames));
     }
 
     public function testSetAndGetImageFilter()

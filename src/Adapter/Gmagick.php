@@ -24,12 +24,16 @@ use Pop\Image\Type;
 /**
  * Gmagick adapter class
  *
+ *  This class has been deprecated as of 2/6/2020 and will no longer be maintained.
+ *  Please use the Imagick classes instead.
+ *
  * @category   Pop
  * @package    Pop\Image
  * @author     Nick Sagona, III <dev@nolainteractive.com>
  * @copyright  Copyright (c) 2009-2020 NOLA Interactive, LLC. (http://www.nolainteractive.com)
  * @license    http://www.popphp.org/license     New BSD License
- * @version    3.3.2
+ * @version    3.4.0
+ * @deprecated
  */
 class Gmagick extends AbstractAdapter
 {
