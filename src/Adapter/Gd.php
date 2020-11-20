@@ -95,6 +95,10 @@ class Gd extends AbstractAdapter
      */
     public function loadFromString($data, $name = null)
     {
+        if (null !== $name) {
+            $this->name = $name;
+        }
+
         $this->resource = @imagecreatefromstring($data);
 
         if ($this->resource === false) {

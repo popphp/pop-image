@@ -133,7 +133,9 @@ class Imagick extends AbstractAdapter
         }
         $this->resource->readImageBlob($data);
 
-        $this->name = $name;
+        if (null !== $name) {
+            $this->name = $name;
+        }
 
         switch ($this->resource->getImageColorspace()) {
             case \Imagick::COLORSPACE_GRAY:
