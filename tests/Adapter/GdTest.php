@@ -314,7 +314,7 @@ class GdTest extends TestCase
         $image->writeToFile();
         $this->assertFileExists(__DIR__ . '/../tmp/test2.jpg');
         unlink(__DIR__ . '/../tmp/test2.jpg');
-        $this->assertFileNotExists(__DIR__ . '/../tmp/test2.jpg');
+        $this->assertFileDoesNotExist(__DIR__ . '/../tmp/test2.jpg');
     }
 
     public function testCreateColor()
@@ -358,8 +358,8 @@ class GdTest extends TestCase
         $result = ob_get_clean();
 
         $image->destroy(true);
-        $this->assertContains('JPEG', $result);
-        $this->assertFileNotExists(__DIR__ . '/../tmp/test-240.jpg');
+        $this->assertStringContainsString('JPEG', $result);
+        $this->assertFileDoesNotExist(__DIR__ . '/../tmp/test-240.jpg');
     }
 
     public function testToString()
@@ -368,7 +368,7 @@ class GdTest extends TestCase
         ob_start();
         echo $image;
         $result = ob_get_clean();
-        $this->assertContains('JPEG', $result);
+        $this->assertStringContainsString('JPEG', $result);
     }
 
 }

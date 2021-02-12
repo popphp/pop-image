@@ -4,7 +4,7 @@
  *
  * @link       https://github.com/popphp/popphp-framework
  * @author     Nick Sagona, III <dev@nolainteractive.com>
- * @copyright  Copyright (c) 2009-2020 NOLA Interactive, LLC. (http://www.nolainteractive.com)
+ * @copyright  Copyright (c) 2009-2021 NOLA Interactive, LLC. (http://www.nolainteractive.com)
  * @license    http://www.popphp.org/license     New BSD License
  */
 
@@ -19,7 +19,7 @@ namespace Pop\Image;
  * @category   Pop
  * @package    Pop\Image
  * @author     Nick Sagona, III <dev@nolainteractive.com>
- * @copyright  Copyright (c) 2009-2020 NOLA Interactive, LLC. (http://www.nolainteractive.com)
+ * @copyright  Copyright (c) 2009-2021 NOLA Interactive, LLC. (http://www.nolainteractive.com)
  * @license    http://www.popphp.org/license     New BSD License
  * @version    3.4.0
  */
@@ -35,7 +35,6 @@ class Image
     {
         return [
             'gd'      => function_exists('gd_info'),
-            'gmagick' => (class_exists('Gmagick', false)),
             'imagick' => (class_exists('Imagick', false))
         ];
     }
@@ -53,10 +52,6 @@ class Image
         switch (strtolower($adapter)) {
             case 'gd':
                 $result = function_exists('gd_info');
-                break;
-            case 'graphicsmagick':
-            case 'gmagick':
-                $result = (class_exists('Gmagick', false));
                 break;
             case 'imagemagick':
             case 'imagick':
@@ -76,17 +71,6 @@ class Image
     public static function loadGd($image)
     {
         return Gd::load($image);
-    }
-
-    /**
-     * Load the image resource from the existing image file into a Gmagick object
-     *
-     * @param  string $image
-     * @return Adapter\Gmagick
-     */
-    public static function loadGmagick($image)
-    {
-        return Gmagick::load($image);
     }
 
     /**
@@ -110,18 +94,6 @@ class Image
     public static function loadGdFromString($data, $name = null)
     {
         return Gd::loadFromString($data, $name);
-    }
-
-    /**
-     * Load the image resource from data into a Gmagick object
-     *
-     * @param  string $data
-     * @param  string $name
-     * @return Adapter\Gmagick
-     */
-    public static function loadGmagickFromString($data, $name = null)
-    {
-        return Gmagick::loadFromString($data, $name);
     }
 
     /**
@@ -160,32 +132,6 @@ class Image
     public static function createGdIndex($width, $height, $image = null)
     {
         return Gd::createIndex($width, $height, $image);
-    }
-
-    /**
-     * Create a new image resource and load it into a Gmagick object
-     *
-     * @param  int    $width
-     * @param  int    $height
-     * @param  string $image
-     * @return Adapter\Gmagick
-     */
-    public static function createGmagick($width, $height, $image = null)
-    {
-        return Gmagick::create($width, $height, $image);
-    }
-
-    /**
-     * Create a new indexed image resource and load it into a Gmagick object
-     *
-     * @param  int    $width
-     * @param  int    $height
-     * @param  string $image
-     * @return Adapter\Gmagick
-     */
-    public static function createGmagickIndex($width, $height, $image = null)
-    {
-        return Gmagick::createIndex($width, $height, $image);
     }
 
     /**

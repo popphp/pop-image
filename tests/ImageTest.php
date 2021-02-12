@@ -14,7 +14,6 @@ class ImageTest extends TestCase
         $adapters = Image::getAvailableAdapters();
         $this->assertTrue(isset($adapters['gd']));
         $this->assertTrue(is_bool(Image::isAvailable('gd')));
-        $this->assertTrue(is_bool(Image::isAvailable('gmagick')));
         $this->assertTrue(is_bool(Image::isAvailable('imagick')));
     }
 

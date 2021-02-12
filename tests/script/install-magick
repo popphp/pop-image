@@ -1,4 +1,0 @@
-#!/bin/bash
-if [ "$MAGICK_EXT" == "imagick" ]; then
-    printf "\n" | pecl install imagick
-fi

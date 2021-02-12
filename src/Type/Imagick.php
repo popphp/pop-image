@@ -4,7 +4,7 @@
  *
  * @link       https://github.com/popphp/popphp-framework
  * @author     Nick Sagona, III <dev@nolainteractive.com>
- * @copyright  Copyright (c) 2009-2020 NOLA Interactive, LLC. (http://www.nolainteractive.com)
+ * @copyright  Copyright (c) 2009-2021 NOLA Interactive, LLC. (http://www.nolainteractive.com)
  * @license    http://www.popphp.org/license     New BSD License
  */
 
@@ -19,7 +19,7 @@ namespace Pop\Image\Type;
  * @category   Pop
  * @package    Pop\Image
  * @author     Nick Sagona, III <dev@nolainteractive.com>
- * @copyright  Copyright (c) 2009-2020 NOLA Interactive, LLC. (http://www.nolainteractive.com)
+ * @copyright  Copyright (c) 2009-2021 NOLA Interactive, LLC. (http://www.nolainteractive.com)
  * @license    http://www.popphp.org/license     New BSD License
  * @version    3.4.0
  */
@@ -59,7 +59,7 @@ class Imagick extends AbstractType
             // Set the font if passed
             if (null !== $this->font) {
                 if (!$draw->setFont($this->font)) {
-                    throw new Exception("Error: The font '" . $this->font . "' is not recognized by the Gmagick extension.");
+                    throw new Exception("Error: The font '" . $this->font . "' is not recognized by the Imagick extension.");
                 }
                 // Else, attempt to set a basic, default system font
             } else {

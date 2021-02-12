@@ -1,13 +1,13 @@
 pop-image
 =========
 
-[![Build Status](https://travis-ci.org/popphp/pop-image.svg?branch=master)](https://travis-ci.org/popphp/pop-image)
+[![Build Status](https://github.com/popphp/pop-image/workflows/phpunit/badge.svg)](https://github.com/popphp/pop-image/actions)
 [![Coverage Status](http://cc.popphp.org/coverage.php?comp=pop-image)](http://cc.popphp.org/pop-image/)
 
 OVERVIEW
 --------
 `pop-image` is a powerful and robust image processing component that's simple to use.
-It supports the GD, Imagick and Gmagick extensions. The API is similar to the more
+It supports the GD and Imagick extensions. The API is similar to the more
 popular image editing application on the market,  with calls to manipulation objects
 that can be extended with additional image processing functionality if needed
 

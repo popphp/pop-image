@@ -9,15 +9,6 @@ use PHPUnit\Framework\TestCase;
 class ImagickTest extends TestCase
 {
 
-    protected function setUp()
-    {
-        parent::setUp();
-
-        if (!class_exists('Imagick')) {
-            $this->markTestSkipped('Imagick is not installed');
-        }
-    }
-
     public function testOpacity()
     {
         $image = new Adapter\Imagick(640, 480, 'test.jpg');

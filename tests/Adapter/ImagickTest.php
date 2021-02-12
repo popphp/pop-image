@@ -8,14 +8,6 @@ use PHPUnit\Framework\TestCase;
 
 class ImagickTest extends TestCase
 {
-    protected function setUp()
-    {
-        parent::setUp();
-
-        if (!class_exists('Imagick')) {
-            $this->markTestSkipped('Imagick is not installed');
-        }
-    }
 
     public function testLoadJpg()
     {
@@ -363,7 +355,7 @@ class ImagickTest extends TestCase
         $image->writeToFile();
         $this->assertFileExists(__DIR__ . '/../tmp/test2.jpg');
         unlink(__DIR__ . '/../tmp/test2.jpg');
-        $this->assertFileNotExists(__DIR__ . '/../tmp/test2.jpg');
+        $this->assertFileDoesNotExist(__DIR__ . '/../tmp/test2.jpg');
     }
 
     public function testCreateColor1()
@@ -409,7 +401,7 @@ class ImagickTest extends TestCase
 
         $image->destroy(true);
         $this->assertFalse(ctype_print($result));
-        $this->assertFileNotExists(__DIR__ . '/../tmp/test-240.jpg');
+        $this->assertFileDoesNotExist(__DIR__ . '/../tmp/test-240.jpg');
     }
 
     public function testToString()
