@@ -27,7 +27,7 @@ jobs:
           ${{ runner.os }}-php-
 
     - name: Install extensions
-      run: apt install imagemagick
+      run: sudo apt install imagemagick php-imagick
 
     - name: Install dependencies
       if: steps.composer-cache.outputs.cache-hit != 'true'
