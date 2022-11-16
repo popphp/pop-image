@@ -4,7 +4,7 @@
  *
  * @link       https://github.com/popphp/popphp-framework
  * @author     Nick Sagona, III <dev@nolainteractive.com>
- * @copyright  Copyright (c) 2009-2021 NOLA Interactive, LLC. (http://www.nolainteractive.com)
+ * @copyright  Copyright (c) 2009-2023 NOLA Interactive, LLC. (http://www.nolainteractive.com)
  * @license    http://www.popphp.org/license     New BSD License
  */
 
@@ -19,7 +19,7 @@ namespace Pop\Image\Draw;
  * @category   Pop
  * @package    Pop\Image
  * @author     Nick Sagona, III <dev@nolainteractive.com>
- * @copyright  Copyright (c) 2009-2021 NOLA Interactive, LLC. (http://www.nolainteractive.com)
+ * @copyright  Copyright (c) 2009-2023 NOLA Interactive, LLC. (http://www.nolainteractive.com)
  * @license    http://www.popphp.org/license     New BSD License
  * @version    3.4.0
  */
@@ -282,7 +282,11 @@ class Gd extends AbstractDraw
             if (null !== $this->fillColor) {
                 $fillColor = ($this->image->isIndexed()) ? $this->image->createColor($this->fillColor) :
                     $this->image->createColor($this->fillColor, $this->opacity);
-                imagefilledpolygon($this->image->getResource(), $realPoints, count($points), $fillColor);
+                if (strpos(PHP_VERSION, '8.1') !== false) {
+                    imagefilledpolygon($this->image->getResource(), $realPoints, $fillColor);
+                } else {
+                    imagefilledpolygon($this->image->getResource(), $realPoints, count($points), $fillColor);
+                }
             }
 
             if ($this->strokeWidth > 0) {
@@ -290,7 +294,11 @@ class Gd extends AbstractDraw
                     $this->image->createColor($this->strokeColor, $this->opacity);
 
                 imagesetthickness($this->image->getResource(), $this->strokeWidth);
-                imagepolygon($this->image->getResource(), $realPoints, count($points), $strokeColor);
+                if (strpos(PHP_VERSION, '8.1') !== false) {
+                    imagepolygon($this->image->getResource(), $realPoints, $strokeColor);
+                } else {
+                    imagepolygon($this->image->getResource(), $realPoints, count($points), $strokeColor);
+                }
             }
         }
 
