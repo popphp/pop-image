@@ -72,6 +72,12 @@ abstract class AbstractAdapter implements AdapterInterface
     protected $format = 'jpg';
 
     /**
+     * Image quality
+     * @var int
+     */
+    protected $quality = 100;
+
+    /**
      * Image colorspace
      * @var int
      */
@@ -211,6 +217,16 @@ abstract class AbstractAdapter implements AdapterInterface
     }
 
     /**
+     * Get the image quality
+     *
+     * @return int
+     */
+    public function getQuality()
+    {
+        return $this->quality;
+    }
+
+    /**
      * Get the colorspace
      *
      * @return int
@@ -278,6 +294,18 @@ abstract class AbstractAdapter implements AdapterInterface
     public function isCmyk()
     {
         return ($this->colorspace == self::IMAGE_CMYK);
+    }
+
+    /**
+     * Set the image quality
+     *
+     * @oaram  int $quality
+     * @return static
+     */
+    public function setQuality($quality)
+    {
+        $this->quality = (int)$quality;
+        return $this;
     }
 
     /**

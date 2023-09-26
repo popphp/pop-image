@@ -779,21 +779,25 @@ class Imagick extends AbstractAdapter
      * @throws Exception
      * @return void
      */
-    public function writeToFile($to = null, $quality = 100)
+    public function writeToFile($to = null, $quality = null)
     {
         if ((null === $this->resource) || ((null !== $this->resource) && ($this->resource->count() == 0))) {
             throw new Exception('Error: An image resource has not been created or loaded');
+        }
+
+        if (null !== $quality) {
+            $this->setQuality($quality);
         }
 
         if (null !== $this->compression) {
             $this->resource->setImageCompression($this->compression);
         }
 
-        if (((int)$quality < 0) || ((int)$quality > 100)) {
+        if (((int)$this->quality < 0) || ((int)$this->quality > 100)) {
             throw new \OutOfRangeException('Error: The quality parameter must be between 0 and 100');
         }
 
-        $this->resource->setImageCompressionQuality($quality);
+        $this->resource->setImageCompressionQuality($this->quality);
 
         if (null === $to) {
             $to = (null !== $this->name) ? basename($this->name) : 'pop-image.' . $this->format;
@@ -815,13 +819,17 @@ class Imagick extends AbstractAdapter
      * @throws Exception
      * @return void
      */
-    public function outputToHttp($quality = 100, $to = null, $download = false, $sendHeaders = true, array $headers = [])
+    public function outputToHttp($quality = null, $to = null, $download = false, $sendHeaders = true, array $headers = [])
     {
         if ((null === $this->resource) || ((null !== $this->resource) && ($this->resource->count() == 0))) {
             throw new Exception('Error: An image resource has not been created or loaded');
         }
 
-        if (((int)$quality < 0) || ((int)$quality > 100)) {
+        if (null !== $quality) {
+            $this->setQuality($quality);
+        }
+
+        if (((int)$this->quality < 0) || ((int)$this->quality > 100)) {
             throw new \OutOfRangeException('Error: The quality parameter must be between 0 and 100');
         }
 
@@ -829,7 +837,7 @@ class Imagick extends AbstractAdapter
             $this->resource->setImageCompression($this->compression);
         }
 
-        $this->resource->setImageCompressionQuality($quality);
+        $this->resource->setImageCompressionQuality($this->quality);
 
         if (null === $to) {
             $to = (null !== $this->name) ? basename($this->name) : 'pop-image.' . strtolower($this->format);

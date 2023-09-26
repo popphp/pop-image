@@ -556,13 +556,17 @@ class Gd extends AbstractAdapter
      * @throws Exception
      * @return void
      */
-    public function writeToFile($to = null, $quality = 100)
+    public function writeToFile($to = null, $quality = null)
     {
         if (null === $this->resource) {
             throw new Exception('Error: An image resource has not been created or loaded');
         }
 
-        if (((int)$quality < 0) || ((int)$quality > 100)) {
+        if (null !== $quality) {
+            $this->setQuality($quality);
+        }
+
+        if (((int)$this->quality < 0) || ((int)$this->quality > 100)) {
             throw new \OutOfRangeException('Error: The quality parameter must be between 0 and 100');
         }
 
@@ -574,7 +578,7 @@ class Gd extends AbstractAdapter
             $this->name = $to;
         }
 
-        $this->generateImage((int)$quality, $to);
+        $this->generateImage((int)$this->quality, $to);
     }
 
     /**
@@ -588,13 +592,17 @@ class Gd extends AbstractAdapter
      * @throws Exception
      * @return void
      */
-    public function outputToHttp($quality = 100, $to = null, $download = false, $sendHeaders = true, array $headers = [])
+    public function outputToHttp($quality = null, $to = null, $download = false, $sendHeaders = true, array $headers = [])
     {
         if (null === $this->resource) {
             throw new Exception('Error: An image resource has not been created or loaded');
         }
 
-        if (((int)$quality < 0) || ((int)$quality > 100)) {
+        if (null !== $quality) {
+            $this->setQuality($quality);
+        }
+
+        if (((int)$this->quality < 0) || ((int)$this->quality > 100)) {
             throw new \OutOfRangeException('Error: The quality parameter must be between 0 and 100');
         }
 
@@ -605,7 +613,7 @@ class Gd extends AbstractAdapter
         }
 
         $this->sendHeaders($to, $download, $headers);
-        $this->generateImage((int)$quality);
+        $this->generateImage((int)$this->quality);
     }
 
     /**
@@ -671,8 +679,9 @@ class Gd extends AbstractAdapter
      */
     public function __toString()
     {
+        $quality = (null !== $this->quality) ? $this->quality : 100;
         $this->sendHeaders();
-        $this->generateImage(100);
+        $this->generateImage($quality);
         return '';
     }
 

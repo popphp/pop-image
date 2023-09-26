@@ -77,6 +77,13 @@ interface AdapterInterface
     public function getHeight();
 
     /**
+     * Get the image quality
+     *
+     * @return int
+     */
+    public function getQuality();
+
+    /**
      * Get the colorspace
      *
      * @return int
@@ -117,6 +124,14 @@ interface AdapterInterface
      * @return boolean
      */
     public function isCmyk();
+
+    /**
+     * Set the image quality
+     *
+     * @param  int $quality
+     * @return static
+     */
+    public function setQuality($quality);
 
     /**
      * Set the image adjust object
