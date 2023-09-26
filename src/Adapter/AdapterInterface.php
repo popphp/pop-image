@@ -91,13 +91,6 @@ interface AdapterInterface
     public function isIndexed();
 
     /**
-     * Get the image type
-     *
-     * @return string
-     */
-    public function getType();
-
-    /**
      * Get the image EXIF data
      *
      * @return array
