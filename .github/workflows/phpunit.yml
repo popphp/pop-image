@@ -30,7 +30,7 @@ jobs:
           ${{ runner.os }}-php-
 
     - name: Install extensions
-      run: sudo apt install imagemagick php${{ matrix.php-versions }}-imagick
+      run: sudo apt install imagemagick php-imagick
 
     - name: Install dependencies
       if: steps.composer-cache.outputs.cache-hit != 'true'
