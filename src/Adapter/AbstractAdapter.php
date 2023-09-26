@@ -31,7 +31,7 @@ use Pop\Image\Type;
  * @license    http://www.popphp.org/license     New BSD License
  * @version    3.4.0
  */
-abstract class AbstractAdapter
+abstract class AbstractAdapter implements AdapterInterface
 {
 
     /**
