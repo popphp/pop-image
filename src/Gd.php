@@ -31,7 +31,7 @@ class Gd
      *
      * @return array
      */
-    public static function getAvailableAdapters()
+    public static function getAvailableAdapters(): array
     {
         return Image::getAvailableAdapters();
     }
@@ -41,7 +41,7 @@ class Gd
      *
      * @return bool
      */
-    public static function isAvailable()
+    public static function isAvailable(): bool
     {
         return Image::isAvailable('gd');
     }
@@ -52,7 +52,7 @@ class Gd
      * @param  string $image
      * @return Adapter\Gd
      */
-    public static function load($image)
+    public static function load(string $image): Adapter\Gd
     {
         return new Adapter\Gd($image);
     }
@@ -60,11 +60,12 @@ class Gd
     /**
      * Load the image resource from data into a Gd object
      *
-     * @param  string $data
-     * @param  string $name
+     * @param  string  $data
+     * @param  ?string $name
+     * @throws Adapter\Exception
      * @return Adapter\Gd
      */
-    public static function loadFromString($data, $name = null)
+    public static function loadFromString(string $data, ?string $name = null): Adapter\Gd
     {
         $gd = new Adapter\Gd();
         $gd->loadFromString($data, $name);
@@ -74,12 +75,12 @@ class Gd
     /**
      * Create a new image resource and load it into a Gd object
      *
-     * @param  int    $width
-     * @param  int    $height
-     * @param  string $image
+     * @param  int     $width
+     * @param  int     $height
+     * @param  ?string $image
      * @return Adapter\Gd
      */
-    public static function create($width, $height, $image = null)
+    public static function create(int $width, int $height, ?string $image = null): Adapter\Gd
     {
         return new Adapter\Gd($width, $height, $image);
     }
@@ -87,12 +88,13 @@ class Gd
     /**
      * Create a new indexed image resource and load it into a Gd object
      *
-     * @param  int    $width
-     * @param  int    $height
-     * @param  string $image
+     * @param  int     $width
+     * @param  int     $height
+     * @param  ?string $image
+     * @throws Adapter\Exception
      * @return Adapter\Gd
      */
-    public static function createIndex($width, $height, $image = null)
+    public static function createIndex(int $width, int $height, ?string $image = null): Adapter\Gd
     {
         $gd = new Adapter\Gd();
         $gd->createIndex($width, $height, $image);

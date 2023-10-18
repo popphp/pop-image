@@ -20,6 +20,9 @@ use Pop\Image\Effect;
 use Pop\Image\Filter;
 use Pop\Image\Layer;
 use Pop\Image\Type;
+use ImagickPixel;
+use ImagickPixelException;
+use ImagickException;
 
 /**
  * Imagick adapter class
@@ -36,28 +39,28 @@ class Imagick extends AbstractAdapter
 
     /**
      * Image compression
-     * @var int
+     * @var ?int
      */
-    protected $compression = null;
+    protected ?int $compression = null;
 
     /**
      * Image filter
      * @var int
      */
-    protected $imageFilter = \Imagick::FILTER_LANCZOS;
+    protected int $imageFilter = \Imagick::FILTER_LANCZOS;
 
     /**
      * Image blur
      * @var float
      */
-    protected $imageBlur = 1;
+    protected float $imageBlur = 1;
 
     /**
      * Create the image resource
      *
      * @return void
      */
-    public function createResource()
+    public function createResource(): void
     {
         $this->resource = new \Imagick();
     }
@@ -65,15 +68,15 @@ class Imagick extends AbstractAdapter
     /**
      * Load the image resource from the existing image file
      *
-     * @param  string $name
-     * @throws Exception
+     * @param  ?string $name
+     * @throws Exception|ImagickException
      * @return Imagick
      */
-    public function load($name = null)
+    public function load(?string $name = null): Imagick
     {
         $filename = null;
         if ($name !== null) {
-            $filename = ((strpos($name, '[') !== false) && (strpos($name, ']') !== false)) ?
+            $filename = ((str_contains($name, '[')) && (str_contains($name, ']'))) ?
                 substr($name, 0, strpos($name, '[')) : $name;
             $this->name = $name;
         }
@@ -109,7 +112,7 @@ class Imagick extends AbstractAdapter
             $this->indexed = true;
         }
 
-        if ((strpos($this->format, 'jp') !== false) && function_exists('exif_read_data')) {
+        if ((str_contains($this->format, 'jp')) && function_exists('exif_read_data')) {
             $exif = @exif_read_data($this->name);
             if ($exif !== false) {
                 $this->exif = $exif;
@@ -122,11 +125,12 @@ class Imagick extends AbstractAdapter
     /**
      * Load the image resource from data
      *
-     * @param  string $data
-     * @param  string $name
+     * @param  string  $data
+     * @param  ?string $name
+     * @throws ImagickException
      * @return Imagick
      */
-    public function loadFromString($data, $name = null)
+    public function loadFromString(string $data, ?string $name = null): Imagick
     {
         if ($this->resource === null) {
             $this->resource = new \Imagick();
@@ -155,7 +159,7 @@ class Imagick extends AbstractAdapter
             $this->indexed = true;
         }
 
-        if ((strpos($this->format, 'jp') !== false) && function_exists('exif_read_data')) {
+        if ((str_contains($this->format, 'jp')) && function_exists('exif_read_data')) {
             $exif = @exif_read_data('data://image/jpeg;base64,' . base64_encode($data));
             if ($exif !== false) {
                 $this->exif = $exif;
@@ -168,12 +172,12 @@ class Imagick extends AbstractAdapter
     /**
      * Create a new image resource
      *
-     * @param  int    $width
-     * @param  int    $height
-     * @param  string $name
+     * @param  ?int    $width
+     * @param  ?int    $height
+     * @param  ?string $name
      * @return Imagick
      */
-    public function create($width = null, $height = null, $name = null)
+    public function create(?int $width = null, ?int $height = null, ?string $name = null): Imagick
     {
         if (($width !== null) && ($height !== null)) {
             $this->width  = $width;
@@ -188,7 +192,7 @@ class Imagick extends AbstractAdapter
             $this->resource = new \Imagick();
         }
 
-        $this->resource->newImage($this->width, $this->height, new \ImagickPixel('white'));
+        $this->resource->newImage($this->width, $this->height, new ImagickPixel('white'));
 
         if ($this->name !== null) {
             $extension = strtolower(substr($this->name, (strrpos($this->name, '.') + 1)));
@@ -204,12 +208,13 @@ class Imagick extends AbstractAdapter
     /**
      * Create a new image resource
      *
-     * @param  int    $width
-     * @param  int    $height
-     * @param  string $name
+     * @param  ?int    $width
+     * @param  ?int    $height
+     * @param  ?string $name
+     * @throws ImagickException
      * @return Imagick
      */
-    public function createIndex($width = null, $height = null, $name = null)
+    public function createIndex(?int $width = null, ?int $height = null, ?string $name = null): Imagick
     {
         if (($width !== null) && ($height !== null)) {
             $this->width  = $width;
@@ -224,7 +229,7 @@ class Imagick extends AbstractAdapter
             $this->resource = new \Imagick();
         }
 
-        $this->resource->newImage($this->width, $this->height, new \ImagickPixel('white'));
+        $this->resource->newImage($this->width, $this->height, new ImagickPixel('white'));
 
         if ($this->name !== null) {
             $extension = strtolower(substr($this->name, (strrpos($this->name, '.') + 1)));
@@ -244,10 +249,11 @@ class Imagick extends AbstractAdapter
      * Add image to the image resource
      *
      * @param  mixed $image
-     * @param  int   $delay
+     * @param  ?int  $delay
+     * @throws ImagickException
      * @return Imagick
      */
-    public function addImage($image, $delay = null)
+    public function addImage(mixed $image, ?int $delay = null): Imagick
     {
         if (!($image instanceof \Imagick)) {
             $image = new \Imagick($image);
@@ -264,7 +270,7 @@ class Imagick extends AbstractAdapter
      *
      * @return bool
      */
-    public function hasImages()
+    public function hasImages(): bool
     {
         return ($this->resource->getNumberImages() > 0);
     }
@@ -272,9 +278,9 @@ class Imagick extends AbstractAdapter
     /**
      * Get images
      *
-     * @return array
+     * @return \Imagick
      */
-    public function getImages()
+    public function getImages(): \Imagick
     {
         return $this->resource->coalesceImages();
     }
@@ -283,9 +289,10 @@ class Imagick extends AbstractAdapter
      * Get images
      *
      * @param  \Imagick $images
+     * @throws ImagickException
      * @return Imagick
      */
-    public function rebuildImages(\Imagick $images)
+    public function rebuildImages(\Imagick $images): Imagick
     {
         $this->resource = $images->deconstructImages();
         return $this;
@@ -294,11 +301,11 @@ class Imagick extends AbstractAdapter
     /**
      * Set the image resolution
      *
-     * @param  int $x
-     * @param  int $y
+     * @param  int  $x
+     * @param  ?int $y
      * @return Imagick
      */
-    public function setResolution($x, $y = null)
+    public function setResolution(int $x, ?int $y = null): Imagick
     {
         if ($y === null) {
             $y = $x;
@@ -313,7 +320,7 @@ class Imagick extends AbstractAdapter
      * @param  int $colorspace
      * @return Imagick
      */
-    public function setImageColorspace($colorspace)
+    public function setImageColorspace(int $colorspace): Imagick
     {
         $this->resource->setImageColorspace($colorspace);
         return $this;
@@ -325,7 +332,7 @@ class Imagick extends AbstractAdapter
      * @param  int $compression
      * @return Imagick
      */
-    public function setCompression($compression)
+    public function setCompression(int $compression): Imagick
     {
         $this->compression = $compression;
         return $this;
@@ -337,7 +344,7 @@ class Imagick extends AbstractAdapter
      * @param  int $filter
      * @return Imagick
      */
-    public function setImageFilter($filter)
+    public function setImageFilter(int $filter): Imagick
     {
         $this->imageFilter = $filter;
         return $this;
@@ -349,7 +356,7 @@ class Imagick extends AbstractAdapter
      * @param  float $blur
      * @return Imagick
      */
-    public function setImageBlur($blur)
+    public function setImageBlur(float $blur): Imagick
     {
         $this->imageBlur = $blur;
         return $this;
@@ -360,7 +367,7 @@ class Imagick extends AbstractAdapter
      *
      * @return int
      */
-    public function getNumberOfImages()
+    public function getNumberOfImages(): int
     {
         return $this->resource->getNumberImages();
     }
@@ -370,7 +377,7 @@ class Imagick extends AbstractAdapter
      *
      * @return int
      */
-    public function getCompression()
+    public function getCompression(): int
     {
         return $this->compression;
     }
@@ -380,7 +387,7 @@ class Imagick extends AbstractAdapter
      *
      * @return int
      */
-    public function getImageFilter()
+    public function getImageFilter(): int
     {
         return $this->imageFilter;
     }
@@ -390,7 +397,7 @@ class Imagick extends AbstractAdapter
      *
      * @return float
      */
-    public function getImageBlur()
+    public function getImageBlur(): float
     {
         return $this->imageBlur;
     }
@@ -401,7 +408,7 @@ class Imagick extends AbstractAdapter
      * @param  int $w
      * @return Imagick
      */
-    public function resizeToWidth($w)
+    public function resizeToWidth(int $w): Imagick
     {
         $scale        = $w / $this->width;
         $this->width  = $w;
@@ -416,7 +423,7 @@ class Imagick extends AbstractAdapter
      * @param  int $h
      * @return Imagick
      */
-    public function resizeToHeight($h)
+    public function resizeToHeight(int $h): Imagick
     {
         $scale        = $h / $this->height;
         $this->height = $h;
@@ -432,7 +439,7 @@ class Imagick extends AbstractAdapter
      * @param  int $px
      * @return Imagick
      */
-    public function resize($px)
+    public function resize(int $px): Imagick
     {
         $scale        = ($this->width > $this->height) ? ($px / $this->width) : ($px / $this->height);
         $this->width  = round($this->width * $scale);
@@ -448,7 +455,7 @@ class Imagick extends AbstractAdapter
      * @param  float $scale
      * @return Imagick
      */
-    public function scale($scale)
+    public function scale(float $scale): Imagick
     {
         $this->width  = round($this->width * $scale);
         $this->height = round($this->height * $scale);
@@ -459,13 +466,13 @@ class Imagick extends AbstractAdapter
     /**
      * Resize image, checking for multiple frames
      *
-     * @param  int $width
-     * @param  int $height
-     * @param  int $filter
-     * @param  int $blur
+     * @param  int  $width
+     * @param  int  $height
+     * @param  ?int $filter
+     * @param  ?int $blur
      * @return Imagick
      */
-    public function resizeImage($width, $height, $filter = null, $blur = null)
+    public function resizeImage(int $width, int $height, ?int $filter = null, ?int $blur = null): Imagick
     {
         if ($filter === null) {
             $filter = $this->imageFilter;
@@ -498,7 +505,7 @@ class Imagick extends AbstractAdapter
      * @param  int $y
      * @return Imagick
      */
-    public function crop($w, $h, $x = 0, $y = 0)
+    public function crop(int $w, int $h, int $x = 0, int $y = 0): Imagick
     {
         $this->width  = $w;
         $this->height = $h;
@@ -510,11 +517,11 @@ class Imagick extends AbstractAdapter
      * value of the $px argument. The optional $offset argument allows for the
      * adjustment of the crop to select a certain area of the image to be cropped.
      *
-     * @param  int $px
-     * @param  int $offset
+     * @param  int  $px
+     * @param  ?int $offset
      * @return Imagick
      */
-    public function cropThumb($px, $offset = null)
+    public function cropThumb(int $px, ?int $offset = null): Imagick
     {
         $xOffset = 0;
         $yOffset = 0;
@@ -556,7 +563,7 @@ class Imagick extends AbstractAdapter
      * @param  int $y
      * @return Imagick
      */
-    public function cropImage($width, $height, $x, $y)
+    public function cropImage(int $width, int $height, int $x, int $y): Imagick
     {
         if ($this->resource->getNumberImages() > 0) {
             $frames = $this->resource->coalesceImages();
@@ -582,7 +589,7 @@ class Imagick extends AbstractAdapter
      * @param  int $height
      * @return Imagick
      */
-    public function cropThumbnailImage($width, $height)
+    public function cropThumbnailImage(int $width, int $height): Imagick
     {
         if ($this->resource->getNumberImages() > 0) {
             $frames = $this->resource->coalesceImages();
@@ -603,11 +610,11 @@ class Imagick extends AbstractAdapter
     /**
      * Rotate the image object
      *
-     * @param  int                  $degrees
-     * @param  Color\ColorInterface $bgColor
+     * @param  int                   $degrees
+     * @param  ?Color\ColorInterface $bgColor
      * @return Imagick
      */
-    public function rotate($degrees, Color\ColorInterface $bgColor = null)
+    public function rotate(int $degrees, ?Color\ColorInterface $bgColor = null): Imagick
     {
         $this->resource->rotateImage($this->createColor($bgColor), $degrees);
         $this->width  = $this->resource->getImageWidth();
@@ -620,7 +627,7 @@ class Imagick extends AbstractAdapter
      *
      * @return Imagick
      */
-    public function flip()
+    public function flip(): Imagick
     {
         $this->resource->flipImage();
         return $this;
@@ -631,7 +638,7 @@ class Imagick extends AbstractAdapter
      *
      * @return Imagick
      */
-    public function flop()
+    public function flop(): Imagick
     {
         $this->resource->flopImage();
         return $this;
@@ -642,7 +649,7 @@ class Imagick extends AbstractAdapter
      *
      * @return Adjust\AdjustInterface
      */
-    public function adjust()
+    public function adjust(): Adjust\AdjustInterface
     {
         if ($this->adjust === null) {
             $this->adjust = new Adjust\Imagick($this);
@@ -659,7 +666,7 @@ class Imagick extends AbstractAdapter
      *
      * @return Draw\DrawInterface
      */
-    public function draw()
+    public function draw(): Draw\DrawInterface
     {
         if ($this->draw === null) {
             $this->draw = new Draw\Imagick($this);
@@ -675,7 +682,7 @@ class Imagick extends AbstractAdapter
      *
      * @return Effect\EffectInterface
      */
-    public function effect()
+    public function effect(): Effect\EffectInterface
     {
         if ($this->effect === null) {
             $this->effect = new Effect\Imagick($this);
@@ -691,7 +698,7 @@ class Imagick extends AbstractAdapter
      *
      * @return Filter\FilterInterface
      */
-    public function filter()
+    public function filter(): Filter\FilterInterface
     {
         if ($this->filter === null) {
             $this->filter = new Filter\Imagick($this);
@@ -707,7 +714,7 @@ class Imagick extends AbstractAdapter
      *
      * @return Layer\LayerInterface
      */
-    public function layer()
+    public function layer(): Layer\LayerInterface
     {
         if ($this->layer === null) {
             $this->layer = new Layer\Imagick($this);
@@ -723,7 +730,7 @@ class Imagick extends AbstractAdapter
      *
      * @return Type\TypeInterface
      */
-    public function type()
+    public function type(): Type\TypeInterface
     {
         if ($this->type === null) {
             $this->type = new Type\Imagick($this);
@@ -740,7 +747,7 @@ class Imagick extends AbstractAdapter
      * @param  string $to
      * @return Imagick
      */
-    public function convert($to)
+    public function convert(string $to): Imagick
     {
         $to   = strtolower($to);
         $old  = strtolower($this->format);
@@ -774,12 +781,12 @@ class Imagick extends AbstractAdapter
     /**
      * Write the image object to a file on disk
      *
-     * @param  string $to
-     * @param  int    $quality
+     * @param  ?string $to
+     * @param  ?int    $quality
      * @throws Exception
      * @return void
      */
-    public function writeToFile($to = null, $quality = null)
+    public function writeToFile(?string $to = null, ?int $quality = null): void
     {
         if (($this->resource === null) || (($this->resource !== null) && ($this->resource->count() == 0))) {
             throw new Exception('Error: An image resource has not been created or loaded');
@@ -811,15 +818,17 @@ class Imagick extends AbstractAdapter
     /**
      * Output the image object directly to HTTP
      *
-     * @param  int     $quality
-     * @param  string  $to
-     * @param  bool $download
-     * @param  bool $sendHeaders
+     * @param  ?int    $quality
+     * @param  ?string $to
+     * @param  bool    $download
+     * @param  bool    $sendHeaders
      * @param  array   $headers
      * @throws Exception
      * @return void
      */
-    public function outputToHttp($quality = null, $to = null, $download = false, $sendHeaders = true, array $headers = [])
+    public function outputToHttp(
+        ?int $quality = null, ?string $to = null, bool $download = false, bool $sendHeaders = true, array $headers = []
+    ): void
     {
         if (($this->resource === null) || (($this->resource !== null) && ($this->resource->count() == 0))) {
             throw new Exception('Error: An image resource has not been created or loaded');
@@ -853,7 +862,7 @@ class Imagick extends AbstractAdapter
      * @param  bool $delete
      * @return void
      */
-    public function destroy($delete = false)
+    public function destroy(bool $delete = false): void
     {
         if ($this->resource !== null) {
             $this->resource->clear();
@@ -872,11 +881,12 @@ class Imagick extends AbstractAdapter
     /**
      * Create and return a color.
      *
-     * @param  Color\ColorInterface $color
-     * @param  int                  $alpha
-     * @return \ImagickPixel
+     * @param  ?Color\ColorInterface $color
+     * @param  int                   $alpha
+     * @throws ImagickPixelException
+     * @return ImagickPixel
      */
-    public function createColor(Color\ColorInterface $color = null, $alpha = 100)
+    public function createColor(?Color\ColorInterface $color = null, int $alpha = 100): ImagickPixel
     {
         if ($color === null) {
             $color = new Color\Rgb(0, 0, 0);
@@ -890,7 +900,7 @@ class Imagick extends AbstractAdapter
             $color->setA($alpha / 100);
         }
 
-        return new \ImagickPixel($color->render(Color\Rgb::CSS));
+        return new ImagickPixel($color->render(Color\Rgb::CSS));
     }
 
     /**
@@ -898,7 +908,7 @@ class Imagick extends AbstractAdapter
      *
      * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         $this->sendHeaders();
         echo ($this->resource->getNumberImages() > 0) ? $this->resource->getImagesBlob() : $this->resource;

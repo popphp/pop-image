@@ -31,14 +31,14 @@ interface LayerInterface
      *
      * @return mixed
      */
-    public function getOpacity();
+    public function getOpacity(): mixed;
 
     /**
      * Set the image opacity.
      *
-     * @param  int $opacity
+     * @param  int|float $opacity
      * @return AbstractLayer
      */
-    public function setOpacity($opacity);
+    public function setOpacity(int|float $opacity): AbstractLayer;
 
 }

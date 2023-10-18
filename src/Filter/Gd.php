@@ -35,7 +35,7 @@ class Gd extends AbstractFilter
      * @param  int $type
      * @return Gd
      */
-    public function blur($amount, $type = IMG_FILTER_GAUSSIAN_BLUR)
+    public function blur(int $amount, int $type = IMG_FILTER_GAUSSIAN_BLUR): Gd
     {
         if ($this->hasImage()) {
             for ($i = 1; $i <= $amount; $i++) {
@@ -52,7 +52,7 @@ class Gd extends AbstractFilter
      * @param  int $amount
      * @return Gd
      */
-    public function sharpen($amount)
+    public function sharpen(int $amount): Gd
     {
         if ($this->hasImage()) {
             imagefilter($this->image->getResource(), IMG_FILTER_SMOOTH, (0 - $amount));
@@ -65,7 +65,7 @@ class Gd extends AbstractFilter
      *
      * @return Gd
      */
-    public function negate()
+    public function negate(): Gd
     {
         if ($this->hasImage()) {
             imagefilter($this->image->getResource(), IMG_FILTER_NEGATE);
@@ -79,7 +79,7 @@ class Gd extends AbstractFilter
      * @param  Color\Rgb $color
      * @return Gd
      */
-    public function colorize(Color\Rgb $color)
+    public function colorize(Color\Rgb $color): Gd
     {
         if ($this->hasImage()) {
             imagefilter($this->image->getResource(), IMG_FILTER_COLORIZE, $color->getR(), $color->getG(), $color->getB());
@@ -93,7 +93,7 @@ class Gd extends AbstractFilter
      * @param  int $px
      * @return Gd
      */
-    public function pixelate($px)
+    public function pixelate(int $px): Gd
     {
         if ($this->hasImage()) {
             imagefilter($this->image->getResource(), IMG_FILTER_PIXELATE, $px, true);
@@ -106,7 +106,7 @@ class Gd extends AbstractFilter
      *
      * @return Gd
      */
-    public function pencil()
+    public function pencil(): Gd
     {
         if ($this->hasImage()) {
             imagefilter($this->image->getResource(), IMG_FILTER_MEAN_REMOVAL);

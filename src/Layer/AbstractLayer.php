@@ -32,14 +32,14 @@ abstract class AbstractLayer extends AbstractEditObject implements LayerInterfac
      * Opacity
      * @var mixed
      */
-    protected $opacity = null;
+    protected int|float|null $opacity = null;
 
     /**
      * Get the opacity
      *
-     * @return mixed
+     * @return int|float|null
      */
-    public function getOpacity()
+    public function getOpacity(): int|float|null
     {
         return $this->opacity;
     }
@@ -50,7 +50,7 @@ abstract class AbstractLayer extends AbstractEditObject implements LayerInterfac
      * @param  int|float $opacity
      * @return AbstractLayer
      */
-    public function setOpacity($opacity)
+    public function setOpacity(int|float $opacity): AbstractLayer
     {
         $this->opacity = $opacity;
         return $this;

@@ -376,7 +376,7 @@ class ImagickTest extends TestCase
     {
         $this->expectException('Pop\Image\Adapter\Exception');
         $image = new Imagick();
-        $image->outputToHttp(__DIR__ . '/../tmp/test-240.jpg');
+        $image->outputToHttp(null, __DIR__ . '/../tmp/test-240.jpg');
     }
 
     public function testOutputToHttpOutOfRangeException()

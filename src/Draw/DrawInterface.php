@@ -31,38 +31,38 @@ interface DrawInterface
     /**
      * Set the opacity
      *
-     * @param  float $opacity
+     * @param  int|float $opacity
      * @return DrawInterface
      */
-    public function setOpacity($opacity);
+    public function setOpacity(int|float $opacity): DrawInterface;
 
     /**
      * Get the opacity
      *
      * @return mixed
      */
-    public function getOpacity();
+    public function getOpacity(): mixed;
 
     /**
      * Get fill color
      *
      * @return Color\Colorinterface
      */
-    public function getFillColor();
+    public function getFillColor(): Color\Colorinterface;
 
     /**
      * Get stroke color
      *
      * @return Color\Colorinterface
      */
-    public function getStrokeColor();
+    public function getStrokeColor(): Color\Colorinterface;
 
     /**
      * Get stroke width
      *
      * @return int
      */
-    public function getStrokeWidth();
+    public function getStrokeWidth(): int;
 
     /**
      * Set fill color
@@ -70,7 +70,7 @@ interface DrawInterface
      * @param  Color\ColorInterface $color
      * @return DrawInterface
      */
-    public function setFillColor(Color\ColorInterface $color);
+    public function setFillColor(Color\ColorInterface $color): DrawInterface;
 
     /**
      * Set stroke color
@@ -78,7 +78,7 @@ interface DrawInterface
      * @param  Color\ColorInterface $color
      * @return DrawInterface
      */
-    public function setStrokeColor(Color\ColorInterface $color);
+    public function setStrokeColor(Color\ColorInterface $color): DrawInterface;
 
     /**
      * Get stroke width
@@ -86,6 +86,6 @@ interface DrawInterface
      * @param int $w
      * @return DrawInterface
      */
-    public function setStrokeWidth($w);
+    public function setStrokeWidth(int $w): DrawInterface;
 
 }

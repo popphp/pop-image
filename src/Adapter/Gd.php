@@ -39,7 +39,7 @@ class Gd extends AbstractAdapter
      *
      * @return void
      */
-    public function createResource()
+    public function createResource(): void
     {
         $this->resource = null;
     }
@@ -47,11 +47,11 @@ class Gd extends AbstractAdapter
     /**
      * Load the image resource from the existing image file
      *
-     * @param  string $name
+     * @param  ?string $name
      * @throws Exception
      * @return Gd
      */
-    public function load($name = null)
+    public function load(?string $name = null): Gd
     {
         if ($name !== null) {
             $this->name = $name;
@@ -88,12 +88,12 @@ class Gd extends AbstractAdapter
     /**
      * Load the image resource from data
      *
-     * @param  string $data
-     * @param  string $name
+     * @param  string  $data
+     * @param  ?string $name
      * @throws Exception
      * @return Gd
      */
-    public function loadFromString($data, $name = null)
+    public function loadFromString(string $data, ?string $name = null): Gd
     {
         if ($name !== null) {
             $this->name = $name;
@@ -107,7 +107,7 @@ class Gd extends AbstractAdapter
 
         $this->parseImage(getimagesizefromstring($data), $data);
 
-        if ((strpos($this->format, 'jp') !== false) && function_exists('exif_read_data')) {
+        if ((str_contains($this->format, 'jp')) && function_exists('exif_read_data')) {
             $exif = @exif_read_data('data://image/jpeg;base64,' . base64_encode($data));
             if ($exif !== false) {
                 $this->exif = $exif;
@@ -120,13 +120,13 @@ class Gd extends AbstractAdapter
     /**
      * Create a new image resource
      *
-     * @param  int    $width
-     * @param  int    $height
-     * @param  string $name
+     * @param  ?int    $width
+     * @param  ?int    $height
+     * @param  ?string $name
      * @throws Exception
      * @return Gd
      */
-    public function create($width = null, $height = null, $name = null)
+    public function create(?int $width = null, ?int $height = null, ?string $name = null): Gd
     {
         if (($width !== null) && ($height !== null)) {
             $this->width  = $width;
@@ -164,13 +164,13 @@ class Gd extends AbstractAdapter
     /**
      * Create a new image resource
      *
-     * @param  int    $width
-     * @param  int    $height
-     * @param  string $name
+     * @param  ?int    $width
+     * @param  ?int    $height
+     * @param  ?string $name
      * @throws Exception
      * @return Gd
      */
-    public function createIndex($width = null, $height = null, $name = null)
+    public function createIndex(?int $width = null, ?int $height = null, ?string $name = null): Gd
     {
         if (($width !== null) && ($height !== null)) {
             $this->width  = $width;
@@ -207,7 +207,7 @@ class Gd extends AbstractAdapter
      * @param  int $w
      * @return Gd
      */
-    public function resizeToWidth($w)
+    public function resizeToWidth(int $w): Gd
     {
         $scale = $w / $this->width;
         $h     = round($this->height * $scale);
@@ -222,7 +222,7 @@ class Gd extends AbstractAdapter
      * @param  int $h
      * @return Gd
      */
-    public function resizeToHeight($h)
+    public function resizeToHeight(int $h): Gd
     {
         $scale = $h / $this->height;
         $w     = round($this->width * $scale);
@@ -238,7 +238,7 @@ class Gd extends AbstractAdapter
      * @param  int $px
      * @return Gd
      */
-    public function resize($px)
+    public function resize(int $px): Gd
     {
         $scale = ($this->width > $this->height) ? ($px / $this->width) : ($px / $this->height);
         $w     = round($this->width * $scale);
@@ -255,7 +255,7 @@ class Gd extends AbstractAdapter
      * @param  float $scale
      * @return Gd
      */
-    public function scale($scale)
+    public function scale(float $scale): Gd
     {
         $w = round($this->width * $scale);
         $h = round($this->height * $scale);
@@ -276,7 +276,7 @@ class Gd extends AbstractAdapter
      * @param  int $y
      * @return Gd
      */
-    public function crop($w, $h, $x = 0, $y = 0)
+    public function crop(int $w, int $h, int $x = 0, int $y = 0): Gd
     {
         $result = imagecreatetruecolor($w, $h);
         imagecopyresampled(
@@ -299,11 +299,11 @@ class Gd extends AbstractAdapter
      * value of the $px argument. The optional $offset argument allows for the
      * adjustment of the crop to select a certain area of the image to be cropped.
      *
-     * @param  int $px
-     * @param  int $offset
+     * @param  int  $px
+     * @param  ?int $offset
      * @return Gd
      */
-    public function cropThumb($px, $offset = null)
+    public function cropThumb(int $px, ?int $offset = null): Gd
     {
         $xOffset = 0;
         $yOffset = 0;
@@ -346,12 +346,12 @@ class Gd extends AbstractAdapter
     /**
      * Rotate the image object
      *
-     * @param  int                  $degrees
-     * @param  Color\ColorInterface $bgColor
-     * @param  int                  $alpha
+     * @param  int                   $degrees
+     * @param  ?Color\ColorInterface $bgColor
+     * @param  ?int                  $alpha
      * @return Gd
      */
-    public function rotate($degrees, Color\ColorInterface $bgColor = null, $alpha = null)
+    public function rotate(int $degrees, ?Color\ColorInterface $bgColor = null, int $alpha = null): Gd
     {
         $this->resource = imagerotate($this->resource, $degrees, $this->createColor($bgColor, $alpha));
         $this->width    = imagesx($this->resource);
@@ -364,7 +364,7 @@ class Gd extends AbstractAdapter
      *
      * @return Gd
      */
-    public function flip()
+    public function flip(): Gd
     {
         $curWidth     = $this->width;
         $curHeight    = $this->height;
@@ -383,7 +383,7 @@ class Gd extends AbstractAdapter
      *
      * @return Gd
      */
-    public function flop()
+    public function flop(): Gd
     {
         $curWidth    = $this->width;
         $curHeight   = $this->height;
@@ -402,7 +402,7 @@ class Gd extends AbstractAdapter
      *
      * @return Adjust\AdjustInterface
      */
-    public function adjust()
+    public function adjust(): Adjust\AdjustInterface
     {
         if ($this->adjust === null) {
             $this->adjust = new Adjust\Gd($this);
@@ -419,7 +419,7 @@ class Gd extends AbstractAdapter
      *
      * @return Draw\DrawInterface
      */
-    public function draw()
+    public function draw(): Draw\DrawInterface
     {
         if ($this->draw === null) {
             $this->draw = new Draw\Gd($this);
@@ -435,7 +435,7 @@ class Gd extends AbstractAdapter
      *
      * @return Effect\EffectInterface
      */
-    public function effect()
+    public function effect(): Effect\EffectInterface
     {
         if ($this->effect === null) {
             $this->effect = new Effect\Gd($this);
@@ -451,7 +451,7 @@ class Gd extends AbstractAdapter
      *
      * @return Filter\FilterInterface
      */
-    public function filter()
+    public function filter(): Filter\FilterInterface
     {
         if ($this->filter === null) {
             $this->filter = new Filter\Gd($this);
@@ -467,7 +467,7 @@ class Gd extends AbstractAdapter
      *
      * @return Layer\LayerInterface
      */
-    public function layer()
+    public function layer(): Layer\LayerInterface
     {
         if ($this->layer === null) {
             $this->layer = new Layer\Gd($this);
@@ -483,7 +483,7 @@ class Gd extends AbstractAdapter
      *
      * @return Type\TypeInterface
      */
-    public function type()
+    public function type(): Type\TypeInterface
     {
         if ($this->type === null) {
             $this->type = new Type\Gd($this);
@@ -501,7 +501,7 @@ class Gd extends AbstractAdapter
      * @throws Exception
      * @return Gd
      */
-    public function convert($to)
+    public function convert(string $to): Gd
     {
         $to = strtolower($to);
 
@@ -551,12 +551,12 @@ class Gd extends AbstractAdapter
     /**
      * Write the image object to a file on disk
      *
-     * @param  string $to
-     * @param  int    $quality
+     * @param  ?string $to
+     * @param  ?int    $quality
      * @throws Exception
      * @return void
      */
-    public function writeToFile($to = null, $quality = null)
+    public function writeToFile(?string $to = null, ?int $quality = null): void
     {
         if ($this->resource === null) {
             throw new Exception('Error: An image resource has not been created or loaded');
@@ -584,15 +584,17 @@ class Gd extends AbstractAdapter
     /**
      * Output the image object directly to HTTP
      *
-     * @param  int     $quality
-     * @param  string  $to
-     * @param  bool $download
-     * @param  bool $sendHeaders
+     * @param  ?int    $quality
+     * @param  ?string $to
+     * @param  bool    $download
+     * @param  bool    $sendHeaders
      * @param  array   $headers
      * @throws Exception
      * @return void
      */
-    public function outputToHttp($quality = null, $to = null, $download = false, $sendHeaders = true, array $headers = [])
+    public function outputToHttp(
+        ?int $quality = null, ?string $to = null, bool $download = false, bool $sendHeaders = true, array $headers = []
+    ): void
     {
         if ($this->resource === null) {
             throw new Exception('Error: An image resource has not been created or loaded');
@@ -622,7 +624,7 @@ class Gd extends AbstractAdapter
      * @param  bool $delete
      * @return void
      */
-    public function destroy($delete = false)
+    public function destroy(bool $delete = false): void
     {
         // Destroy the image resource.
         if ($this->resource !== null) {
@@ -643,12 +645,12 @@ class Gd extends AbstractAdapter
     /**
      * Create and return a color
      *
-     * @param  Color\ColorInterface $color
-     * @param  int                  $alpha
+     * @param  ?Color\ColorInterface $color
+     * @param  ?int                  $alpha
      * @throws Exception
      * @return mixed
      */
-    public function createColor(Color\ColorInterface $color = null, $alpha = null)
+    public function createColor(?Color\ColorInterface $color = null, ?int $alpha = null): mixed
     {
         if ($color === null) {
             $color = new Color\Rgb(0, 0, 0);
@@ -677,7 +679,7 @@ class Gd extends AbstractAdapter
      *
      * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         $quality = ($this->quality !== null) ? $this->quality : 100;
         $this->sendHeaders();
@@ -694,7 +696,7 @@ class Gd extends AbstractAdapter
      * @param  int $y
      * @return void
      */
-    protected function copyImage($w, $h, $x = 0, $y = 0)
+    protected function copyImage(int $w, int $h, int $x = 0, int $y = 0): void
     {
         $result = imagecreatetruecolor($w, $h);
         imagecopyresampled($result, $this->resource, 0, 0, $x, $y, $w, $h, $this->width, $this->height);
@@ -715,7 +717,7 @@ class Gd extends AbstractAdapter
      * @param  string $data
      * @return void
      */
-    protected function parseImage(array $size, $data)
+    protected function parseImage(array $size, string $data): void
     {
         $this->width  = $size[0];
         $this->height = $size[1];
@@ -759,11 +761,11 @@ class Gd extends AbstractAdapter
     /**
      * Parse the image data
      *
-     * @param  int    $quality
-     * @param  string $to
+     * @param  int     $quality
+     * @param  ?string $to
      * @return void
      */
-    protected function generateImage($quality, $to = null)
+    protected function generateImage(int $quality, ?string $to = null): void
     {
         switch ($this->format) {
             case 'jpg':

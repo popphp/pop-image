@@ -39,91 +39,91 @@ interface AdapterInterface
      *
      * @return void
      */
-    public function createResource();
+    public function createResource(): void;
 
     /**
      * Get the image resource
      *
-     * @return resource
+     * @return mixed
      */
-    public function getResource();
+    public function getResource(): mixed;
 
     /**
      * Determine if there is an image resource
      *
      * @return bool
      */
-    public function hasResource();
+    public function hasResource(): bool;
 
     /**
      * Get the image name
      *
      * @return string
      */
-    public function getName();
+    public function getName(): string;
 
     /**
      * Get the image width
      *
      * @return int
      */
-    public function getWidth();
+    public function getWidth(): int;
 
     /**
      * Get the image height
      *
      * @return int
      */
-    public function getHeight();
+    public function getHeight(): int;
 
     /**
      * Get the image quality
      *
      * @return int
      */
-    public function getQuality();
+    public function getQuality(): int;
 
     /**
      * Get the colorspace
      *
      * @return int
      */
-    public function getColorspace();
+    public function getColorspace(): int;
 
     /**
      * Determine if the image is index color
      *
      * @return bool
      */
-    public function isIndexed();
+    public function isIndexed(): bool;
 
     /**
      * Get the image EXIF data
      *
      * @return array
      */
-    public function getExif();
+    public function getExif(): array;
 
     /**
      * Determine if the image is grayscale
      *
      * @return bool
      */
-    public function isGray();
+    public function isGray(): bool;
 
     /**
      * Determine if the image is RGB
      *
      * @return bool
      */
-    public function isRgb();
+    public function isRgb(): bool;
 
     /**
      * Determine if the image is CMYK
      *
      * @return bool
      */
-    public function isCmyk();
+    public function isCmyk(): bool;
 
     /**
      * Set the image quality
@@ -131,7 +131,7 @@ interface AdapterInterface
      * @param  int $quality
      * @return static
      */
-    public function setQuality($quality);
+    public function setQuality(int $quality): static;
 
     /**
      * Set the image adjust object
@@ -139,7 +139,7 @@ interface AdapterInterface
      * @param  Adjust\AdjustInterface $adjust
      * @return AdapterInterface
      */
-    public function setAdjust(Adjust\AdjustInterface $adjust);
+    public function setAdjust(Adjust\AdjustInterface $adjust): AdapterInterface;
 
     /**
      * Set the image draw object
@@ -147,7 +147,7 @@ interface AdapterInterface
      * @param  Draw\DrawInterface $draw
      * @return AdapterInterface
      */
-    public function setDraw(Draw\DrawInterface $draw);
+    public function setDraw(Draw\DrawInterface $draw): AdapterInterface;
 
     /**
      * Set the image effect object
@@ -155,7 +155,7 @@ interface AdapterInterface
      * @param  Effect\EffectInterface $effect
      * @return AdapterInterface
      */
-    public function setEffect(Effect\EffectInterface $effect);
+    public function setEffect(Effect\EffectInterface $effect): AdapterInterface;
 
     /**
      * Set the image filter object
@@ -163,7 +163,7 @@ interface AdapterInterface
      * @param  Filter\FilterInterface $filter
      * @return AdapterInterface
      */
-    public function setFilter(Filter\FilterInterface $filter);
+    public function setFilter(Filter\FilterInterface $filter): AdapterInterface;
 
     /**
      * Set the image layer object
@@ -171,7 +171,7 @@ interface AdapterInterface
      * @param  Layer\LayerInterface $layer
      * @return AdapterInterface
      */
-    public function setLayer(Layer\LayerInterface $layer);
+    public function setLayer(Layer\LayerInterface $layer): AdapterInterface;
 
     /**
      * Set the image type object
@@ -179,15 +179,15 @@ interface AdapterInterface
      * @param  Type\TypeInterface $type
      * @return AdapterInterface
      */
-    public function setType(Type\TypeInterface $type);
+    public function setType(Type\TypeInterface $type): AdapterInterface;
 
     /**
      * Load the image resource from the existing image file
      *
-     * @param  string $name
+     * @param  ?string $name
      * @return AdapterInterface
      */
-    public function load($name = null);
+    public function load(?string $name = null): AdapterInterface;
 
     /**
      * Load the image resource from data
@@ -196,27 +196,27 @@ interface AdapterInterface
      * @param  string $name
      * @return AdapterInterface
      */
-    public function loadFromString($data, $name = null);
+    public function loadFromString(string $data, ?string $name = null): AdapterInterface;
 
     /**
      * Create a new image resource
      *
-     * @param  int    $width
-     * @param  int    $height
-     * @param  string $name
+     * @param  ?int    $width
+     * @param  ?int    $height
+     * @param  ?string $name
      * @return AdapterInterface
      */
-    public function create($width = null, $height = null, $name = null);
+    public function create(?int $width = null, ?int $height = null, ?string $name = null): AdapterInterface;
 
     /**
      * Create a new indexed image resource
      *
-     * @param  int    $width
-     * @param  int    $height
-     * @param  string $name
+     * @param  ?int    $width
+     * @param  ?int    $height
+     * @param  ?string $name
      * @return AdapterInterface
      */
-    public function createIndex($width = null, $height = null, $name = null);
+    public function createIndex(?int $width = null, ?int $height = null, ?string $name = null): AdapterInterface;
 
     /**
      * Resize the image object to the width parameter passed
@@ -224,7 +224,7 @@ interface AdapterInterface
      * @param  int $w
      * @return AdapterInterface
      */
-    public function resizeToWidth($w);
+    public function resizeToWidth(int $w): AdapterInterface;
 
     /**
      * Resize the image object to the height parameter passed
@@ -232,7 +232,7 @@ interface AdapterInterface
      * @param  int $h
      * @return AdapterInterface
      */
-    public function resizeToHeight($h);
+    public function resizeToHeight(int $h): AdapterInterface;
 
     /**
      * Resize the image object, allowing for the largest dimension
@@ -241,7 +241,7 @@ interface AdapterInterface
      * @param  int $px
      * @return AdapterInterface
      */
-    public function resize($px);
+    public function resize(int $px): AdapterInterface;
 
     /**
      * Scale the image object, allowing for the dimensions to be scaled
@@ -250,7 +250,7 @@ interface AdapterInterface
      * @param  float $scale
      * @return AdapterInterface
      */
-    public function scale($scale);
+    public function scale(float $scale): AdapterInterface;
 
     /**
      * Crop the image object to a image whose dimensions are based on the
@@ -264,84 +264,84 @@ interface AdapterInterface
      * @param  int $y
      * @return AdapterInterface
      */
-    public function crop($w, $h, $x = 0, $y = 0);
+    public function crop(int $w, int $h, int $x = 0, int $y = 0): AdapterInterface;
 
     /**
      * Crop the image object to a square image whose dimensions are based on the
      * value of the $px argument. The optional $offset argument allows for the
      * adjustment of the crop to select a certain area of the image to be cropped.
      *
-     * @param  int $px
-     * @param  int $offset
+     * @param  int  $px
+     * @param  ?int $offset
      * @return AdapterInterface
      */
-    public function cropThumb($px, $offset = null);
+    public function cropThumb(int $px, ?int $offset = null): AdapterInterface;
 
     /**
      * Rotate the image object
      *
-     * @param  int                  $degrees
-     * @param  Color\ColorInterface $bgColor
+     * @param  int                   $degrees
+     * @param  ?Color\ColorInterface $bgColor
      * @throws Exception
      * @return Gd
      */
-    public function rotate($degrees, Color\ColorInterface $bgColor = null);
+    public function rotate(int $degrees, ?Color\ColorInterface $bgColor = null): AdapterInterface;
 
     /**
      * Method to flip the image over the x-axis
      *
      * @return AdapterInterface
      */
-    public function flip();
+    public function flip(): AdapterInterface;
 
     /**
      * Method to flip the image over the y-axis
      *
      * @return AdapterInterface
      */
-    public function flop();
+    public function flop(): AdapterInterface;
 
     /**
      * Get the image adjust object
      *
      * @return Adjust\AdjustInterface
      */
-    public function adjust();
+    public function adjust(): Adjust\AdjustInterface;
 
     /**
      * Get the image filter object
      *
      * @return Filter\FilterInterface
      */
-    public function filter();
+    public function filter(): Filter\FilterInterface;
 
     /**
      * Get the image layer object
      *
      * @return Layer\LayerInterface
      */
-    public function layer();
+    public function layer(): Layer\LayerInterface;
 
     /**
      * Get the image draw object
      *
      * @return Draw\DrawInterface
      */
-    public function draw();
+    public function draw(): Draw\DrawInterface;
 
     /**
      * Get the image effect object
      *
      * @return Effect\EffectInterface
      */
-    public function effect();
+    public function effect(): Effect\EffectInterface;
 
     /**
      * Get the image type object
      *
      * @return Type\TypeInterface
      */
-    public function type();
+    public function type(): Type\TypeInterface;
 
     /**
      * Convert the image object to another format
@@ -350,29 +350,29 @@ interface AdapterInterface
      * @throws Exception
      * @return AdapterInterface
      */
-    public function convert($type);
+    public function convert(string $type): AdapterInterface;
 
     /**
      * Write the image object to a file on disk
      *
-     * @param  string $to
-     * @param  int    $quality
+     * @param  ?string $to
+     * @param  int     $quality
      * @throws Exception
      * @return void
      */
-    public function writeToFile($to = null, $quality = 100);
+    public function writeToFile(?string $to = null, int $quality = 100): void;
 
     /**
      * Output the image object directly to HTTP
      *
      * @param  int     $quality
-     * @param  string  $to
-     * @param  bool $download
-     * @param  bool $sendHeaders
+     * @param  ?string $to
+     * @param  bool    $download
+     * @param  bool    $sendHeaders
      * @throws Exception
      * @return void
      */
-    public function outputToHttp($quality = 100, $to = null, $download = false, $sendHeaders = true);
+    public function outputToHttp(int $quality = 100, ?string $to = null, bool $download = false, bool $sendHeaders = true): void;
 
     /**
      * Destroy the image object and the related image file directly
@@ -380,32 +380,32 @@ interface AdapterInterface
      * @param  bool $delete
      * @return void
      */
-    public function destroy($delete = false);
+    public function destroy(bool $delete = false): void;
 
     /**
      * Create and return a color.
      *
-     * @param  Color\ColorInterface $color
+     * @param  ?Color\ColorInterface $color
      * @param  int                  $alpha
      * @throws Exception
      * @return mixed
      */
-    public function createColor(Color\ColorInterface $color = null, $alpha = 100);
+    public function createColor(Color\ColorInterface $color = null, int $alpha = 100): mixed;
 
     /**
      * Send image headers the image
      *
-     * @param  string  $to
-     * @param  bool $download
+     * @param  ?string $to
+     * @param  bool    $download
      * @return void
      */
-    public function sendHeaders($to = null, $download = false);
+    public function sendHeaders(?string $to = null, bool $download = false): void;
 
     /**
      * Output the image
      *
      * @return string
      */
-    public function __toString();
+    public function __toString(): string;
 
 }

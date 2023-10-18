@@ -25,14 +25,14 @@
     ],
     "require": {
         "php": ">=8.1.0",
-        "popphp/pop-color": "^1.0.0"
+        "popphp/pop-color": "^1.0.0",
+        "ext-gd": "To use the Gd image adapter",
+        "ext-imagick": "To use the Imagick image adapter"
     },
     "require-dev": {
         "phpunit/phpunit": "^10.0.0"
     },
     "suggest": {
-        "ext-gd": "To use the Gd image adapter",
-        "ext-imagick": "To use the Imagick image adapter"
     },
     "autoload": {
         "psr-4": {

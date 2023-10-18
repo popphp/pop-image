@@ -37,7 +37,7 @@ abstract class AbstractEffect extends AbstractEditObject implements EffectInterf
      * @param  int                  $tween
      * @return array
      */
-    public function getBlend(Color\ColorInterface $color1, Color\ColorInterface $color2, $tween)
+    public function getBlend(Color\ColorInterface $color1, Color\ColorInterface $color2, int $tween): array
     {
         if (!($color1 instanceof Color\Rgb)) {
             $color1 = $color1->toRgb();
@@ -78,7 +78,7 @@ abstract class AbstractEffect extends AbstractEditObject implements EffectInterf
      * @param  int $totalSteps
      * @return int
      */
-    public function calculateSteps($curStep, $start, $end, $totalSteps)
+    public function calculateSteps(int $curStep, int $start, int $end, int $totalSteps): int
     {
         return ($end * ($curStep / $totalSteps)) + $start;
     }

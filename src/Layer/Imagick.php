@@ -13,6 +13,8 @@
  */
 namespace Pop\Image\Layer;
 
+use ImagickException;
+
 /**
  * Layer class for Imagick
  *
@@ -27,23 +29,17 @@ class Imagick extends AbstractLayer
 {
 
     /**
-     * Opacity
-     * @var float
-     */
-    protected $opacity = 1.0;
-
-    /**
      * Overlay style
      * @var int
      */
-    protected $overlay = \Imagick::COMPOSITE_ATOP;
+    protected int $overlay = \Imagick::COMPOSITE_ATOP;
 
     /**
      * Get the overlay
      *
      * @return int
      */
-    public function getOverlay()
+    public function getOverlay(): int
     {
         return $this->overlay;
     }
@@ -54,7 +50,7 @@ class Imagick extends AbstractLayer
      * @param  int $overlay
      * @return Imagick
      */
-    public function setOverlay($overlay)
+    public function setOverlay(int $overlay): Imagick
     {
         $this->overlay = $overlay;
         return $this;
@@ -66,9 +62,10 @@ class Imagick extends AbstractLayer
      * @param  string $image
      * @param  int    $x
      * @param  int    $y
+     * @throws ImagickException
      * @return Imagick
      */
-    public function overlay($image, $x = 0, $y = 0)
+    public function overlay(string $image, int $x = 0, int $y = 0): Imagick
     {
         if ($this->hasImage()) {
             $overlayImage = new \Imagick($image);
@@ -84,7 +81,7 @@ class Imagick extends AbstractLayer
      * @param  int $method
      * @return Imagick
      */
-    public function flatten($method = \Imagick::LAYERMETHOD_FLATTEN)
+    public function flatten(int $method = \Imagick::LAYERMETHOD_FLATTEN): Imagick
     {
         if ($this->hasImage()) {
             $this->image->getResource()->mergeImageLayers($method);

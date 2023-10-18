@@ -14,6 +14,7 @@
 namespace Pop\Image\Effect;
 
 use Pop\Color\Color;
+use ImagickException;
 
 /**
  * Effect class for Imagick
@@ -33,10 +34,10 @@ class Imagick extends AbstractEffect
      *
      * @param  Color\ColorInterface $color
      * @param  int                  $w
-     * @param  int                  $h
+     * @param  ?int                 $h
      * @return Imagick
      */
-    public function border(Color\ColorInterface $color, $w = 1, $h = null)
+    public function border(Color\ColorInterface $color, int $w = 1, ?int $h = null): Imagick
     {
         if ($this->hasImage()) {
             $h = ($h === null) ? $w : $h;
@@ -51,7 +52,7 @@ class Imagick extends AbstractEffect
      * @param  Color\ColorInterface $color
      * @return Imagick
      */
-    public function fill(Color\ColorInterface $color)
+    public function fill(Color\ColorInterface $color): Imagick
     {
         if ($this->hasImage()) {
             $draw = new \ImagickDraw();
@@ -67,9 +68,10 @@ class Imagick extends AbstractEffect
      *
      * @param  Color\ColorInterface $color1
      * @param  Color\ColorInterface $color2
+     * @throws ImagickException
      * @return Imagick
      */
-    public function radialGradient(Color\ColorInterface $color1, Color\ColorInterface $color2)
+    public function radialGradient(Color\ColorInterface $color1, Color\ColorInterface $color2): Imagick
     {
         if ($this->hasImage()) {
             $im = new \Imagick();
@@ -99,9 +101,10 @@ class Imagick extends AbstractEffect
      *
      * @param  Color\ColorInterface $color1
      * @param  Color\ColorInterface $color2
+     * @throws ImagickException
      * @return Imagick
      */
-    public function verticalGradient(Color\ColorInterface $color1, Color\ColorInterface $color2)
+    public function verticalGradient(Color\ColorInterface $color1, Color\ColorInterface $color2): Imagick
     {
         if ($this->hasImage()) {
             $im = new \Imagick();
@@ -127,9 +130,10 @@ class Imagick extends AbstractEffect
      *
      * @param  Color\ColorInterface $color1
      * @param  Color\ColorInterface $color2
+     * @throws ImagickException
      * @return Imagick
      */
-    public function horizontalGradient(Color\ColorInterface $color1, Color\ColorInterface $color2)
+    public function horizontalGradient(Color\ColorInterface $color1, Color\ColorInterface $color2): Imagick
     {
         if ($this->hasImage()) {
             $im = new \Imagick();
@@ -156,11 +160,11 @@ class Imagick extends AbstractEffect
      *
      * @param  Color\ColorInterface $color1
      * @param  Color\ColorInterface $color2
-     * @param  bool $vertical
-     * @throws Exception
+     * @param  bool                 $vertical
+     * @throws ImagickException
      * @return Imagick
      */
-    public function linearGradient(Color\ColorInterface $color1, Color\ColorInterface $color2, $vertical = true)
+    public function linearGradient(Color\ColorInterface $color1, Color\ColorInterface $color2, bool $vertical = true): Imagick
     {
         if ($this->hasImage()) {
             if ($vertical) {

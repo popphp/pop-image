@@ -28,7 +28,6 @@ use Pop\Color\Color;
 interface EffectInterface
 {
 
-
     /**
      * Get the blend between 2 colors
      *
@@ -37,7 +36,7 @@ interface EffectInterface
      * @param  int                  $tween
      * @return array
      */
-    public function getBlend(Color\ColorInterface $color1, Color\ColorInterface $color2, $tween);
+    public function getBlend(Color\ColorInterface $color1, Color\ColorInterface $color2, int $tween): array;
 
     /**
      * Calculate the steps between two points
@@ -48,6 +47,6 @@ interface EffectInterface
      * @param  int $totalSteps
      * @return int
      */
-    public function calculateSteps($curStep, $start, $end, $totalSteps);
+    public function calculateSteps(int $curStep, int $start, int $end, int $totalSteps): int;
 
 }

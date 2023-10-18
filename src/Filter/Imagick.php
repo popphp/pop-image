@@ -36,7 +36,7 @@ class Imagick extends AbstractFilter
      * @param  int   $channel
      * @return Imagick
      */
-    public function blur($radius = 0, $sigma = 0, $channel = \Imagick::CHANNEL_ALL)
+    public function blur(mixed $radius = 0, mixed $sigma = 0, int $channel = \Imagick::CHANNEL_ALL): Imagick
     {
         if ($this->hasImage()) {
             $this->image->getResource()->blurImage($radius, $sigma, $channel);
@@ -52,7 +52,7 @@ class Imagick extends AbstractFilter
      * @param  int   $channel
      * @return Imagick
      */
-    public function adaptiveBlur($radius = 0, $sigma = 0, $channel = \Imagick::CHANNEL_DEFAULT)
+    public function adaptiveBlur(mixed $radius = 0, mixed $sigma = 0, int $channel = \Imagick::CHANNEL_DEFAULT): Imagick
     {
         if ($this->hasImage()) {
             $this->image->getResource()->adaptiveBlurImage($radius, $sigma, $channel);
@@ -68,7 +68,7 @@ class Imagick extends AbstractFilter
      * @param  int   $channel
      * @return Imagick
      */
-    public function gaussianBlur($radius = 0, $sigma = 0, $channel = \Imagick::CHANNEL_ALL)
+    public function gaussianBlur(mixed $radius = 0, mixed $sigma = 0, int $channel = \Imagick::CHANNEL_ALL): Imagick
     {
         if ($this->hasImage()) {
             $this->image->getResource()->gaussianBlurImage($radius, $sigma, $channel);
@@ -85,7 +85,7 @@ class Imagick extends AbstractFilter
      * @param  int   $channel
      * @return Imagick
      */
-    public function motionBlur($radius = 0, $sigma = 0, $angle = 0, $channel = \Imagick::CHANNEL_DEFAULT)
+    public function motionBlur(mixed $radius = 0, mixed $sigma = 0, int $angle = 0, int $channel = \Imagick::CHANNEL_DEFAULT): Imagick
     {
         if ($this->hasImage()) {
             $this->image->getResource()->motionBlurImage($radius, $sigma, $angle, $channel);
@@ -101,7 +101,7 @@ class Imagick extends AbstractFilter
      * @param  int   $channel
      * @return Imagick
      */
-    public function sharpen($radius = 0, $sigma = 0, $channel = \Imagick::CHANNEL_ALL)
+    public function sharpen(mixed $radius = 0, mixed $sigma = 0, int $channel = \Imagick::CHANNEL_ALL): Imagick
     {
         if ($this->hasImage()) {
             $this->image->getResource()->sharpenImage($radius, $sigma, $channel);
@@ -114,7 +114,7 @@ class Imagick extends AbstractFilter
      *
      * @return Imagick
      */
-    public function negate()
+    public function negate(): Imagick
     {
         if ($this->hasImage()) {
             $this->image->getResource()->negateImage(false);
@@ -128,7 +128,7 @@ class Imagick extends AbstractFilter
      * @param  int $radius
      * @return Imagick
      */
-    public function paint($radius)
+    public function paint(int $radius): Imagick
     {
         if ($this->hasImage()) {
             $this->image->getResource()->oilPaintImage($radius);
@@ -139,11 +139,11 @@ class Imagick extends AbstractFilter
     /**
      * Apply a posterize effect to the image
      *
-     * @param  int     $levels
+     * @param  int  $levels
      * @param  bool $dither
      * @return Imagick
      */
-    public function posterize($levels, $dither = false)
+    public function posterize(int $levels, bool $dither = false): Imagick
     {
         if ($this->hasImage()) {
             $this->image->getResource()->posterizeImage($levels, $dither);
@@ -158,7 +158,7 @@ class Imagick extends AbstractFilter
      * @param  int $channel
      * @return Imagick
      */
-    public function noise($type = \Imagick::NOISE_MULTIPLICATIVEGAUSSIAN, $channel = \Imagick::CHANNEL_DEFAULT)
+    public function noise(int $type = \Imagick::NOISE_MULTIPLICATIVEGAUSSIAN, int $channel = \Imagick::CHANNEL_DEFAULT): Imagick
     {
         if ($this->hasImage()) {
             $this->image->getResource()->addNoiseImage($type, $channel);
@@ -172,7 +172,7 @@ class Imagick extends AbstractFilter
      * @param  int $radius
      * @return Imagick
      */
-    public function diffuse($radius)
+    public function diffuse(int $radius): Imagick
     {
         if ($this->hasImage()) {
             $this->image->getResource()->spreadImage($radius);
@@ -183,12 +183,12 @@ class Imagick extends AbstractFilter
     /**
      * Apply a skew effect to the image
      *
-     * @param  int                  $x
-     * @param  int                  $y
-     * @param  Color\ColorInterface $color
+     * @param  int                   $x
+     * @param  int                   $y
+     * @param  ?Color\ColorInterface $color
      * @return Imagick
      */
-    public function skew($x, $y, Color\ColorInterface $color = null)
+    public function skew(int $x, int $y, ?Color\ColorInterface $color = null): Imagick
     {
         if ($this->hasImage()) {
             if ($color === null) {
@@ -209,7 +209,7 @@ class Imagick extends AbstractFilter
      * @param  int $degrees
      * @return Imagick
      */
-    public function swirl($degrees)
+    public function swirl(int $degrees): Imagick
     {
         if ($this->hasImage()) {
             $this->image->getResource()->swirlImage($degrees);
@@ -224,7 +224,7 @@ class Imagick extends AbstractFilter
      * @param  mixed $length
      * @return Imagick
      */
-    public function wave($amp, $length)
+    public function wave(mixed $amp, mixed $length): Imagick
     {
         if ($this->hasImage()) {
             $this->image->getResource()->waveImage($amp, $length);
@@ -235,11 +235,11 @@ class Imagick extends AbstractFilter
     /**
      * Apply a mosaic pixelate effect to the image
      *
-     * @param  int $w
-     * @param  int $h
+     * @param  int  $w
+     * @param  ?int $h
      * @return Imagick
      */
-    public function pixelate($w, $h = null)
+    public function pixelate(int $w, ?int $h = null): Imagick
     {
         if ($this->hasImage()) {
             $x = $this->image->getWidth() / $w;
@@ -260,7 +260,7 @@ class Imagick extends AbstractFilter
      * @param  mixed $angle
      * @return Imagick
      */
-    public function pencil($radius, $sigma, $angle)
+    public function pencil(mixed $radius, mixed $sigma, mixed $angle): Imagick
     {
         if ($this->hasImage()) {
             $this->image->getResource()->sketchImage($radius, $sigma, $angle);

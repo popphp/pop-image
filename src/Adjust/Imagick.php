@@ -32,7 +32,7 @@ class Imagick extends AbstractAdjust
      * @param  int $amount
      * @return Imagick
      */
-    public function hue($amount)
+    public function hue(int $amount): Imagick
     {
         if ($this->hasImage()) {
             $this->image->getResource()->modulateImage(100, 100, $amount);
@@ -46,7 +46,7 @@ class Imagick extends AbstractAdjust
      * @param  int $amount
      * @return Imagick
      */
-    public function saturation($amount)
+    public function saturation(int $amount): Imagick
     {
         if ($this->hasImage()) {
             $this->image->getResource()->modulateImage(100, $amount, 100);
@@ -60,7 +60,7 @@ class Imagick extends AbstractAdjust
      * @param  int $amount
      * @return Imagick
      */
-    public function brightness($amount)
+    public function brightness(int $amount): Imagick
     {
         if ($this->hasImage()) {
             $this->image->getResource()->modulateImage($amount, 100, 100);
@@ -76,7 +76,7 @@ class Imagick extends AbstractAdjust
      * @param  int $b
      * @return Imagick
      */
-    public function hsb($h, $s, $b)
+    public function hsb(int $h, int $s, int $b): Imagick
     {
         if ($this->hasImage()) {
             $this->image->getResource()->modulateImage($h, $s, $b);
@@ -92,7 +92,7 @@ class Imagick extends AbstractAdjust
      * @param  int   $white
      * @return Imagick
      */
-    public function level($black, $gamma, $white)
+    public function level(int $black, float $gamma, int $white): Imagick
     {
         if ($this->hasImage()) {
             $quantumRange = $this->image->getResource()->getQuantumRange();
@@ -119,7 +119,7 @@ class Imagick extends AbstractAdjust
      * @param  int $amount
      * @return Imagick
      */
-    public function contrast($amount)
+    public function contrast(int $amount): Imagick
     {
         if ($this->hasImage()) {
             if ($amount > 0) {
@@ -140,7 +140,7 @@ class Imagick extends AbstractAdjust
      *
      * @return Imagick
      */
-    public function desaturate()
+    public function desaturate(): Imagick
     {
         if ($this->hasImage()) {
             $this->image->getResource()->modulateImage(100, 0, 100);

@@ -32,16 +32,16 @@ abstract class AbstractEditObject
      * Image object
      * @var mixed
      */
-    protected $image = null;
+    protected mixed $image = null;
 
     /**
      * Constructor
      *
      * Instantiate an image edit object
      *
-     * @param AbstractAdapter $image
+     * @param ?AbstractAdapter $image
      */
-    public function __construct(AbstractAdapter $image = null)
+    public function __construct(?AbstractAdapter $image = null)
     {
         if ($image !== null) {
             $this->setImage($image);
@@ -51,9 +51,9 @@ abstract class AbstractEditObject
     /**
      * Get the image object
      *
-     * @return AbstractAdapter
+     * @return AbstractAdapter|null
      */
-    public function getImage()
+    public function getImage(): AbstractAdapter|null
     {
         return $this->image;
     }
@@ -64,7 +64,7 @@ abstract class AbstractEditObject
      * @param  AbstractAdapter $image
      * @return AbstractEditObject
      */
-    public function setImage(AbstractAdapter $image)
+    public function setImage(AbstractAdapter $image): AbstractEditObject
     {
         $this->image = $image;
         return $this;
@@ -75,7 +75,7 @@ abstract class AbstractEditObject
      *
      * @return bool
      */
-    public function hasImage()
+    public function hasImage(): bool
     {
         return ($this->image !== null);
     }

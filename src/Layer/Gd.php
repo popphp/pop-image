@@ -28,9 +28,9 @@ class Gd extends AbstractLayer
 
     /**
      * Opacity
-     * @var int
+     * @var int|float|null
      */
-    protected $opacity = 100;
+    protected int|float|null $opacity = 100;
 
     /**
      * Overlay an image onto the current image.
@@ -41,7 +41,7 @@ class Gd extends AbstractLayer
      * @throws Exception
      * @return Gd
      */
-    public function overlay($image, $x = 0, $y = 0)
+    public function overlay(string $image, int $x = 0, int $y = 0): Gd
     {
         if ($this->hasImage()) {
             imagealphablending($this->image->getResource(), true);

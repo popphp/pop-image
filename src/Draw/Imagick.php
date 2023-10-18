@@ -13,6 +13,8 @@
  */
 namespace Pop\Image\Draw;
 
+use ImagickDrawException;
+
 /**
  * Draw class for Imagick
  *
@@ -28,17 +30,17 @@ class Imagick extends AbstractDraw
 
     /**
      * Opacity
-     * @var float
+     * @var int|float|null
      */
-    protected $opacity = 1.0;
+    protected int|float|null $opacity = 1.0;
 
     /**
      * Set the opacity
      *
-     * @param  float $opacity
+     * @param  int|float $opacity
      * @return Imagick
      */
-    public function setOpacity($opacity)
+    public function setOpacity(int|float $opacity): Imagick
     {
         $this->opacity = $opacity;
         return $this;
@@ -51,9 +53,10 @@ class Imagick extends AbstractDraw
      * @param  int $y1
      * @param  int $x2
      * @param  int $y2
+     * @throws ImagickDrawException
      * @return Imagick
      */
-    public function line($x1, $y1, $x2, $y2)
+    public function line(int $x1, int $y1, int $x2, int $y2): Imagick
     {
         if ($this->hasImage()) {
             $draw = new \ImagickDraw();
@@ -69,13 +72,14 @@ class Imagick extends AbstractDraw
     /**
      * Draw a rectangle on the image.
      *
-     * @param  int $x
-     * @param  int $y
-     * @param  int $w
-     * @param  int $h
+     * @param  int  $x
+     * @param  int  $y
+     * @param  int  $w
+     * @param  ?int $h
+     * @throws ImagickDrawException
      * @return Imagick
      */
-    public function rectangle($x, $y, $w, $h = null)
+    public function rectangle(int $x, int $y, int $w, ?int $h = null): Imagick
     {
         if ($this->hasImage()) {
             $x2 = $x + $w;
@@ -102,12 +106,13 @@ class Imagick extends AbstractDraw
     /**
      * Draw a square on the image.
      *
-     * @param  int     $x
-     * @param  int     $y
-     * @param  int     $w
+     * @param  int $x
+     * @param  int $y
+     * @param  int $w
+     * @throws ImagickDrawException
      * @return Imagick
      */
-    public function square($x, $y, $w)
+    public function square(int $x, int $y, int $w): Imagick
     {
         return $this->rectangle($x, $y, $w, $w);
     }
@@ -115,15 +120,16 @@ class Imagick extends AbstractDraw
     /**
      * Draw a rounded rectangle on the image.
      *
-     * @param  int $x
-     * @param  int $y
-     * @param  int $w
-     * @param  int $h
-     * @param  int $rx
-     * @param  int $ry
+     * @param  int  $x
+     * @param  int  $y
+     * @param  int  $w
+     * @param  ?int $h
+     * @param  ?int $rx
+     * @param  ?int $ry
+     * @throws ImagickDrawException
      * @return Imagick
      */
-    public function roundedRectangle($x, $y, $w, $h = null, $rx = 10, $ry = null)
+    public function roundedRectangle(int $x, int $y, int $w, ?int $h = null, ?int $rx = 10, ?int $ry = null): Imagick
     {
         if ($this->hasImage()) {
             $x2 = $x + $w;
@@ -153,14 +159,15 @@ class Imagick extends AbstractDraw
     /**
      * Draw a rounded square on the image.
      *
-     * @param  int $x
-     * @param  int $y
-     * @param  int $w
-     * @param  int $rx
-     * @param  int $ry
+     * @param  int  $x
+     * @param  int  $y
+     * @param  int  $w
+     * @param  int  $rx
+     * @param  ?int $ry
+     * @throws ImagickDrawException
      * @return Imagick
      */
-    public function roundedSquare($x, $y, $w, $rx = 10, $ry = null)
+    public function roundedSquare(int $x, int $y, int $w, int $rx = 10, ?int $ry = null): Imagick
     {
         return $this->roundedRectangle($x, $y, $w, $w, $rx, $ry);
     }
@@ -168,13 +175,14 @@ class Imagick extends AbstractDraw
     /**
      * Draw an ellipse on the image.
      *
-     * @param  int $x
-     * @param  int $y
-     * @param  int $w
-     * @param  int $h
+     * @param  int  $x
+     * @param  int  $y
+     * @param  int  $w
+     * @param  ?int $h
+     * @throws ImagickDrawException
      * @return Imagick
      */
-    public function ellipse($x, $y, $w, $h = null)
+    public function ellipse(int $x, int $y, int $w, ?int $h = null): Imagick
     {
         if ($this->hasImage()) {
             $wid = $w;
@@ -201,12 +209,13 @@ class Imagick extends AbstractDraw
     /**
      * Method to add a circle to the image.
      *
-     * @param  int     $x
-     * @param  int     $y
-     * @param  int     $w
+     * @param  int $x
+     * @param  int $y
+     * @param  int $w
+     * @throws ImagickDrawException
      * @return Imagick
      */
-    public function circle($x, $y, $w)
+    public function circle(int $x, int $y, int $w): Imagick
     {
         return $this->ellipse($x, $y, $w, $w);
     }
@@ -214,15 +223,16 @@ class Imagick extends AbstractDraw
     /**
      * Draw an arc on the image.
      *
-     * @param  int $x
-     * @param  int $y
-     * @param  int $start
-     * @param  int $end
-     * @param  int $w
-     * @param  int $h
+     * @param  int  $x
+     * @param  int  $y
+     * @param  int  $start
+     * @param  int  $end
+     * @param  int  $w
+     * @param  ?int $h
+     * @throws ImagickDrawException
      * @return Imagick
      */
-    public function arc($x, $y, $start, $end, $w, $h = null)
+    public function arc(int $x, int $y, int $start, int $end, int $w, ?int $h = null): Imagick
     {
         if ($this->hasImage()) {
             if ($this->strokeWidth == 0) {
@@ -248,15 +258,16 @@ class Imagick extends AbstractDraw
     /**
      * Draw a chord on the image.
      *
-     * @param  int $x
-     * @param  int $y
-     * @param  int $start
-     * @param  int $end
-     * @param  int $w
-     * @param  int $h
+     * @param  int  $x
+     * @param  int  $y
+     * @param  int  $start
+     * @param  int  $end
+     * @param  int  $w
+     * @param  ?int $h
+     * @throws ImagickDrawException
      * @return Imagick
      */
-    public function chord($x, $y, $start, $end, $w, $h = null)
+    public function chord(int $x, int $y, int $start, int $end, int $w, ?int $h = null): Imagick
     {
         if ($this->hasImage()) {
             $wid = $w;
@@ -293,15 +304,16 @@ class Imagick extends AbstractDraw
     /**
      * Draw a pie slice on the image.
      *
-     * @param  int $x
-     * @param  int $y
-     * @param  int $start
-     * @param  int $end
-     * @param  int $w
-     * @param  int $h
+     * @param  int  $x
+     * @param  int  $y
+     * @param  int  $start
+     * @param  int  $end
+     * @param  int  $w
+     * @param  ?int $h
+     * @throws ImagickDrawException
      * @return Imagick
      */
-    public function pie($x, $y, $start, $end, $w, $h = null)
+    public function pie(int $x, int $y, int $start, int $end, int $w, ?int $h = null): Imagick
     {
         if ($this->hasImage()) {
             $wid = $w;
@@ -348,9 +360,10 @@ class Imagick extends AbstractDraw
      * Draw a polygon on the image.
      *
      * @param  array $points
+     * @throws ImagickDrawException
      * @return Imagick
      */
-    public function polygon($points)
+    public function polygon(array $points): Imagick
     {
         if ($this->hasImage()) {
             $draw = new \ImagickDraw();

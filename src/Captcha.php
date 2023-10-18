@@ -13,6 +13,8 @@
  */
 namespace Pop\Image;
 
+use Pop\Color\Color;
+
 /**
  * Image captcha class
  *
@@ -28,57 +30,57 @@ class Captcha
 
     /**
      * CAPTCHA URL
-     * @var string
+     * @var ?string
      */
-    protected $url = null;
+    protected ?string $url = null;
 
     /**
      * CAPTCHA answer length
-     * @var string
+     * @var ?string
      */
-    protected $answer = null;
+    protected ?string $answer = null;
 
     /**
      * CAPTCHA length
-     * @var string
+     * @var int
      */
-    protected $length = 4;
+    protected int $length = 4;
 
     /**
      * CAPTCHA uppercase flag
      * @var bool
      */
-    protected $uppercase = true;
+    protected bool $uppercase = true;
 
     /**
      * CAPTCHA expiration
      * @var int
      */
-    protected $expire = 300;
+    protected int $expire = 300;
 
     /**
      * CAPTCHA reload text
      * @var string
      */
-    protected $reload = 'Reload';
+    protected string $reload = 'Reload';
 
     /**
      * CAPTCHA image
-     * @var Adapter\Gd
+     * @var ?Adapter\Gd
      */
-    protected $image = null;
+    protected ?Adapter\Gd $image = null;
 
     /**
      * Current token data
      * @var array
      */
-    protected $token = [];
+    protected array $token = [];
 
     /**
      * CAPTCHA image config
      * @var array
      */
-    protected $config = [
+    protected array $config = [
         'adapter'     => 'Gd',
         'width'       => 71,
         'height'      => 26,
@@ -97,9 +99,9 @@ class Captcha
      *
      * @param  string $url
      * @param  int    $expire
-     * @param  array  $config
+     * @param  ?array $config
      */
-    public function __construct($url, $expire = 300, array $config = null)
+    public function __construct(string $url, int $expire = 300, ?array $config = null)
     {
         $this->setUrl($url);
         $this->setExpire($expire);
@@ -135,7 +137,7 @@ class Captcha
      * @param  string $url
      * @return Captcha
      */
-    public function setUrl($url)
+    public function setUrl(string $url): Captcha
     {
         $this->url = str_replace(['?captcha=1', '&captcha=1'], ['', ''], $url);
         return $this;
@@ -147,9 +149,9 @@ class Captcha
      * @param  int $expire
      * @return Captcha
      */
-    public function setExpire($expire)
+    public function setExpire(int $expire): Captcha
     {
-        $this->expire = (int)$expire;
+        $this->expire = $expire;
         return $this;
     }
 
@@ -159,7 +161,7 @@ class Captcha
      * @param  string $answer
      * @return Captcha
      */
-    public function setAnswer($answer)
+    public function setAnswer(string $answer): Captcha
     {
         $this->answer = $answer;
         return $this;
@@ -171,7 +173,7 @@ class Captcha
      * @param  int $length
      * @return Captcha
      */
-    public function setLength($length)
+    public function setLength(int $length): Captcha
     {
         $this->length = $length;
         return $this;
@@ -183,9 +185,9 @@ class Captcha
      * @param  bool $uppercase
      * @return Captcha
      */
-    public function setUppercase($uppercase)
+    public function setUppercase(bool $uppercase): Captcha
     {
-        $this->uppercase = (bool)$uppercase;
+        $this->uppercase = $uppercase;
         return $this;
     }
 
@@ -195,7 +197,7 @@ class Captcha
      * @param  string $reload
      * @return Captcha
      */
-    public function setReload($reload)
+    public function setReload(string $reload): Captcha
     {
         $this->reload = $reload;
         return $this;
@@ -207,7 +209,7 @@ class Captcha
      * @param  array $config
      * @return Captcha
      */
-    public function setConfig(array $config)
+    public function setConfig(array $config): Captcha
     {
         if (isset($config['adapter'])) {
             $this->config['adapter'] = $config['adapter'];
@@ -236,15 +238,16 @@ class Captcha
         if (isset($config['rotate'])) {
             $this->config['rotate'] = $config['rotate'];
         }
+
         return $this;
     }
 
     /**
      * Get CAPTCHA URL
      *
-     * @return string
+     * @return string|null
      */
-    public function getUrl()
+    public function getUrl(): string|null
     {
         return $this->url;
     }
@@ -254,7 +257,7 @@ class Captcha
      *
      * @return int
      */
-    public function getExpire()
+    public function getExpire(): int
     {
         return $this->expire;
     }
@@ -262,9 +265,9 @@ class Captcha
     /**
      * Get CAPTCHA answer
      *
-     * @return string
+     * @return string|null
      */
-    public function getAnswer()
+    public function getAnswer(): string|null
     {
         return $this->answer;
     }
@@ -274,7 +277,7 @@ class Captcha
      *
      * @return int
      */
-    public function getLength()
+    public function getLength(): int
     {
         return $this->length;
     }
@@ -284,7 +287,7 @@ class Captcha
      *
      * @return bool
      */
-    public function isUppercase()
+    public function isUppercase(): bool
     {
         return $this->uppercase;
     }
@@ -294,7 +297,7 @@ class Captcha
      *
      * @return string
      */
-    public function getReload()
+    public function getReload(): string
     {
         return $this->reload;
     }
@@ -304,7 +307,7 @@ class Captcha
      *
      * @return array
      */
-    public function getConfig()
+    public function getConfig(): array
     {
         return $this->config;
     }
@@ -312,9 +315,9 @@ class Captcha
     /**
      * Get CAPTCHA image
      *
-     * @return Adapter\Gd
+     * @return Adapter\Gd|null
      */
-    public function getImage()
+    public function getImage(): Adapter\Gd|null
     {
         if ($this->image === null) {
             $this->createImage();
@@ -327,7 +330,7 @@ class Captcha
      *
      * @return string
      */
-    public function getImageHtml()
+    public function getImageHtml(): string
     {
         if ($this->image === null) {
             $this->createImage();
@@ -340,7 +343,7 @@ class Captcha
      *
      * @return array
      */
-    public function getToken()
+    public function getToken(): array
     {
         return $this->token;
     }
@@ -350,21 +353,21 @@ class Captcha
      *
      * @return Captcha
      */
-    public function createNewToken()
+    public function createNewToken(): Captcha
     {
         $captcha = '<img id="pop-captcha-image" class="pop-captcha-image" src="' . $this->url . '" />' .
             '<a class="pop-captcha-reload" href="#" onclick="document.getElementById(\'pop-captcha-image\').src = \'' .
             $this->url . '?captcha=1\'; return false;">' . $this->reload . '</a>';
 
-        $answer = ($this->answer === null) ? $this->random($this->length, true) : $this->answer;
-
         $this->token = [
             'captcha' => $captcha,
-            'answer'  => $answer,
+            'answer'  => ($this->answer === null) ? $this->random($this->length, true) : $this->answer,
             'expire'  => (int)$this->expire,
             'start'   => time()
         ];
+
         $_SESSION['pop_captcha'] = serialize($this->token);
+
         return $this;
     }
 
@@ -373,7 +376,7 @@ class Captcha
      *
      * @return Captcha
      */
-    public function createImage()
+    public function createImage(): Captcha
     {
         if ($this->config['adapter'] == 'Imagick') {
             $adapterClass = 'Pop\Image\\' . $this->config['adapter'];
@@ -432,11 +435,11 @@ class Captcha
     /**
      * Create random alphanumeric string
      *
-     * @param  int     $length
+     * @param  int  $length
      * @param  bool $case
      * @return string
      */
-    public function random($length = 8, $case = false)
+    public function random(int $length = 8, bool $case = false)
     {
         $chars = [
             0 => (($case) ? str_split('ABCDEFGHJKMNPQRSTUVWXYZ') : str_split('abcdefghjkmnpqrstuvwxyz')),
@@ -445,10 +448,10 @@ class Captcha
         $indices = [0, 1];
         $str     = '';
 
-        for ($i = 0; $i < (int)$length; $i++) {
-            $index = $indices[rand(0, (count($indices) - 1))];
+        for ($i = 0; $i < $length; $i++) {
+            $index    = $indices[rand(0, (count($indices) - 1))];
             $subIndex = rand(0, (count($chars[$index]) - 1));
-            $str .= $chars[$index][$subIndex];
+            $str     .= $chars[$index][$subIndex];
         }
 
         return $str;
@@ -459,7 +462,7 @@ class Captcha
      *
      * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         if ($this->image === null) {
             $this->createImage();

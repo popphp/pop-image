@@ -31,7 +31,7 @@ class Imagick
      *
      * @return array
      */
-    public static function getAvailableAdapters()
+    public static function getAvailableAdapters(): array
     {
         return Image::getAvailableAdapters();
     }
@@ -41,7 +41,7 @@ class Imagick
      *
      * @return bool
      */
-    public static function isAvailable()
+    public static function isAvailable(): bool
     {
         return Image::isAvailable('imagick');
     }
@@ -52,7 +52,7 @@ class Imagick
      * @param  string $image
      * @return Adapter\Imagick
      */
-    public static function load($image)
+    public static function load(string $image): Adapter\Imagick
     {
         return new Adapter\Imagick($image);
     }
@@ -60,11 +60,11 @@ class Imagick
     /**
      * Load the image resource from data into a Imagick object
      *
-     * @param  string $data
-     * @param  string $name
+     * @param  string  $data
+     * @param  ?string $name
      * @return Adapter\Imagick
      */
-    public static function loadFromString($data, $name = null)
+    public static function loadFromString(string $data, ?string $name = null): Adapter\Imagick
     {
         $imagick = new Adapter\Imagick();
         $imagick->loadFromString($data, $name);
@@ -74,12 +74,12 @@ class Imagick
     /**
      * Create an Imagick adapter object from an existing image
      *
-     * @param  int    $width
-     * @param  int    $height
-     * @param  string $image
+     * @param  int     $width
+     * @param  int     $height
+     * @param  ?string $image
      * @return Adapter\Imagick
      */
-    public static function create($width, $height, $image = null)
+    public static function create(int $width, int $height, ?string $image = null): Adapter\Imagick
     {
         return new Adapter\Imagick($width, $height, $image);
     }
@@ -87,12 +87,12 @@ class Imagick
     /**
      * Create a new indexed image resource and load it into a Imagick object
      *
-     * @param  int    $width
-     * @param  int    $height
-     * @param  string $image
+     * @param  int     $width
+     * @param  int     $height
+     * @param  ?string $image
      * @return Adapter\Imagick
      */
-    public static function createIndex($width, $height, $image = null)
+    public static function createIndex(int $width, int $height, ?string $image = null): Adapter\Imagick
     {
         $imagick = new Adapter\Imagick();
         $imagick->createIndex($width, $height, $image);

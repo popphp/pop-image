@@ -33,10 +33,10 @@ class Gd extends AbstractEffect
      *
      * @param  Color\ColorInterface $color
      * @param  int                  $w
-     * @param  int                  $h
+     * @param  ?int                 $h
      * @return Gd
      */
-    public function border(Color\ColorInterface $color, $w, $h = null)
+    public function border(Color\ColorInterface $color, int $w, ?int $h = null): Gd
     {
         if ($this->hasImage()) {
             $h = ($h === null) ? $w : $h;
@@ -59,7 +59,7 @@ class Gd extends AbstractEffect
      * @param  Color\ColorInterface $color
      * @return Gd
      */
-    public function fill(Color\ColorInterface $color)
+    public function fill(Color\ColorInterface $color): Gd
     {
         if ($this->hasImage()) {
             if ($this->image->isIndexed()) {
@@ -78,7 +78,7 @@ class Gd extends AbstractEffect
      * @param  Color\ColorInterface $color2
      * @return Gd
      */
-    public function radialGradient(Color\ColorInterface $color1, Color\ColorInterface $color2)
+    public function radialGradient(Color\ColorInterface $color1, Color\ColorInterface $color2): Gd
     {
         if ($this->hasImage()) {
             if ($this->image->getHeight() > $this->image->getWidth()) {
@@ -118,11 +118,12 @@ class Gd extends AbstractEffect
     /**
      * Flood the image with a vertical color gradient.
      *
-     * @param  Color\ColorInterface $color1
-     * @param  Color\ColorInterface $color2
+     * @param Color\ColorInterface $color1
+     * @param Color\ColorInterface $color2
+     * @throws Exception
      * @return Gd
      */
-    public function verticalGradient(Color\ColorInterface $color1, Color\ColorInterface $color2)
+    public function verticalGradient(Color\ColorInterface $color1, Color\ColorInterface $color2): Gd
     {
         return $this->linearGradient($color1, $color2, true);
     }
@@ -134,7 +135,7 @@ class Gd extends AbstractEffect
      * @param  Color\ColorInterface $color2
      * @return Gd
      */
-    public function horizontalGradient(Color\ColorInterface $color1, Color\ColorInterface $color2)
+    public function horizontalGradient(Color\ColorInterface $color1, Color\ColorInterface $color2): Gd
     {
         return $this->linearGradient($color1, $color2, false);
     }
@@ -144,11 +145,11 @@ class Gd extends AbstractEffect
      *
      * @param  Color\ColorInterface $color1
      * @param  Color\ColorInterface $color2
-     * @param  bool              $vertical
+     * @param  bool                 $vertical
      * @throws Exception
      * @return Gd
      */
-    public function linearGradient(Color\ColorInterface $color1, Color\ColorInterface $color2, $vertical = true)
+    public function linearGradient(Color\ColorInterface $color1, Color\ColorInterface $color2, bool $vertical = true): Gd
     {
         if ($this->hasImage()) {
             $tween = ($vertical) ? $this->image->getHeight() : $this->image->getWidth();

@@ -32,7 +32,7 @@ class Gd extends AbstractAdjust
      * @param  int $amount
      * @return Gd
      */
-    public function brightness($amount)
+    public function brightness(int $amount): Gd
     {
         if ($this->hasImage()) {
             imagefilter($this->image->getResource(), IMG_FILTER_BRIGHTNESS, $amount);
@@ -46,7 +46,7 @@ class Gd extends AbstractAdjust
      * @param  int $amount
      * @return Gd
      */
-    public function contrast($amount)
+    public function contrast(int $amount): Gd
     {
         if ($this->hasImage()) {
             imagefilter($this->image->getResource(), IMG_FILTER_CONTRAST, (0 - $amount));
@@ -59,7 +59,7 @@ class Gd extends AbstractAdjust
      *
      * @return Gd
      */
-    public function desaturate()
+    public function desaturate(): Gd
     {
         if ($this->hasImage()) {
             imagefilter($this->image->getResource(), IMG_FILTER_GRAYSCALE);

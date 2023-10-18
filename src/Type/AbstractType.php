@@ -33,62 +33,62 @@ abstract class AbstractType extends AbstractEditObject implements TypeInterface
      * Type font size
      * @var int
      */
-    protected $size = 12;
+    protected int $size = 12;
 
     /**
      * Type font
-     * @var string
+     * @var ?string
      */
-    protected $font = null;
+    protected ?string $font = null;
 
     /**
      * Fill color
-     * @var Color\ColorInterface
+     * @var ?Color\ColorInterface
      */
-    protected $fillColor = null;
+    protected ?Color\ColorInterface $fillColor = null;
 
     /**
      * Stroke color
-     * @var Color\ColorInterface
+     * @var ?Color\ColorInterface
      */
-    protected $strokeColor = null;
+    protected ?Color\ColorInterface $strokeColor = null;
 
     /**
      * Stroke width
      * @var int
      */
-    protected $strokeWidth = 1;
+    protected int $strokeWidth = 1;
 
     /**
      * Type X-position
      * @var int
      */
-    protected $x = 0;
+    protected int $x = 0;
 
     /**
      * Type Y-position
      * @var int
      */
-    protected $y = 0;
+    protected int $y = 0;
 
     /**
      * Type rotation in degrees
      * @var int
      */
-    protected $rotation = 0;
+    protected int $rotation = 0;
 
     /**
      * Opacity
-     * @var mixed
+     * @var int|float|null
      */
-    protected $opacity = null;
+    protected int|float|null $opacity = null;
 
     /**
      * Get the opacity
      *
-     * @return mixed
+     * @return int|float|null
      */
-    public function getOpacity()
+    public function getOpacity(): int|float|null
     {
         return $this->opacity;
     }
@@ -98,7 +98,7 @@ abstract class AbstractType extends AbstractEditObject implements TypeInterface
      *
      * @return Color\ColorInterface
      */
-    public function getFillColor()
+    public function getFillColor(): Color\ColorInterface
     {
         return $this->fillColor;
     }
@@ -108,7 +108,7 @@ abstract class AbstractType extends AbstractEditObject implements TypeInterface
      *
      * @return Color\ColorInterface
      */
-    public function getStrokeColor()
+    public function getStrokeColor(): Color\ColorInterface
     {
         return $this->strokeColor;
     }
@@ -118,7 +118,7 @@ abstract class AbstractType extends AbstractEditObject implements TypeInterface
      *
      * @return int
      */
-    public function getStrokeWidth()
+    public function getStrokeWidth(): int
     {
         return $this->strokeWidth;
     }
@@ -129,7 +129,7 @@ abstract class AbstractType extends AbstractEditObject implements TypeInterface
      * @param  Color\ColorInterface $color
      * @return AbstractType
      */
-    public function setFillColor(Color\ColorInterface $color)
+    public function setFillColor(Color\ColorInterface $color): AbstractType
     {
         $this->fillColor = $color;
         return $this;
@@ -141,7 +141,7 @@ abstract class AbstractType extends AbstractEditObject implements TypeInterface
      * @param  Color\ColorInterface $color
      * @return AbstractType
      */
-    public function setStrokeColor(Color\ColorInterface $color)
+    public function setStrokeColor(Color\ColorInterface $color): AbstractType
     {
         $this->strokeColor = $color;
         return $this;
@@ -153,7 +153,7 @@ abstract class AbstractType extends AbstractEditObject implements TypeInterface
      * @param  int $w
      * @return AbstractType
      */
-    public function setStrokeWidth($w)
+    public function setStrokeWidth(int $w): AbstractType
     {
         $this->strokeWidth = $w;
         return $this;
@@ -165,7 +165,7 @@ abstract class AbstractType extends AbstractEditObject implements TypeInterface
      * @param  int $size
      * @return AbstractType
      */
-    public function size($size)
+    public function size(int $size): AbstractType
     {
         $this->size = (int)$size;
         return $this;
@@ -177,7 +177,7 @@ abstract class AbstractType extends AbstractEditObject implements TypeInterface
      * @param  string $font
      * @return AbstractType
      */
-    public function font($font)
+    public function font(string $font): AbstractType
     {
         $this->font = $font;
         return $this;
@@ -189,7 +189,7 @@ abstract class AbstractType extends AbstractEditObject implements TypeInterface
      * @param  int $x
      * @return AbstractType
      */
-    public function x($x)
+    public function x(int $x): AbstractType
     {
         $this->x = (int)$x;
         return $this;
@@ -201,7 +201,7 @@ abstract class AbstractType extends AbstractEditObject implements TypeInterface
      * @param  int $y
      * @return AbstractType
      */
-    public function y($y)
+    public function y(int $y): AbstractType
     {
         $this->y = (int)$y;
         return $this;
@@ -214,7 +214,7 @@ abstract class AbstractType extends AbstractEditObject implements TypeInterface
      * @param  int $y
      * @return AbstractType
      */
-    public function xy($x, $y)
+    public function xy(int $x, int $y): AbstractType
     {
         $this->x($x);
         $this->y($y);
@@ -227,7 +227,7 @@ abstract class AbstractType extends AbstractEditObject implements TypeInterface
      * @param  int $degrees
      * @return AbstractType
      */
-    public function rotate($degrees)
+    public function rotate(int $degrees): AbstractType
     {
         $this->rotation = (int)$degrees;
         return $this;
@@ -236,9 +236,9 @@ abstract class AbstractType extends AbstractEditObject implements TypeInterface
     /**
      * Set the opacity
      *
-     * @param  mixed $opacity
+     * @param  int|float $opacity
      * @return AbstractType
      */
-    abstract public function setOpacity($opacity);
+    abstract public function setOpacity(int|float$opacity): AbstractType;
 
 }

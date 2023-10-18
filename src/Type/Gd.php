@@ -28,17 +28,17 @@ class Gd extends AbstractType
 
     /**
      * Opacity
-     * @var int
+     * @var int|float|null
      */
-    protected $opacity = 0;
+    protected int|float|null $opacity = 0;
 
     /**
      * Set the opacity
      *
-     * @param  int $opacity
+     * @param  int|float $opacity
      * @return Gd
      */
-    public function setOpacity($opacity)
+    public function setOpacity(int|float $opacity): Gd
     {
         $this->opacity = (int)round((127 - (127 * ($opacity / 100))));
         return $this;
@@ -50,7 +50,7 @@ class Gd extends AbstractType
      * @param  string $string
      * @return Gd
      */
-    public function text($string)
+    public function text(string $string): Gd
     {
         if ($this->hasImage()) {
             $fillColor = ($this->image->isIndexed()) ? $this->image->createColor($this->fillColor, null) :

@@ -30,15 +30,15 @@ class Gd extends AbstractDraw
      * Opacity
      * @var int
      */
-    protected $opacity = 0;
+    protected int|float|null $opacity = 0;
 
     /**
      * Set the opacity
      *
-     * @param  int $opacity
+     * @param  int|float $opacity
      * @return Gd
      */
-    public function setOpacity($opacity)
+    public function setOpacity(int|float $opacity): Gd
     {
         $this->opacity = (int)round((127 - (127 * ($opacity / 100))));
         return $this;
@@ -53,7 +53,7 @@ class Gd extends AbstractDraw
      * @param  int $y2
      * @return Gd
      */
-    public function line($x1, $y1, $x2, $y2)
+    public function line(int $x1, int $y1, int $x2, int $y2): Gd
     {
         if ($this->hasImage()) {
             $strokeColor = ($this->image->isIndexed()) ? $this->image->createColor($this->strokeColor) :
@@ -69,13 +69,13 @@ class Gd extends AbstractDraw
     /**
      * Draw a rectangle on the image.
      *
-     * @param  int $x
-     * @param  int $y
-     * @param  int $w
-     * @param  int $h
+     * @param  int  $x
+     * @param  int  $y
+     * @param  int  $w
+     * @param  ?int $h
      * @return Gd
      */
-    public function rectangle($x, $y, $w, $h = null)
+    public function rectangle(int $x, int $y, int $w, ?int $h = null): Gd
     {
         if ($this->hasImage()) {
             $x2 = $x + $w;
@@ -102,12 +102,12 @@ class Gd extends AbstractDraw
     /**
      * Draw a square on the image.
      *
-     * @param  int     $x
-     * @param  int     $y
-     * @param  int     $w
+     * @param  int $x
+     * @param  int $y
+     * @param  int $w
      * @return Gd
      */
-    public function square($x, $y, $w)
+    public function square(int $x, int $y, int $w): Gd
     {
         return $this->rectangle($x, $y, $w, $w);
     }
@@ -115,13 +115,13 @@ class Gd extends AbstractDraw
     /**
      * Draw an ellipse on the image.
      *
-     * @param  int $x
-     * @param  int $y
-     * @param  int $w
-     * @param  int $h
+     * @param  int  $x
+     * @param  int  $y
+     * @param  int  $w
+     * @param  ?int $h
      * @return Gd
      */
-    public function ellipse($x, $y, $w, $h = null)
+    public function ellipse(int $x, int $y, int $w, ?int $h = null): Gd
     {
         if ($this->hasImage()) {
             $wid = $w;
@@ -147,12 +147,12 @@ class Gd extends AbstractDraw
     /**
      * Method to add a circle to the image.
      *
-     * @param  int     $x
-     * @param  int     $y
-     * @param  int     $w
+     * @param  int $x
+     * @param  int $y
+     * @param  int $w
      * @return Gd
      */
-    public function circle($x, $y, $w)
+    public function circle(int $x, int $y, int $w): Gd
     {
         return $this->ellipse($x, $y, $w, $w);
     }
@@ -160,15 +160,15 @@ class Gd extends AbstractDraw
     /**
      * Draw an arc on the image.
      *
-     * @param  int $x
-     * @param  int $y
-     * @param  int $start
-     * @param  int $end
-     * @param  int $w
-     * @param  int $h
+     * @param  int  $x
+     * @param  int  $y
+     * @param  int  $start
+     * @param  int  $end
+     * @param  int  $w
+     * @param  ?int $h
      * @return Gd
      */
-    public function arc($x, $y, $start, $end, $w, $h = null)
+    public function arc(int $x, int $y, int $start, int $end, int $w, ?int $h = null): Gd
     {
         if ($this->hasImage()) {
             if ($this->strokeWidth == 0) {
@@ -191,15 +191,15 @@ class Gd extends AbstractDraw
     /**
      * Draw a chord on the image.
      *
-     * @param  int $x
-     * @param  int $y
-     * @param  int $start
-     * @param  int $end
-     * @param  int $w
-     * @param  int $h
+     * @param  int  $x
+     * @param  int  $y
+     * @param  int  $start
+     * @param  int  $end
+     * @param  int  $w
+     * @param  ?int $h
      * @return Gd
      */
-    public function chord($x, $y, $start, $end, $w, $h = null)
+    public function chord(int $x, int $y, int $start, int $end, int $w, ?int $h = null): Gd
     {
         if ($this->hasImage()) {
             $wid = $w;
@@ -228,15 +228,15 @@ class Gd extends AbstractDraw
     /**
      * Draw a slice on the image.
      *
-     * @param  int $x
-     * @param  int $y
-     * @param  int $start
-     * @param  int $end
-     * @param  int $w
-     * @param  int $h
+     * @param  int  $x
+     * @param  int  $y
+     * @param  int  $start
+     * @param  int  $end
+     * @param  int  $w
+     * @param  ?int $h
      * @return Gd
      */
-    public function pie($x, $y, $start, $end, $w, $h = null)
+    public function pie(int $x, int $y, int $start, int $end, int $w, ?int $h = null): Gd
     {
         if ($this->hasImage()) {
             $wid = $w;
@@ -268,7 +268,7 @@ class Gd extends AbstractDraw
      * @param  array   $points
      * @return Gd
      */
-    public function polygon($points)
+    public function polygon(array $points): Gd
     {
         if ($this->hasImage()) {
             $realPoints = [];
@@ -294,11 +294,7 @@ class Gd extends AbstractDraw
                     $this->image->createColor($this->strokeColor, $this->opacity);
 
                 imagesetthickness($this->image->getResource(), $this->strokeWidth);
-                if (strpos(PHP_VERSION, '8.1') !== false) {
-                    imagepolygon($this->image->getResource(), $realPoints, $strokeColor);
-                } else {
-                    imagepolygon($this->image->getResource(), $realPoints, count($points), $strokeColor);
-                }
+                imagepolygon($this->image->getResource(), $realPoints, $strokeColor);
             }
         }
 

@@ -32,30 +32,30 @@ interface TypeInterface
     /**
      * Get the opacity
      *
-     * @return mixed
+     * @return int|float|null
      */
-    public function getOpacity();
+    public function getOpacity(): int|float|null;
 
     /**
      * Get fill color
      *
      * @return Color\ColorInterface
      */
-    public function getFillColor();
+    public function getFillColor(): Color\ColorInterface;
 
     /**
      * Get stroke color
      *
      * @return Color\ColorInterface
      */
-    public function getStrokeColor();
+    public function getStrokeColor(): Color\ColorInterface;
 
     /**
      * Get stroke width
      *
      * @return int
      */
-    public function getStrokeWidth();
+    public function getStrokeWidth(): int;
 
     /**
      * Set fill color
@@ -63,7 +63,7 @@ interface TypeInterface
      * @param  Color\ColorInterface $color
      * @return TypeInterface
      */
-    public function setFillColor(Color\ColorInterface $color);
+    public function setFillColor(Color\ColorInterface $color): TypeInterface;
 
     /**
      * Set stroke color
@@ -71,7 +71,7 @@ interface TypeInterface
      * @param  Color\ColorInterface $color
      * @return TypeInterface
      */
-    public function setStrokeColor(Color\ColorInterface $color);
+    public function setStrokeColor(Color\ColorInterface $color): TypeInterface;
 
     /**
      * Set stroke width
@@ -79,7 +79,7 @@ interface TypeInterface
      * @param  int $w
      * @return TypeInterface
      */
-    public function setStrokeWidth($w);
+    public function setStrokeWidth(int $w): TypeInterface;
 
     /**
      * Set the font size
@@ -87,7 +87,7 @@ interface TypeInterface
      * @param  int $size
      * @return TypeInterface
      */
-    public function size($size);
+    public function size(int $size): TypeInterface;
 
     /**
      * Set the font
@@ -95,7 +95,7 @@ interface TypeInterface
      * @param  string $font
      * @return TypeInterface
      */
-    public function font($font);
+    public function font(string $font): TypeInterface;
 
     /**
      * Set the X-position
@@ -103,7 +103,7 @@ interface TypeInterface
      * @param  int $x
      * @return TypeInterface
      */
-    public function x($x);
+    public function x(int $x): TypeInterface;
 
     /**
      * Set the Y-position
@@ -111,7 +111,7 @@ interface TypeInterface
      * @param  int $y
      * @return TypeInterface
      */
-    public function y($y);
+    public function y(int $y): TypeInterface;
 
     /**
      * Set both the X- and Y-positions
@@ -120,7 +120,7 @@ interface TypeInterface
      * @param  int $y
      * @return TypeInterface
      */
-    public function xy($x, $y);
+    public function xy(int $x, int $y): TypeInterface;
 
     /**
      * Set the rotation of the text
@@ -128,14 +128,14 @@ interface TypeInterface
      * @param  int $degrees
      * @return TypeInterface
      */
-    public function rotate($degrees);
+    public function rotate(int $degrees): TypeInterface;
 
     /**
      * Set the opacity
      *
-     * @param  mixed $opacity
+     * @param  int|float $opacity
      * @return TypeInterface
      */
-    public function setOpacity($opacity);
+    public function setOpacity(int|float $opacity): TypeInterface;
     
 }

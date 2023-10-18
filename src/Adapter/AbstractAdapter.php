@@ -45,91 +45,91 @@ abstract class AbstractAdapter implements AdapterInterface
      * Image resource
      * @var mixed
      */
-    protected $resource = null;
+    protected mixed $resource = null;
 
     /**
      * Image name
      * @var string
      */
-    protected $name = 'pop-image.jpg';
+    protected string $name = 'pop-image.jpg';
 
     /**
      * Image width
      * @var int
      */
-    protected $width = 640;
+    protected int $width = 640;
 
     /**
      * Image height
      * @var int
      */
-    protected $height = 480;
+    protected int $height = 480;
 
     /**
      * Image format
      * @var string
      */
-    protected $format = 'jpg';
+    protected string $format = 'jpg';
 
     /**
      * Image quality
      * @var int
      */
-    protected $quality = 100;
+    protected int $quality = 100;
 
     /**
      * Image colorspace
      * @var int
      */
-    protected $colorspace = 2;
+    protected int $colorspace = 2;
 
     /**
      * Index color flag
      * @var bool
      */
-    protected $indexed = false;
+    protected bool $indexed = false;
 
     /**
      * EXIF data
      * @var array
      */
-    protected $exif = [];
+    protected array $exif = [];
 
     /**
      * Image adjust object
-     * @var Adjust\AdjustInterface
+     * @var ?Adjust\AdjustInterface
      */
-    protected $adjust = null;
+    protected ?Adjust\AdjustInterface $adjust = null;
 
     /**
      * Image draw object
-     * @var Draw\DrawInterface
+     * @var ?Draw\DrawInterface
      */
-    protected $draw = null;
+    protected ?Draw\DrawInterface $draw = null;
 
     /**
      * Image effect object
-     * @var Effect\EffectInterface
+     * @var ?Effect\EffectInterface
      */
-    protected $effect = null;
+    protected ?Effect\EffectInterface $effect = null;
 
     /**
      * Image filter object
-     * @var Filter\FilterInterface
+     * @var ?Filter\FilterInterface
      */
-    protected $filter = null;
+    protected ?Filter\FilterInterface $filter = null;
 
     /**
      * Image layer object
-     * @var Layer\LayerInterface
+     * @var ?Layer\LayerInterface
      */
-    protected $layer = null;
+    protected ?Layer\LayerInterface $layer = null;
 
     /**
      * Image type object
-     * @var Type\TypeInterface
+     * @var ?Type\TypeInterface
      */
-    protected $type = null;
+    protected ?Type\TypeInterface $type = null;
 
     /**
      * Constructor
@@ -164,14 +164,14 @@ abstract class AbstractAdapter implements AdapterInterface
      *
      * @return void
      */
-    abstract public function createResource();
+    abstract public function createResource(): void;
 
     /**
      * Get the image resource
      *
-     * @return resource
+     * @return mixed
      */
-    public function getResource()
+    public function getResource(): mixed
     {
         return $this->resource;
     }
@@ -181,7 +181,7 @@ abstract class AbstractAdapter implements AdapterInterface
      *
      * @return bool
      */
-    public function hasResource()
+    public function hasResource(): bool
     {
         return ($this->resource !== null);
     }
@@ -191,7 +191,7 @@ abstract class AbstractAdapter implements AdapterInterface
      *
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
@@ -201,7 +201,7 @@ abstract class AbstractAdapter implements AdapterInterface
      *
      * @return int
      */
-    public function getWidth()
+    public function getWidth(): int
     {
         return $this->width;
     }
@@ -211,7 +211,7 @@ abstract class AbstractAdapter implements AdapterInterface
      *
      * @return int
      */
-    public function getHeight()
+    public function getHeight(): int
     {
         return $this->height;
     }
@@ -221,7 +221,7 @@ abstract class AbstractAdapter implements AdapterInterface
      *
      * @return int
      */
-    public function getQuality()
+    public function getQuality(): int
     {
         return $this->quality;
     }
@@ -231,7 +231,7 @@ abstract class AbstractAdapter implements AdapterInterface
      *
      * @return int
      */
-    public function getColorspace()
+    public function getColorspace(): int
     {
         return $this->colorspace;
     }
@@ -241,7 +241,7 @@ abstract class AbstractAdapter implements AdapterInterface
      *
      * @return bool
      */
-    public function isIndexed()
+    public function isIndexed(): bool
     {
         return $this->indexed;
     }
@@ -251,7 +251,7 @@ abstract class AbstractAdapter implements AdapterInterface
      *
      * @return string
      */
-    public function getFormat()
+    public function getFormat(): string
     {
         return $this->format;
     }
@@ -261,7 +261,7 @@ abstract class AbstractAdapter implements AdapterInterface
      *
      * @return array
      */
-    public function getExif()
+    public function getExif(): array
     {
         return $this->exif;
     }
@@ -271,7 +271,7 @@ abstract class AbstractAdapter implements AdapterInterface
      *
      * @return bool
      */
-    public function isGray()
+    public function isGray(): bool
     {
         return ($this->colorspace == self::IMAGE_GRAY);
     }
@@ -281,7 +281,7 @@ abstract class AbstractAdapter implements AdapterInterface
      *
      * @return bool
      */
-    public function isRgb()
+    public function isRgb(): bool
     {
         return ($this->colorspace == self::IMAGE_RGB);
     }
@@ -291,7 +291,7 @@ abstract class AbstractAdapter implements AdapterInterface
      *
      * @return bool
      */
-    public function isCmyk()
+    public function isCmyk(): bool
     {
         return ($this->colorspace == self::IMAGE_CMYK);
     }
@@ -302,9 +302,9 @@ abstract class AbstractAdapter implements AdapterInterface
      * @oaram  int $quality
      * @return static
      */
-    public function setQuality($quality)
+    public function setQuality(int $quality): static
     {
-        $this->quality = (int)$quality;
+        $this->quality = $quality;
         return $this;
     }
 
@@ -314,7 +314,7 @@ abstract class AbstractAdapter implements AdapterInterface
      * @param  Adjust\AdjustInterface $adjust
      * @return AbstractAdapter
      */
-    public function setAdjust(Adjust\AdjustInterface $adjust)
+    public function setAdjust(Adjust\AdjustInterface $adjust): AbstractAdapter
     {
         $this->adjust = $adjust;
         return $this;
@@ -326,7 +326,7 @@ abstract class AbstractAdapter implements AdapterInterface
      * @param  Draw\DrawInterface $draw
      * @return AbstractAdapter
      */
-    public function setDraw(Draw\DrawInterface $draw)
+    public function setDraw(Draw\DrawInterface $draw): AbstractAdapter
     {
         $this->draw = $draw;
         return $this;
@@ -338,7 +338,7 @@ abstract class AbstractAdapter implements AdapterInterface
      * @param  Effect\EffectInterface $effect
      * @return AbstractAdapter
      */
-    public function setEffect(Effect\EffectInterface $effect)
+    public function setEffect(Effect\EffectInterface $effect): AbstractAdapter
     {
         $this->effect = $effect;
         return $this;
@@ -350,7 +350,7 @@ abstract class AbstractAdapter implements AdapterInterface
      * @param  Filter\FilterInterface $filter
      * @return AbstractAdapter
      */
-    public function setFilter(Filter\FilterInterface $filter)
+    public function setFilter(Filter\FilterInterface $filter): AbstractAdapter
     {
         $this->filter = $filter;
         return $this;
@@ -361,7 +361,7 @@ abstract class AbstractAdapter implements AdapterInterface
      * @param  Layer\LayerInterface $layer
      * @return AbstractAdapter
      */
-    public function setLayer(Layer\LayerInterface $layer)
+    public function setLayer(Layer\LayerInterface $layer): AbstractAdapter
     {
         $this->layer = $layer;
         return $this;
@@ -373,7 +373,7 @@ abstract class AbstractAdapter implements AdapterInterface
      * @param  Type\TypeInterface $type
      * @return AbstractAdapter
      */
-    public function setType(Type\TypeInterface $type)
+    public function setType(Type\TypeInterface $type): AbstractAdapter
     {
         $this->type = $type;
         return $this;
@@ -382,12 +382,12 @@ abstract class AbstractAdapter implements AdapterInterface
     /**
      * Send image headers the image
      *
-     * @param  string  $to
-     * @param  bool $download
+     * @param  ?string $to
+     * @param  bool    $download
      * @param  array   $additionalHeaders
      * @return void
      */
-    public function sendHeaders($to = null, $download = false, array $additionalHeaders = [])
+    public function sendHeaders(?string $to = null, bool $download = false, array $additionalHeaders = []): void
     {
         if ($to === null) {
             $to = ($this->name !== null) ? basename($this->name) : 'pop-image.' . $this->format;
@@ -418,62 +418,55 @@ abstract class AbstractAdapter implements AdapterInterface
      * @param  string $name
      * @return mixed
      */
-    public function __get($name)
+    public function __get(string $name): mixed
     {
-        switch ($name) {
-            case 'adjust':
-                return $this->adjust();
-            case 'filter':
-                return $this->filter();
-            case 'layer':
-                return $this->layer();
-            case 'draw':
-                return $this->draw();
-            case 'effect':
-                return $this->effect();
-            case 'type':
-                return $this->type();
-            default:
-                return null;
-        }
+        return match ($name) {
+            'adjust' => $this->adjust(),
+            'filter' => $this->filter(),
+            'layer'  => $this->layer(),
+            'draw'   => $this->draw(),
+            'effect' => $this->effect(),
+            'type'   => $this->type(),
+            default  => null,
+        };
     }
 
     /**
      * Load the image resource from the existing image file
      *
-     * @param  string $name
+     * @param  ?string $name
      * @return AbstractAdapter
      */
-    abstract public function load($name = null);
+    abstract public function load(?string $name = null): AbstractAdapter;
 
     /**
      * Load the image resource from data
      *
-     * @param  string $data
-     * @param  string $name
+     * @param  string  $data
+     * @param  ?string $name
      * @return AbstractAdapter
      */
-    abstract public function loadFromString($data, $name = null);
+    abstract public function loadFromString(string $data, ?string $name = null): AbstractAdapter;
 
     /**
      * Create a new image resource
      *
-     * @param  int    $width
-     * @param  int    $height
-     * @param  string $name
+     * @param  ?int    $width
+     * @param  ?int    $height
+     * @param  ?string $name
      * @return AbstractAdapter
      */
-    abstract public function create($width = null, $height = null, $name = null);
+    abstract public function create(?int $width = null, ?int $height = null, ?string $name = null): AbstractAdapter;
 
     /**
      * Create a new indexed image resource
      *
-     * @param  int    $width
-     * @param  int    $height
-     * @param  string $name
+     * @param  ?int    $width
+     * @param  ?int    $height
+     * @param  ?string $name
      * @return AbstractAdapter
      */
-    abstract public function createIndex($width = null, $height = null, $name = null);
+    abstract public function createIndex(?int $width = null, ?int $height = null, ?string $name = null): AbstractAdapter;
 
     /**
      * Resize the image object to the width parameter passed
@@ -481,7 +474,7 @@ abstract class AbstractAdapter implements AdapterInterface
      * @param  int $w
      * @return AbstractAdapter
      */
-    abstract public function resizeToWidth($w);
+    abstract public function resizeToWidth(int $w): AbstractAdapter;
 
     /**
      * Resize the image object to the height parameter passed
@@ -489,7 +482,7 @@ abstract class AbstractAdapter implements AdapterInterface
      * @param  int $h
      * @return AbstractAdapter
      */
-    abstract public function resizeToHeight($h);
+    abstract public function resizeToHeight(int $h): AbstractAdapter;
 
     /**
      * Resize the image object, allowing for the largest dimension
@@ -498,7 +491,7 @@ abstract class AbstractAdapter implements AdapterInterface
      * @param  int $px
      * @return AbstractAdapter
      */
-    abstract public function resize($px);
+    abstract public function resize(int $px): AbstractAdapter;
 
     /**
      * Scale the image object, allowing for the dimensions to be scaled
@@ -507,7 +500,7 @@ abstract class AbstractAdapter implements AdapterInterface
      * @param  float $scale
      * @return AbstractAdapter
      */
-    abstract public function scale($scale);
+    abstract public function scale(float $scale): AbstractAdapter;
 
     /**
      * Crop the image object to a image whose dimensions are based on the
@@ -521,84 +514,84 @@ abstract class AbstractAdapter implements AdapterInterface
      * @param  int $y
      * @return AbstractAdapter
      */
-    abstract public function crop($w, $h, $x = 0, $y = 0);
+    abstract public function crop(int $w, int $h, int $x = 0, int $y = 0): AbstractAdapter;
 
     /**
      * Crop the image object to a square image whose dimensions are based on the
      * value of the $px argument. The optional $offset argument allows for the
      * adjustment of the crop to select a certain area of the image to be cropped.
      *
-     * @param  int $px
-     * @param  int $offset
+     * @param  int  $px
+     * @param  ?int $offset
      * @return AbstractAdapter
      */
-    abstract public function cropThumb($px, $offset = null);
+    abstract public function cropThumb(int $px, ?int $offset = null): AbstractAdapter;
 
     /**
      * Rotate the image object
      *
-     * @param  int                  $degrees
-     * @param  Color\ColorInterface $bgColor
+     * @param  int                   $degrees
+     * @param  ?Color\ColorInterface $bgColor
      * @throws Exception
-     * @return Gd
+     * @return AbstractAdapter
      */
-    abstract public function rotate($degrees, Color\ColorInterface $bgColor = null);
+    abstract public function rotate(int $degrees, ?Color\ColorInterface $bgColor = null): AbstractAdapter;
 
     /**
      * Method to flip the image over the x-axis
      *
      * @return AbstractAdapter
      */
-    abstract public function flip();
+    abstract public function flip(): AbstractAdapter;
 
     /**
      * Method to flip the image over the y-axis
      *
      * @return AbstractAdapter
      */
-    abstract public function flop();
+    abstract public function flop(): AbstractAdapter;
 
     /**
      * Get the image adjust object
      *
      * @return Adjust\AdjustInterface
      */
-    abstract public function adjust();
+    abstract public function adjust(): Adjust\AdjustInterface;
 
     /**
      * Get the image filter object
      *
      * @return Filter\FilterInterface
      */
-    abstract public function filter();
+    abstract public function filter(): Filter\FilterInterface;
 
     /**
      * Get the image layer object
      *
      * @return Layer\LayerInterface
      */
-    abstract public function layer();
+    abstract public function layer(): Layer\LayerInterface;
 
     /**
      * Get the image draw object
      *
      * @return Draw\DrawInterface
      */
-    abstract public function draw();
+    abstract public function draw(): Draw\DrawInterface;
 
     /**
      * Get the image effect object
      *
      * @return Effect\EffectInterface
      */
-    abstract public function effect();
+    abstract public function effect(): Effect\EffectInterface;
 
     /**
      * Get the image type object
      *
      * @return Type\TypeInterface
      */
-    abstract public function type();
+    abstract public function type(): Type\TypeInterface;
 
     /**
      * Convert the image object to another format
@@ -607,29 +600,29 @@ abstract class AbstractAdapter implements AdapterInterface
      * @throws Exception
      * @return AbstractAdapter
      */
-    abstract public function convert($type);
+    abstract public function convert(string $type): AbstractAdapter;
 
     /**
      * Write the image object to a file on disk
      *
-     * @param  string $to
-     * @param  int    $quality
+     * @param  ?string $to
+     * @param  int     $quality
      * @throws Exception
      * @return void
      */
-    abstract public function writeToFile($to = null, $quality = 100);
+    abstract public function writeToFile(?string $to = null, int $quality = 100): void;
 
     /**
      * Output the image object directly to HTTP
      *
      * @param  int     $quality
-     * @param  string  $to
-     * @param  bool $download
-     * @param  bool $sendHeaders
+     * @param  ?string $to
+     * @param  bool    $download
+     * @param  bool    $sendHeaders
      * @throws Exception
      * @return void
      */
-    abstract public function outputToHttp($quality = 100, $to = null, $download = false, $sendHeaders = true);
+    abstract public function outputToHttp(int $quality = 100, ?string $to = null, bool $download = false, bool $sendHeaders = true): void;
 
     /**
      * Destroy the image object and the related image file directly
@@ -637,23 +630,23 @@ abstract class AbstractAdapter implements AdapterInterface
      * @param  bool $delete
      * @return void
      */
-    abstract public function destroy($delete = false);
+    abstract public function destroy(bool $delete = false): void;
 
     /**
      * Create and return a color.
      *
-     * @param  Color\ColorInterface $color
-     * @param  int                  $alpha
+     * @param  ?Color\ColorInterface $color
+     * @param  int                   $alpha
      * @throws Exception
      * @return mixed
      */
-    abstract public function createColor(Color\ColorInterface $color = null, $alpha = 100);
+    abstract public function createColor(?Color\ColorInterface $color = null, int $alpha = 100): mixed;
 
     /**
      * Output the image
      *
      * @return string
      */
-    abstract public function __toString();
+    abstract public function __toString(): string;
 
 }

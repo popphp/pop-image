@@ -13,6 +13,9 @@
  */
 namespace Pop\Image\Type;
 
+use ImagickException;
+use ImagickDrawException;
+
 /**
  * Type class for Imagick
  *
@@ -28,17 +31,17 @@ class Imagick extends AbstractType
 
     /**
      * Opacity
-     * @var float
+     * @var int|float|null
      */
-    protected $opacity = 1.0;
+    protected int|float|null $opacity = 1.0;
 
     /**
      * Set the opacity
      *
-     * @param  float $opacity
+     * @param  int|float $opacity
      * @return Imagick
      */
-    public function setOpacity($opacity)
+    public function setOpacity(int|float $opacity): Imagick
     {
         $this->opacity = $opacity;
         return $this;
@@ -47,11 +50,11 @@ class Imagick extends AbstractType
     /**
      * Set and apply the text on the image
      *
-     * @param  string $string
-     * @throws Exception
+     * @param string $string
+     * @throws Exception|ImagickException|ImagickDrawException
      * @return Imagick
      */
-    public function text($string)
+    public function text(string $string): Imagick
     {
         if ($this->hasImage()) {
             $draw = new \ImagickDraw();

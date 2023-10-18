@@ -31,42 +31,42 @@ abstract class AbstractDraw extends AbstractEditObject implements DrawInterface
 
     /**
      * Opacity
-     * @var mixed
+     * @var int|float|null
      */
-    protected $opacity = null;
+    protected int|float|null $opacity = null;
 
     /**
      * Fill color
-     * @var Color\Colorinterface
+     * @var ?Color\Colorinterface
      */
-    protected $fillColor = null;
+    protected ?Color\Colorinterface $fillColor = null;
 
     /**
      * Stroke color
-     * @var Color\Colorinterface
+     * @var ?Color\Colorinterface
      */
-    protected $strokeColor = null;
+    protected ?Color\Colorinterface$strokeColor = null;
 
     /**
      * Stroke width
      * @var int
      */
-    protected $strokeWidth = 0;
+    protected int $strokeWidth = 0;
 
     /**
      * Set the opacity
      *
-     * @param  float $opacity
+     * @param  int|float $opacity
      * @return AbstractDraw
      */
-    abstract public function setOpacity($opacity);
+    abstract public function setOpacity(int|float $opacity): AbstractDraw;
 
     /**
      * Get the opacity
      *
      * @return mixed
      */
-    public function getOpacity()
+    public function getOpacity(): mixed
     {
         return $this->opacity;
     }
@@ -76,7 +76,7 @@ abstract class AbstractDraw extends AbstractEditObject implements DrawInterface
      *
      * @return Color\Colorinterface
      */
-    public function getFillColor()
+    public function getFillColor(): Color\Colorinterface
     {
         return $this->fillColor;
     }
@@ -86,7 +86,7 @@ abstract class AbstractDraw extends AbstractEditObject implements DrawInterface
      *
      * @return Color\Colorinterface
      */
-    public function getStrokeColor()
+    public function getStrokeColor(): Color\Colorinterface
     {
         return $this->strokeColor;
     }
@@ -96,7 +96,7 @@ abstract class AbstractDraw extends AbstractEditObject implements DrawInterface
      *
      * @return int
      */
-    public function getStrokeWidth()
+    public function getStrokeWidth(): int
     {
         return $this->strokeWidth;
     }
@@ -107,7 +107,7 @@ abstract class AbstractDraw extends AbstractEditObject implements DrawInterface
      * @param  Color\ColorInterface $color
      * @return AbstractDraw
      */
-    public function setFillColor(Color\ColorInterface $color)
+    public function setFillColor(Color\ColorInterface $color): AbstractDraw
     {
         $this->fillColor = $color;
         return $this;
@@ -119,7 +119,7 @@ abstract class AbstractDraw extends AbstractEditObject implements DrawInterface
      * @param  Color\ColorInterface $color
      * @return AbstractDraw
      */
-    public function setStrokeColor(Color\ColorInterface $color)
+    public function setStrokeColor(Color\ColorInterface $color): AbstractDraw
     {
         $this->strokeColor = $color;
         return $this;
@@ -131,9 +131,9 @@ abstract class AbstractDraw extends AbstractEditObject implements DrawInterface
      * @param int $w
      * @return AbstractDraw
      */
-    public function setStrokeWidth($w)
+    public function setStrokeWidth(int $w): AbstractDraw
     {
-        $this->strokeWidth = (int)$w;
+        $this->strokeWidth = $w;
         return $this;
     }
 
