@@ -4,7 +4,7 @@
  *
  * @link       https://github.com/popphp/popphp-framework
  * @author     Nick Sagona, III <dev@nolainteractive.com>
- * @copyright  Copyright (c) 2009-2023 NOLA Interactive, LLC. (http://www.nolainteractive.com)
+ * @copyright  Copyright (c) 2009-2024 NOLA Interactive, LLC. (http://www.nolainteractive.com)
  * @license    http://www.popphp.org/license     New BSD License
  */
 
@@ -13,7 +13,7 @@
  */
 namespace Pop\Image\Filter;
 
-use Pop\Image\Color;
+use Pop\Color\Color;
 
 /**
  * Filter class for Imagick
@@ -21,9 +21,9 @@ use Pop\Image\Color;
  * @category   Pop
  * @package    Pop\Image
  * @author     Nick Sagona, III <dev@nolainteractive.com>
- * @copyright  Copyright (c) 2009-2023 NOLA Interactive, LLC. (http://www.nolainteractive.com)
+ * @copyright  Copyright (c) 2009-2024 NOLA Interactive, LLC. (http://www.nolainteractive.com)
  * @license    http://www.popphp.org/license     New BSD License
- * @version    3.4.0
+ * @version    4.0.0
  */
 class Imagick extends AbstractFilter
 {
@@ -140,7 +140,7 @@ class Imagick extends AbstractFilter
      * Apply a posterize effect to the image
      *
      * @param  int     $levels
-     * @param  boolean $dither
+     * @param  bool $dither
      * @return Imagick
      */
     public function posterize($levels, $dither = false)
@@ -191,13 +191,13 @@ class Imagick extends AbstractFilter
     public function skew($x, $y, Color\ColorInterface $color = null)
     {
         if ($this->hasImage()) {
-            if (null === $color) {
+            if ($color === null) {
                 $color = new Color\Rgb(255, 255, 255);
             }
             if (!($color instanceof Color\Rgb)) {
                 $color = $color->toRgb();
             }
-            $this->image->getResource()->shearImage('rgb(' . $color . ')', $x, $y);
+            $this->image->getResource()->shearImage($color->render(Color\Rgb::CSS), $x, $y);
         }
 
         return $this;
@@ -243,7 +243,7 @@ class Imagick extends AbstractFilter
     {
         if ($this->hasImage()) {
             $x = $this->image->getWidth() / $w;
-            $y = $this->image->getHeight() / ((null === $h) ? $w : $h);
+            $y = $this->image->getHeight() / (($h === null) ? $w : $h);
 
             $this->image->getResource()->scaleImage($x, $y);
             $this->image->getResource()->scaleImage($this->image->getWidth(), $this->image->getHeight());

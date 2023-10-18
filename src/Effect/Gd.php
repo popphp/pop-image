@@ -4,7 +4,7 @@
  *
  * @link       https://github.com/popphp/popphp-framework
  * @author     Nick Sagona, III <dev@nolainteractive.com>
- * @copyright  Copyright (c) 2009-2023 NOLA Interactive, LLC. (http://www.nolainteractive.com)
+ * @copyright  Copyright (c) 2009-2024 NOLA Interactive, LLC. (http://www.nolainteractive.com)
  * @license    http://www.popphp.org/license     New BSD License
  */
 
@@ -13,7 +13,7 @@
  */
 namespace Pop\Image\Effect;
 
-use Pop\Image\Color;
+use Pop\Color\Color;
 
 /**
  * Effect class for Gd
@@ -21,9 +21,9 @@ use Pop\Image\Color;
  * @category   Pop
  * @package    Pop\Image
  * @author     Nick Sagona, III <dev@nolainteractive.com>
- * @copyright  Copyright (c) 2009-2023 NOLA Interactive, LLC. (http://www.nolainteractive.com)
+ * @copyright  Copyright (c) 2009-2024 NOLA Interactive, LLC. (http://www.nolainteractive.com)
  * @license    http://www.popphp.org/license     New BSD License
- * @version    3.4.0
+ * @version    4.0.0
  */
 class Gd extends AbstractEffect
 {
@@ -39,7 +39,7 @@ class Gd extends AbstractEffect
     public function border(Color\ColorInterface $color, $w, $h = null)
     {
         if ($this->hasImage()) {
-            $h = (null === $h) ? $w : $h;
+            $h = ($h === null) ? $w : $h;
             $width = $this->image->getWidth();
             $height = $this->image->getHeight();
 
@@ -144,7 +144,7 @@ class Gd extends AbstractEffect
      *
      * @param  Color\ColorInterface $color1
      * @param  Color\ColorInterface $color2
-     * @param  boolean              $vertical
+     * @param  bool              $vertical
      * @throws Exception
      * @return Gd
      */

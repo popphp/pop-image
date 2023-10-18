@@ -4,7 +4,7 @@
  *
  * @link       https://github.com/popphp/popphp-framework
  * @author     Nick Sagona, III <dev@nolainteractive.com>
- * @copyright  Copyright (c) 2009-2023 NOLA Interactive, LLC. (http://www.nolainteractive.com)
+ * @copyright  Copyright (c) 2009-2024 NOLA Interactive, LLC. (http://www.nolainteractive.com)
  * @license    http://www.popphp.org/license     New BSD License
  */
 
@@ -19,9 +19,9 @@ namespace Pop\Image\Draw;
  * @category   Pop
  * @package    Pop\Image
  * @author     Nick Sagona, III <dev@nolainteractive.com>
- * @copyright  Copyright (c) 2009-2023 NOLA Interactive, LLC. (http://www.nolainteractive.com)
+ * @copyright  Copyright (c) 2009-2024 NOLA Interactive, LLC. (http://www.nolainteractive.com)
  * @license    http://www.popphp.org/license     New BSD License
- * @version    3.4.0
+ * @version    4.0.0
  */
 class Imagick extends AbstractDraw
 {
@@ -58,7 +58,7 @@ class Imagick extends AbstractDraw
         if ($this->hasImage()) {
             $draw = new \ImagickDraw();
             $draw->setStrokeColor($this->image->createColor($this->strokeColor, $this->opacity));
-            $draw->setStrokeWidth((null === $this->strokeWidth) ? 1 : $this->strokeWidth);
+            $draw->setStrokeWidth(($this->strokeWidth === null) ? 1 : $this->strokeWidth);
             $draw->line($x1, $y1, $x2, $y2);
             $this->image->getResource()->drawImage($draw);
         }
@@ -79,11 +79,11 @@ class Imagick extends AbstractDraw
     {
         if ($this->hasImage()) {
             $x2 = $x + $w;
-            $y2 = $y + ((null === $h) ? $w : $h);
+            $y2 = $y + (($h === null) ? $w : $h);
 
             $draw = new \ImagickDraw();
 
-            if (null !== $this->fillColor) {
+            if ($this->fillColor !== null) {
                 $draw->setFillColor($this->image->createColor($this->fillColor, $this->opacity));
             }
 
@@ -127,14 +127,14 @@ class Imagick extends AbstractDraw
     {
         if ($this->hasImage()) {
             $x2 = $x + $w;
-            $y2 = $y + ((null === $h) ? $w : $h);
-            if (null === $ry) {
+            $y2 = $y + (($h === null) ? $w : $h);
+            if ($ry === null) {
                 $ry = $rx;
             }
 
             $draw = new \ImagickDraw();
 
-            if (null !== $this->fillColor) {
+            if ($this->fillColor !== null) {
                 $draw->setFillColor($this->image->createColor($this->fillColor, $this->opacity));
             }
 
@@ -178,11 +178,11 @@ class Imagick extends AbstractDraw
     {
         if ($this->hasImage()) {
             $wid = $w;
-            $hgt = (null === $h) ? $w : $h;
+            $hgt = ($h === null) ? $w : $h;
 
             $draw = new \ImagickDraw();
 
-            if (null !== $this->fillColor) {
+            if ($this->fillColor !== null) {
                 $draw->setFillColor($this->image->createColor($this->fillColor, $this->opacity));
             }
 
@@ -230,7 +230,7 @@ class Imagick extends AbstractDraw
             }
 
             $wid = $w;
-            $hgt = (null === $h) ? $w : $h;
+            $hgt = ($h === null) ? $w : $h;
 
             $draw = new \ImagickDraw();
             $draw->setFillOpacity(0);
@@ -260,7 +260,7 @@ class Imagick extends AbstractDraw
     {
         if ($this->hasImage()) {
             $wid = $w;
-            $hgt = (null === $h) ? $w : $h;
+            $hgt = ($h === null) ? $w : $h;
 
             $draw = new \ImagickDraw();
             $draw->setFillColor($this->image->createColor($this->fillColor));
@@ -305,7 +305,7 @@ class Imagick extends AbstractDraw
     {
         if ($this->hasImage()) {
             $wid = $w;
-            $hgt = (null === $h) ? $w : $h;
+            $hgt = ($h === null) ? $w : $h;
 
             $draw = new \ImagickDraw();
             $draw->setFillColor($this->image->createColor($this->fillColor));
@@ -354,7 +354,7 @@ class Imagick extends AbstractDraw
     {
         if ($this->hasImage()) {
             $draw = new \ImagickDraw();
-            if (null !== $this->fillColor) {
+            if ($this->fillColor !== null) {
                 $draw->setFillColor($this->image->createColor($this->fillColor, $this->opacity));
             }
 

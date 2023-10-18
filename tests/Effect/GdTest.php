@@ -3,9 +3,9 @@
 namespace Pop\Image\Test\Effect;
 
 use Pop\Image\Adapter;
-use Pop\Image\Color\Rgb;
-use Pop\Image\Color\Cmyk;
-use Pop\Image\Color\Gray;
+use Pop\Color\Color\Rgb;
+use Pop\Color\Color\Cmyk;
+use Pop\Color\Color\Grayscale;
 use PHPUnit\Framework\TestCase;
 
 class GdTest extends TestCase
@@ -74,7 +74,7 @@ class GdTest extends TestCase
     public function testHorizontalGradient3()
     {
         $image = new Adapter\Gd(640, 480, 'test.jpg');
-        $image->effect()->horizontalGradient(new Gray(100), new Gray(0));
+        $image->effect()->horizontalGradient(new Grayscale(100), new Grayscale(0));
         $this->assertInstanceOf('Pop\Image\Effect\Gd', $image->effect());
     }
 

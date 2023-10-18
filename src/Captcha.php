@@ -4,7 +4,7 @@
  *
  * @link       https://github.com/popphp/popphp-framework
  * @author     Nick Sagona, III <dev@nolainteractive.com>
- * @copyright  Copyright (c) 2009-2023 NOLA Interactive, LLC. (http://www.nolainteractive.com)
+ * @copyright  Copyright (c) 2009-2024 NOLA Interactive, LLC. (http://www.nolainteractive.com)
  * @license    http://www.popphp.org/license     New BSD License
  */
 
@@ -19,9 +19,9 @@ namespace Pop\Image;
  * @category   Pop
  * @package    Pop\Image
  * @author     Nick Sagona, III <dev@nolainteractive.com>
- * @copyright  Copyright (c) 2009-2023 NOLA Interactive, LLC. (http://www.nolainteractive.com)
+ * @copyright  Copyright (c) 2009-2024 NOLA Interactive, LLC. (http://www.nolainteractive.com)
  * @license    http://www.popphp.org/license     New BSD License
- * @version    3.4.0
+ * @version    4.0.0
  */
 class Captcha
 {
@@ -46,7 +46,7 @@ class Captcha
 
     /**
      * CAPTCHA uppercase flag
-     * @var boolean
+     * @var bool
      */
     protected $uppercase = true;
 
@@ -104,7 +104,7 @@ class Captcha
         $this->setUrl($url);
         $this->setExpire($expire);
 
-        if (null !== $config) {
+        if ($config !== null) {
             $this->setConfig($config);
         }
 
@@ -180,7 +180,7 @@ class Captcha
     /**
      * Set CAPTCHA answer case
      *
-     * @param  boolean $uppercase
+     * @param  bool $uppercase
      * @return Captcha
      */
     public function setUppercase($uppercase)
@@ -282,7 +282,7 @@ class Captcha
     /**
      * Get CAPTCHA answer case
      *
-     * @return boolean
+     * @return bool
      */
     public function isUppercase()
     {
@@ -316,7 +316,7 @@ class Captcha
      */
     public function getImage()
     {
-        if (null === $this->image) {
+        if ($this->image === null) {
             $this->createImage();
         }
         return $this->image;
@@ -329,7 +329,7 @@ class Captcha
      */
     public function getImageHtml()
     {
-        if (null === $this->image) {
+        if ($this->image === null) {
             $this->createImage();
         }
         return (isset($this->token['captcha'])) ? $this->token['captcha'] : '';
@@ -356,7 +356,7 @@ class Captcha
             '<a class="pop-captcha-reload" href="#" onclick="document.getElementById(\'pop-captcha-image\').src = \'' .
             $this->url . '?captcha=1\'; return false;">' . $this->reload . '</a>';
 
-        $answer = (null === $this->answer) ? $this->random($this->length, true) : $this->answer;
+        $answer = ($this->answer === null) ? $this->random($this->length, true) : $this->answer;
 
         $this->token = [
             'captcha' => $captcha,
@@ -409,7 +409,7 @@ class Captcha
             new Color\Rgb($this->config['textColor'][0], $this->config['textColor'][1], $this->config['textColor'][2])
         );
 
-        if (null === $this->config['font']) {
+        if ($this->config['font'] === null) {
             $this->image->type()->size($fontSize);
             $textX = round(($this->config['width'] - ($this->length * 10)) / 2);
             $textY = ($adapterClass != 'Pop\Image\Gd') ?
@@ -433,7 +433,7 @@ class Captcha
      * Create random alphanumeric string
      *
      * @param  int     $length
-     * @param  boolean $case
+     * @param  bool $case
      * @return string
      */
     public function random($length = 8, $case = false)
@@ -461,7 +461,7 @@ class Captcha
      */
     public function __toString()
     {
-        if (null === $this->image) {
+        if ($this->image === null) {
             $this->createImage();
         }
         return (string)$this->getImage();

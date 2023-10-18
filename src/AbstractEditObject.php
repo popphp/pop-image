@@ -4,7 +4,7 @@
  *
  * @link       https://github.com/popphp/popphp-framework
  * @author     Nick Sagona, III <dev@nolainteractive.com>
- * @copyright  Copyright (c) 2009-2023 NOLA Interactive, LLC. (http://www.nolainteractive.com)
+ * @copyright  Copyright (c) 2009-2024 NOLA Interactive, LLC. (http://www.nolainteractive.com)
  * @license    http://www.popphp.org/license     New BSD License
  */
 
@@ -21,9 +21,9 @@ use Pop\Image\Adapter\AbstractAdapter;
  * @category   Pop
  * @package    Pop\Image
  * @author     Nick Sagona, III <dev@nolainteractive.com>
- * @copyright  Copyright (c) 2009-2023 NOLA Interactive, LLC. (http://www.nolainteractive.com)
+ * @copyright  Copyright (c) 2009-2024 NOLA Interactive, LLC. (http://www.nolainteractive.com)
  * @license    http://www.popphp.org/license     New BSD License
- * @version    3.4.0
+ * @version    4.0.0
  */
 abstract class AbstractEditObject
 {
@@ -43,7 +43,7 @@ abstract class AbstractEditObject
      */
     public function __construct(AbstractAdapter $image = null)
     {
-        if (null !== $image) {
+        if ($image !== null) {
             $this->setImage($image);
         }
     }
@@ -73,11 +73,11 @@ abstract class AbstractEditObject
     /**
      * Has the image object
      *
-     * @return boolean
+     * @return bool
      */
     public function hasImage()
     {
-        return (null !== $this->image);
+        return ($this->image !== null);
     }
 
 }

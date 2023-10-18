@@ -3,7 +3,7 @@
 namespace Pop\Image\Test\Type;
 
 use Pop\Image\Adapter;
-use Pop\Image\Color\Rgb;
+use Pop\Color\Color\Rgb;
 use PHPUnit\Framework\TestCase;
 
 class ImagickTest extends TestCase

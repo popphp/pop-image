@@ -320,7 +320,7 @@ class GdTest extends TestCase
     public function testCreateColor()
     {
         $image = new Gd(__DIR__ . '/../tmp/test.jpg');
-        $color = $image->createColor(new \Pop\Image\Color\Cmyk(100, 80, 60, 40));
+        $color = $image->createColor(new \Pop\Color\Color\Cmyk(100, 80, 60, 40));
         $this->assertTrue(is_numeric($color));
     }
 
@@ -328,7 +328,7 @@ class GdTest extends TestCase
     {
         $this->expectException('OutOfRangeException');
         $image = new Gd(__DIR__ . '/../tmp/test.jpg');
-        $color = $image->createColor(new \Pop\Image\Color\Rgb(100, 80, 60), 200);
+        $color = $image->createColor(new \Pop\Color\Color\Rgb(100, 80, 60), 200);
     }
 
     public function testOutputToHttpNotCreatedException()

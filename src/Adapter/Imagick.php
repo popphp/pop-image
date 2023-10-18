@@ -4,7 +4,7 @@
  *
  * @link       https://github.com/popphp/popphp-framework
  * @author     Nick Sagona, III <dev@nolainteractive.com>
- * @copyright  Copyright (c) 2009-2023 NOLA Interactive, LLC. (http://www.nolainteractive.com)
+ * @copyright  Copyright (c) 2009-2024 NOLA Interactive, LLC. (http://www.nolainteractive.com)
  * @license    http://www.popphp.org/license     New BSD License
  */
 
@@ -14,7 +14,7 @@
 namespace Pop\Image\Adapter;
 
 use Pop\Image\Adjust;
-use Pop\Image\Color;
+use Pop\Color\Color;
 use Pop\Image\Draw;
 use Pop\Image\Effect;
 use Pop\Image\Filter;
@@ -27,9 +27,9 @@ use Pop\Image\Type;
  * @category   Pop
  * @package    Pop\Image
  * @author     Nick Sagona, III <dev@nolainteractive.com>
- * @copyright  Copyright (c) 2009-2023 NOLA Interactive, LLC. (http://www.nolainteractive.com)
+ * @copyright  Copyright (c) 2009-2024 NOLA Interactive, LLC. (http://www.nolainteractive.com)
  * @license    http://www.popphp.org/license     New BSD License
- * @version    3.4.0
+ * @version    4.0.0
  */
 class Imagick extends AbstractAdapter
 {
@@ -72,17 +72,17 @@ class Imagick extends AbstractAdapter
     public function load($name = null)
     {
         $filename = null;
-        if (null !== $name) {
+        if ($name !== null) {
             $filename = ((strpos($name, '[') !== false) && (strpos($name, ']') !== false)) ?
                 substr($name, 0, strpos($name, '[')) : $name;
             $this->name = $name;
         }
 
-        if ((null === $this->name) || ((null !== $filename) && !file_exists($filename))) {
+        if (($this->name === null) || (($filename !== null) && !file_exists($filename))) {
             throw new Exception('Error: The image file has not been passed to the image adapter');
         }
 
-        if (null !== $this->resource) {
+        if ($this->resource !== null) {
             $this->resource->readImage($this->name);
         } else {
             $this->resource = new \Imagick($this->name);
@@ -128,12 +128,12 @@ class Imagick extends AbstractAdapter
      */
     public function loadFromString($data, $name = null)
     {
-        if (null === $this->resource) {
+        if ($this->resource === null) {
             $this->resource = new \Imagick();
         }
         $this->resource->readImageBlob($data);
 
-        if (null !== $name) {
+        if ($name !== null) {
             $this->name = $name;
         }
 
@@ -175,22 +175,22 @@ class Imagick extends AbstractAdapter
      */
     public function create($width = null, $height = null, $name = null)
     {
-        if ((null !== $width) && (null !== $height)) {
+        if (($width !== null) && ($height !== null)) {
             $this->width  = $width;
             $this->height = $height;
         }
 
-        if (null !== $name) {
+        if ($name !== null) {
             $this->name = $name;
         }
 
-        if (null === $this->resource) {
+        if ($this->resource === null) {
             $this->resource = new \Imagick();
         }
 
         $this->resource->newImage($this->width, $this->height, new \ImagickPixel('white'));
 
-        if (null !== $this->name) {
+        if ($this->name !== null) {
             $extension = strtolower(substr($this->name, (strrpos($this->name, '.') + 1)));
             if (!empty($extension)) {
                 $this->resource->setImageFormat($extension);
@@ -211,22 +211,22 @@ class Imagick extends AbstractAdapter
      */
     public function createIndex($width = null, $height = null, $name = null)
     {
-        if ((null !== $width) && (null !== $height)) {
+        if (($width !== null) && ($height !== null)) {
             $this->width  = $width;
             $this->height = $height;
         }
 
-        if (null !== $name) {
+        if ($name !== null) {
             $this->name = $name;
         }
 
-        if (null === $this->resource) {
+        if ($this->resource === null) {
             $this->resource = new \Imagick();
         }
 
         $this->resource->newImage($this->width, $this->height, new \ImagickPixel('white'));
 
-        if (null !== $this->name) {
+        if ($this->name !== null) {
             $extension = strtolower(substr($this->name, (strrpos($this->name, '.') + 1)));
             if (!empty($extension)) {
                 $this->resource->setImageFormat($extension);
@@ -252,7 +252,7 @@ class Imagick extends AbstractAdapter
         if (!($image instanceof \Imagick)) {
             $image = new \Imagick($image);
         }
-        if (null !== $delay) {
+        if ($delay !== null) {
             $image->setImageDelay($delay);
         }
         $this->resource->addImage($image);
@@ -262,7 +262,7 @@ class Imagick extends AbstractAdapter
     /**
      * Does image have images
      *
-     * @return boolean
+     * @return bool
      */
     public function hasImages()
     {
@@ -300,7 +300,7 @@ class Imagick extends AbstractAdapter
      */
     public function setResolution($x, $y = null)
     {
-        if (null === $y) {
+        if ($y === null) {
             $y = $x;
         }
         $this->resource->setResolution($x, $y);
@@ -467,10 +467,10 @@ class Imagick extends AbstractAdapter
      */
     public function resizeImage($width, $height, $filter = null, $blur = null)
     {
-        if (null === $filter) {
+        if ($filter === null) {
             $filter = $this->imageFilter;
         }
-        if (null === $blur) {
+        if ($blur === null) {
             $blur = $this->imageBlur;
         }
         if ($this->resource->getNumberImages() > 0) {
@@ -519,7 +519,7 @@ class Imagick extends AbstractAdapter
         $xOffset = 0;
         $yOffset = 0;
 
-        if (null !== $offset) {
+        if ($offset !== null) {
             if ($this->width > $this->height) {
                 $xOffset = $offset;
                 $yOffset = 0;
@@ -535,7 +535,7 @@ class Imagick extends AbstractAdapter
         $hgt = round($this->height * $scale);
 
         // Create a new image output resource.
-        if (null !== $offset) {
+        if ($offset !== null) {
             $this->resizeImage($wid, $hgt, $this->imageFilter, $this->imageBlur);
             $this->cropImage($px, $px, $xOffset, $yOffset);
         } else {
@@ -644,10 +644,10 @@ class Imagick extends AbstractAdapter
      */
     public function adjust()
     {
-        if (null === $this->adjust) {
+        if ($this->adjust === null) {
             $this->adjust = new Adjust\Imagick($this);
         }
-        if (null === $this->adjust->getImage()) {
+        if ($this->adjust->getImage() === null) {
             $this->adjust->setImage($this);
         }
 
@@ -661,10 +661,10 @@ class Imagick extends AbstractAdapter
      */
     public function draw()
     {
-        if (null === $this->draw) {
+        if ($this->draw === null) {
             $this->draw = new Draw\Imagick($this);
         }
-        if (null === $this->draw->getImage()) {
+        if ($this->draw->getImage() === null) {
             $this->draw->setImage($this);
         }
         return $this->draw;
@@ -677,10 +677,10 @@ class Imagick extends AbstractAdapter
      */
     public function effect()
     {
-        if (null === $this->effect) {
+        if ($this->effect === null) {
             $this->effect = new Effect\Imagick($this);
         }
-        if (null === $this->effect->getImage()) {
+        if ($this->effect->getImage() === null) {
             $this->effect->setImage($this);
         }
         return $this->effect;
@@ -693,10 +693,10 @@ class Imagick extends AbstractAdapter
      */
     public function filter()
     {
-        if (null === $this->filter) {
+        if ($this->filter === null) {
             $this->filter = new Filter\Imagick($this);
         }
-        if (null === $this->filter->getImage()) {
+        if ($this->filter->getImage() === null) {
             $this->filter->setImage($this);
         }
         return $this->filter;
@@ -709,10 +709,10 @@ class Imagick extends AbstractAdapter
      */
     public function layer()
     {
-        if (null === $this->layer) {
+        if ($this->layer === null) {
             $this->layer = new Layer\Imagick($this);
         }
-        if (null === $this->layer->getImage()) {
+        if ($this->layer->getImage() === null) {
             $this->layer->setImage($this);
         }
         return $this->layer;
@@ -725,10 +725,10 @@ class Imagick extends AbstractAdapter
      */
     public function type()
     {
-        if (null === $this->type) {
+        if ($this->type === null) {
             $this->type = new Type\Imagick($this);
         }
-        if (null === $this->type->getImage()) {
+        if ($this->type->getImage() === null) {
             $this->type->setImage($this);
         }
         return $this->type;
@@ -781,15 +781,15 @@ class Imagick extends AbstractAdapter
      */
     public function writeToFile($to = null, $quality = null)
     {
-        if ((null === $this->resource) || ((null !== $this->resource) && ($this->resource->count() == 0))) {
+        if (($this->resource === null) || (($this->resource !== null) && ($this->resource->count() == 0))) {
             throw new Exception('Error: An image resource has not been created or loaded');
         }
 
-        if (null !== $quality) {
+        if ($quality !== null) {
             $this->setQuality($quality);
         }
 
-        if (null !== $this->compression) {
+        if ($this->compression !== null) {
             $this->resource->setImageCompression($this->compression);
         }
 
@@ -799,8 +799,8 @@ class Imagick extends AbstractAdapter
 
         $this->resource->setImageCompressionQuality($this->quality);
 
-        if (null === $to) {
-            $to = (null !== $this->name) ? basename($this->name) : 'pop-image.' . $this->format;
+        if ($to === null) {
+            $to = ($this->name !== null) ? basename($this->name) : 'pop-image.' . $this->format;
         } else {
             $this->name = $to;
         }
@@ -813,19 +813,19 @@ class Imagick extends AbstractAdapter
      *
      * @param  int     $quality
      * @param  string  $to
-     * @param  boolean $download
-     * @param  boolean $sendHeaders
+     * @param  bool $download
+     * @param  bool $sendHeaders
      * @param  array   $headers
      * @throws Exception
      * @return void
      */
     public function outputToHttp($quality = null, $to = null, $download = false, $sendHeaders = true, array $headers = [])
     {
-        if ((null === $this->resource) || ((null !== $this->resource) && ($this->resource->count() == 0))) {
+        if (($this->resource === null) || (($this->resource !== null) && ($this->resource->count() == 0))) {
             throw new Exception('Error: An image resource has not been created or loaded');
         }
 
-        if (null !== $quality) {
+        if ($quality !== null) {
             $this->setQuality($quality);
         }
 
@@ -833,14 +833,14 @@ class Imagick extends AbstractAdapter
             throw new \OutOfRangeException('Error: The quality parameter must be between 0 and 100');
         }
 
-        if (null !== $this->compression) {
+        if ($this->compression !== null) {
             $this->resource->setImageCompression($this->compression);
         }
 
         $this->resource->setImageCompressionQuality($this->quality);
 
-        if (null === $to) {
-            $to = (null !== $this->name) ? basename($this->name) : 'pop-image.' . strtolower($this->format);
+        if ($to === null) {
+            $to = ($this->name !== null) ? basename($this->name) : 'pop-image.' . strtolower($this->format);
         }
 
         $this->sendHeaders($to, $download, $headers);
@@ -850,12 +850,12 @@ class Imagick extends AbstractAdapter
     /**
      * Destroy the image object and the related image file directly
      *
-     * @param  boolean $delete
+     * @param  bool $delete
      * @return void
      */
     public function destroy($delete = false)
     {
-        if (null !== $this->resource) {
+        if ($this->resource !== null) {
             $this->resource->clear();
             $this->resource->destroy();
         }
@@ -878,7 +878,7 @@ class Imagick extends AbstractAdapter
      */
     public function createColor(Color\ColorInterface $color = null, $alpha = 100)
     {
-        if (null === $color) {
+        if ($color === null) {
             $color = new Color\Rgb(0, 0, 0);
         }
 
@@ -886,8 +886,11 @@ class Imagick extends AbstractAdapter
             $color = $color->toRgb();
         }
 
-        return ((int)$alpha < 100) ?
-            new \ImagickPixel('rgba(' . $color . ',' . (int)$alpha . ')') : new \ImagickPixel('rgb(' . $color . ')');
+        if ($alpha < 100) {
+            $color->setA($alpha / 100);
+        }
+
+        return new \ImagickPixel($color->render(Color\Rgb::CSS));
     }
 
     /**

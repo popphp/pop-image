@@ -4,7 +4,7 @@
  *
  * @link       https://github.com/popphp/popphp-framework
  * @author     Nick Sagona, III <dev@nolainteractive.com>
- * @copyright  Copyright (c) 2009-2023 NOLA Interactive, LLC. (http://www.nolainteractive.com)
+ * @copyright  Copyright (c) 2009-2024 NOLA Interactive, LLC. (http://www.nolainteractive.com)
  * @license    http://www.popphp.org/license     New BSD License
  */
 
@@ -19,9 +19,9 @@ namespace Pop\Image\Type;
  * @category   Pop
  * @package    Pop\Image
  * @author     Nick Sagona, III <dev@nolainteractive.com>
- * @copyright  Copyright (c) 2009-2023 NOLA Interactive, LLC. (http://www.nolainteractive.com)
+ * @copyright  Copyright (c) 2009-2024 NOLA Interactive, LLC. (http://www.nolainteractive.com)
  * @license    http://www.popphp.org/license     New BSD License
- * @version    3.4.0
+ * @version    4.0.0
  */
 class Gd extends AbstractType
 {
@@ -56,8 +56,8 @@ class Gd extends AbstractType
             $fillColor = ($this->image->isIndexed()) ? $this->image->createColor($this->fillColor, null) :
                 $this->image->createColor($this->fillColor, $this->opacity);
 
-            if ((null !== $this->font) && function_exists('imagettftext')) {
-                if (null !== $this->strokeColor) {
+            if (($this->font !== null) && function_exists('imagettftext')) {
+                if ($this->strokeColor !== null) {
                     $strokeColor = ($this->image->isIndexed()) ? $this->image->createColor($this->strokeColor, null) :
                         $this->image->createColor($this->strokeColor, $this->opacity);
                     imagettftext($this->image->getResource(), $this->size, $this->rotation, $this->x, ($this->y - 1), $strokeColor, $this->font, $string);

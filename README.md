@@ -20,6 +20,13 @@ Install `pop-image` using Composer.
 
     composer require popphp/pop-image
 
+Or, require it in your composer.json file
+
+    "require": {
+        "popphp/pop-image" : "^4.0.0"
+    }
+
+
 BASIC USAGE
 -----------
 

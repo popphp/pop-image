@@ -4,7 +4,7 @@
  *
  * @link       https://github.com/popphp/popphp-framework
  * @author     Nick Sagona, III <dev@nolainteractive.com>
- * @copyright  Copyright (c) 2009-2023 NOLA Interactive, LLC. (http://www.nolainteractive.com)
+ * @copyright  Copyright (c) 2009-2024 NOLA Interactive, LLC. (http://www.nolainteractive.com)
  * @license    http://www.popphp.org/license     New BSD License
  */
 
@@ -14,7 +14,7 @@
 namespace Pop\Image\Adapter;
 
 use Pop\Image\Adjust;
-use Pop\Image\Color;
+use Pop\Color\Color;
 use Pop\Image\Draw;
 use Pop\Image\Effect;
 use Pop\Image\Filter;
@@ -27,9 +27,9 @@ use Pop\Image\Type;
  * @category   Pop
  * @package    Pop\Image
  * @author     Nick Sagona, III <dev@nolainteractive.com>
- * @copyright  Copyright (c) 2009-2023 NOLA Interactive, LLC. (http://www.nolainteractive.com)
+ * @copyright  Copyright (c) 2009-2024 NOLA Interactive, LLC. (http://www.nolainteractive.com)
  * @license    http://www.popphp.org/license     New BSD License
- * @version    3.4.0
+ * @version    4.0.0
  */
 class Gd extends AbstractAdapter
 {
@@ -53,11 +53,11 @@ class Gd extends AbstractAdapter
      */
     public function load($name = null)
     {
-        if (null !== $name) {
+        if ($name !== null) {
             $this->name = $name;
         }
 
-        if ((null === $this->name) || !file_exists($this->name)) {
+        if (($this->name === null) || !file_exists($this->name)) {
             throw new Exception('Error: The image file has not been passed to the image adapter');
         }
 
@@ -95,7 +95,7 @@ class Gd extends AbstractAdapter
      */
     public function loadFromString($data, $name = null)
     {
-        if (null !== $name) {
+        if ($name !== null) {
             $this->name = $name;
         }
 
@@ -128,16 +128,16 @@ class Gd extends AbstractAdapter
      */
     public function create($width = null, $height = null, $name = null)
     {
-        if ((null !== $width) && (null !== $height)) {
+        if (($width !== null) && ($height !== null)) {
             $this->width  = $width;
             $this->height = $height;
         }
 
-        if (null !== $name) {
+        if ($name !== null) {
             $this->name = $name;
         }
 
-        if ((null === $this->width) && (null === $this->height)) {
+        if (($this->width === null) && ($this->height === null)) {
             throw new Exception('Error: You must pass a width and a height');
         }
 
@@ -172,16 +172,16 @@ class Gd extends AbstractAdapter
      */
     public function createIndex($width = null, $height = null, $name = null)
     {
-        if ((null !== $width) && (null !== $height)) {
+        if (($width !== null) && ($height !== null)) {
             $this->width  = $width;
             $this->height = $height;
         }
 
-        if (null !== $name) {
+        if ($name !== null) {
             $this->name = $name;
         }
 
-        if ((null === $this->width) && (null === $this->height)) {
+        if (($this->width === null) && ($this->height === null)) {
             throw new Exception('Error: You must pass a width and a height');
         }
 
@@ -311,7 +311,7 @@ class Gd extends AbstractAdapter
         $w       = round($this->width * $scale);
         $h       = round($this->height * $scale);
 
-        if (null !== $offset) {
+        if ($offset !== null) {
             if ($this->width > $this->height) {
                 $xOffset = $offset;
                 $yOffset = 0;
@@ -404,10 +404,10 @@ class Gd extends AbstractAdapter
      */
     public function adjust()
     {
-        if (null === $this->adjust) {
+        if ($this->adjust === null) {
             $this->adjust = new Adjust\Gd($this);
         }
-        if (null === $this->adjust->getImage()) {
+        if ($this->adjust->getImage() === null) {
             $this->adjust->setImage($this);
         }
 
@@ -421,10 +421,10 @@ class Gd extends AbstractAdapter
      */
     public function draw()
     {
-        if (null === $this->draw) {
+        if ($this->draw === null) {
             $this->draw = new Draw\Gd($this);
         }
-        if (null === $this->draw->getImage()) {
+        if ($this->draw->getImage() === null) {
             $this->draw->setImage($this);
         }
         return $this->draw;
@@ -437,10 +437,10 @@ class Gd extends AbstractAdapter
      */
     public function effect()
     {
-        if (null === $this->effect) {
+        if ($this->effect === null) {
             $this->effect = new Effect\Gd($this);
         }
-        if (null === $this->effect->getImage()) {
+        if ($this->effect->getImage() === null) {
             $this->effect->setImage($this);
         }
         return $this->effect;
@@ -453,10 +453,10 @@ class Gd extends AbstractAdapter
      */
     public function filter()
     {
-        if (null === $this->filter) {
+        if ($this->filter === null) {
             $this->filter = new Filter\Gd($this);
         }
-        if (null === $this->filter->getImage()) {
+        if ($this->filter->getImage() === null) {
             $this->filter->setImage($this);
         }
         return $this->filter;
@@ -469,10 +469,10 @@ class Gd extends AbstractAdapter
      */
     public function layer()
     {
-        if (null === $this->layer) {
+        if ($this->layer === null) {
             $this->layer = new Layer\Gd($this);
         }
-        if (null === $this->layer->getImage()) {
+        if ($this->layer->getImage() === null) {
             $this->layer->setImage($this);
         }
         return $this->layer;
@@ -485,10 +485,10 @@ class Gd extends AbstractAdapter
      */
     public function type()
     {
-        if (null === $this->type) {
+        if ($this->type === null) {
             $this->type = new Type\Gd($this);
         }
-        if (null === $this->type->getImage()) {
+        if ($this->type->getImage() === null) {
             $this->type->setImage($this);
         }
         return $this->type;
@@ -509,7 +509,7 @@ class Gd extends AbstractAdapter
             throw new Exception('Error: The image type must be a GIF, PNG or JPG');
         }
 
-        if (null === $this->resource) {
+        if ($this->resource === null) {
             throw new Exception('Error: An image resource has not been created or loaded');
         }
 
@@ -528,7 +528,7 @@ class Gd extends AbstractAdapter
                 break;
         }
 
-        if ((null !== $this->name) && (strpos($this->name, '.') !== false)) {
+        if (($this->name !== null) && (strpos($this->name, '.') !== false)) {
             $this->name = substr($this->name, 0, (strrpos($this->name, '.') + 1)) . $this->format;
         }
 
@@ -558,11 +558,11 @@ class Gd extends AbstractAdapter
      */
     public function writeToFile($to = null, $quality = null)
     {
-        if (null === $this->resource) {
+        if ($this->resource === null) {
             throw new Exception('Error: An image resource has not been created or loaded');
         }
 
-        if (null !== $quality) {
+        if ($quality !== null) {
             $this->setQuality($quality);
         }
 
@@ -572,8 +572,8 @@ class Gd extends AbstractAdapter
 
         $this->format = strtolower($this->format);
 
-        if (null === $to) {
-            $to = (null !== $this->name) ? basename($this->name) : 'pop-image.' . $this->format;
+        if ($to === null) {
+            $to = ($this->name !== null) ? basename($this->name) : 'pop-image.' . $this->format;
         } else {
             $this->name = $to;
         }
@@ -586,19 +586,19 @@ class Gd extends AbstractAdapter
      *
      * @param  int     $quality
      * @param  string  $to
-     * @param  boolean $download
-     * @param  boolean $sendHeaders
+     * @param  bool $download
+     * @param  bool $sendHeaders
      * @param  array   $headers
      * @throws Exception
      * @return void
      */
     public function outputToHttp($quality = null, $to = null, $download = false, $sendHeaders = true, array $headers = [])
     {
-        if (null === $this->resource) {
+        if ($this->resource === null) {
             throw new Exception('Error: An image resource has not been created or loaded');
         }
 
-        if (null !== $quality) {
+        if ($quality !== null) {
             $this->setQuality($quality);
         }
 
@@ -608,8 +608,8 @@ class Gd extends AbstractAdapter
 
         $this->format = strtolower($this->format);
 
-        if (null === $to) {
-            $to = (null !== $this->name) ? basename($this->name) : 'pop-image.' . $this->format;
+        if ($to === null) {
+            $to = ($this->name !== null) ? basename($this->name) : 'pop-image.' . $this->format;
         }
 
         $this->sendHeaders($to, $download, $headers);
@@ -619,13 +619,13 @@ class Gd extends AbstractAdapter
     /**
      * Destroy the image object and the related image file directly
      *
-     * @param  boolean $delete
+     * @param  bool $delete
      * @return void
      */
     public function destroy($delete = false)
     {
         // Destroy the image resource.
-        if (null !== $this->resource) {
+        if ($this->resource !== null) {
             if (!is_string($this->resource) && is_resource($this->resource)) {
                 imagedestroy($this->resource);
             }
@@ -650,7 +650,7 @@ class Gd extends AbstractAdapter
      */
     public function createColor(Color\ColorInterface $color = null, $alpha = null)
     {
-        if (null === $color) {
+        if ($color === null) {
             $color = new Color\Rgb(0, 0, 0);
         }
 
@@ -662,7 +662,7 @@ class Gd extends AbstractAdapter
         $g = $color->getG();
         $b = $color->getB();
 
-        if (null !== $alpha) {
+        if ($alpha !== null) {
             if (((int)$alpha < 0) || ((int)$alpha > 127)) {
                 throw new \OutOfRangeException('Error: The alpha parameter must be between 0 and 127');
             }
@@ -679,7 +679,7 @@ class Gd extends AbstractAdapter
      */
     public function __toString()
     {
-        $quality = (null !== $this->quality) ? $this->quality : 100;
+        $quality = ($this->quality !== null) ? $this->quality : 100;
         $this->sendHeaders();
         $this->generateImage($quality);
         return '';

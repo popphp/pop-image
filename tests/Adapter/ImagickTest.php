@@ -361,14 +361,14 @@ class ImagickTest extends TestCase
     public function testCreateColor1()
     {
         $image = new Imagick(__DIR__ . '/../tmp/test.jpg');
-        $color = $image->createColor(new \Pop\Image\Color\Cmyk(100, 80, 60, 40));
+        $color = $image->createColor(new \Pop\Color\Color\Cmyk(100, 80, 60, 40));
         $this->assertInstanceOf('ImagickPixel', $color);
     }
 
     public function testCreateColor2()
     {
         $image = new Imagick(__DIR__ . '/../tmp/test.jpg');
-        $color = $image->createColor(new \Pop\Image\Color\Gray(100));
+        $color = $image->createColor(new \Pop\Color\Color\Grayscale(100));
         $this->assertInstanceOf('ImagickPixel', $color);
     }
 

@@ -4,7 +4,7 @@
  *
  * @link       https://github.com/popphp/popphp-framework
  * @author     Nick Sagona, III <dev@nolainteractive.com>
- * @copyright  Copyright (c) 2009-2023 NOLA Interactive, LLC. (http://www.nolainteractive.com)
+ * @copyright  Copyright (c) 2009-2024 NOLA Interactive, LLC. (http://www.nolainteractive.com)
  * @license    http://www.popphp.org/license     New BSD License
  */
 
@@ -14,7 +14,7 @@
 namespace Pop\Image\Adapter;
 
 use Pop\Image\Adjust;
-use Pop\Image\Color;
+use Pop\Color\Color;
 use Pop\Image\Draw;
 use Pop\Image\Effect;
 use Pop\Image\Filter;
@@ -27,9 +27,9 @@ use Pop\Image\Type;
  * @category   Pop
  * @package    Pop\Image
  * @author     Nick Sagona, III <dev@nolainteractive.com>
- * @copyright  Copyright (c) 2009-2023 NOLA Interactive, LLC. (http://www.nolainteractive.com)
+ * @copyright  Copyright (c) 2009-2024 NOLA Interactive, LLC. (http://www.nolainteractive.com)
  * @license    http://www.popphp.org/license     New BSD License
- * @version    3.4.0
+ * @version    4.0.0
  */
 abstract class AbstractAdapter implements AdapterInterface
 {
@@ -85,7 +85,7 @@ abstract class AbstractAdapter implements AdapterInterface
 
     /**
      * Index color flag
-     * @var boolean
+     * @var bool
      */
     protected $indexed = false;
 
@@ -179,11 +179,11 @@ abstract class AbstractAdapter implements AdapterInterface
     /**
      * Determine if there is an image resource
      *
-     * @return boolean
+     * @return bool
      */
     public function hasResource()
     {
-        return (null !== $this->resource);
+        return ($this->resource !== null);
     }
 
     /**
@@ -239,7 +239,7 @@ abstract class AbstractAdapter implements AdapterInterface
     /**
      * Determine if the image is index color
      *
-     * @return boolean
+     * @return bool
      */
     public function isIndexed()
     {
@@ -269,7 +269,7 @@ abstract class AbstractAdapter implements AdapterInterface
     /**
      * Determine if the image is grayscale
      *
-     * @return boolean
+     * @return bool
      */
     public function isGray()
     {
@@ -279,7 +279,7 @@ abstract class AbstractAdapter implements AdapterInterface
     /**
      * Determine if the image is RGB
      *
-     * @return boolean
+     * @return bool
      */
     public function isRgb()
     {
@@ -289,7 +289,7 @@ abstract class AbstractAdapter implements AdapterInterface
     /**
      * Determine if the image is CMYK
      *
-     * @return boolean
+     * @return bool
      */
     public function isCmyk()
     {
@@ -383,14 +383,14 @@ abstract class AbstractAdapter implements AdapterInterface
      * Send image headers the image
      *
      * @param  string  $to
-     * @param  boolean $download
+     * @param  bool $download
      * @param  array   $additionalHeaders
      * @return void
      */
     public function sendHeaders($to = null, $download = false, array $additionalHeaders = [])
     {
-        if (null === $to) {
-            $to = (null !== $this->name) ? basename($this->name) : 'pop-image.' . $this->format;
+        if ($to === null) {
+            $to = ($this->name !== null) ? basename($this->name) : 'pop-image.' . $this->format;
         }
 
         // Determine if the force download argument has been passed.
@@ -624,8 +624,8 @@ abstract class AbstractAdapter implements AdapterInterface
      *
      * @param  int     $quality
      * @param  string  $to
-     * @param  boolean $download
-     * @param  boolean $sendHeaders
+     * @param  bool $download
+     * @param  bool $sendHeaders
      * @throws Exception
      * @return void
      */
@@ -634,7 +634,7 @@ abstract class AbstractAdapter implements AdapterInterface
     /**
      * Destroy the image object and the related image file directly
      *
-     * @param  boolean $delete
+     * @param  bool $delete
      * @return void
      */
     abstract public function destroy($delete = false);

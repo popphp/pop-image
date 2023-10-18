@@ -4,7 +4,7 @@
  *
  * @link       https://github.com/popphp/popphp-framework
  * @author     Nick Sagona, III <dev@nolainteractive.com>
- * @copyright  Copyright (c) 2009-2023 NOLA Interactive, LLC. (http://www.nolainteractive.com)
+ * @copyright  Copyright (c) 2009-2024 NOLA Interactive, LLC. (http://www.nolainteractive.com)
  * @license    http://www.popphp.org/license     New BSD License
  */
 
@@ -19,9 +19,9 @@ namespace Pop\Image\Type;
  * @category   Pop
  * @package    Pop\Image
  * @author     Nick Sagona, III <dev@nolainteractive.com>
- * @copyright  Copyright (c) 2009-2023 NOLA Interactive, LLC. (http://www.nolainteractive.com)
+ * @copyright  Copyright (c) 2009-2024 NOLA Interactive, LLC. (http://www.nolainteractive.com)
  * @license    http://www.popphp.org/license     New BSD License
- * @version    3.4.0
+ * @version    4.0.0
  */
 class Imagick extends AbstractType
 {
@@ -57,7 +57,7 @@ class Imagick extends AbstractType
             $draw = new \ImagickDraw();
 
             // Set the font if passed
-            if (null !== $this->font) {
+            if ($this->font !== null) {
                 if (!$draw->setFont($this->font)) {
                     throw new Exception("Error: The font '" . $this->font . "' is not recognized by the Imagick extension.");
                 }
@@ -91,11 +91,11 @@ class Imagick extends AbstractType
             $draw->setFontSize($this->size);
             $draw->setFillColor($this->image->createColor($this->fillColor, $this->opacity));
 
-            if (null !== $this->rotation) {
+            if ($this->rotation !== null) {
                 $draw->rotate($this->rotation);
             }
 
-            if (null !== $this->strokeColor) {
+            if ($this->strokeColor !== null) {
                 $draw->setStrokeColor($this->image->createColor($this->strokeColor, $this->opacity));
                 $draw->setStrokeWidth((int)$this->strokeWidth);
             }

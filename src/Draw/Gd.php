@@ -4,7 +4,7 @@
  *
  * @link       https://github.com/popphp/popphp-framework
  * @author     Nick Sagona, III <dev@nolainteractive.com>
- * @copyright  Copyright (c) 2009-2023 NOLA Interactive, LLC. (http://www.nolainteractive.com)
+ * @copyright  Copyright (c) 2009-2024 NOLA Interactive, LLC. (http://www.nolainteractive.com)
  * @license    http://www.popphp.org/license     New BSD License
  */
 
@@ -19,9 +19,9 @@ namespace Pop\Image\Draw;
  * @category   Pop
  * @package    Pop\Image
  * @author     Nick Sagona, III <dev@nolainteractive.com>
- * @copyright  Copyright (c) 2009-2023 NOLA Interactive, LLC. (http://www.nolainteractive.com)
+ * @copyright  Copyright (c) 2009-2024 NOLA Interactive, LLC. (http://www.nolainteractive.com)
  * @license    http://www.popphp.org/license     New BSD License
- * @version    3.4.0
+ * @version    4.0.0
  */
 class Gd extends AbstractDraw
 {
@@ -79,9 +79,9 @@ class Gd extends AbstractDraw
     {
         if ($this->hasImage()) {
             $x2 = $x + $w;
-            $y2 = $y + ((null === $h) ? $w : $h);
+            $y2 = $y + (($h === null) ? $w : $h);
 
-            if (null !== $this->fillColor) {
+            if ($this->fillColor !== null) {
                 $fillColor = ($this->image->isIndexed()) ? $this->image->createColor($this->fillColor) :
                     $this->image->createColor($this->fillColor, $this->opacity);
 
@@ -125,9 +125,9 @@ class Gd extends AbstractDraw
     {
         if ($this->hasImage()) {
             $wid = $w;
-            $hgt = (null === $h) ? $w : $h;
+            $hgt = ($h === null) ? $w : $h;
 
-            if (null !== $this->fillColor) {
+            if ($this->fillColor !== null) {
                 $fillColor = ($this->image->isIndexed()) ? $this->image->createColor($this->fillColor) :
                     $this->image->createColor($this->fillColor, $this->opacity);
                 imagefilledellipse($this->image->getResource(), $x, $y, $wid, $hgt, $fillColor);
@@ -176,7 +176,7 @@ class Gd extends AbstractDraw
             }
 
             $wid = $w;
-            $hgt = (null === $h) ? $w : $h;
+            $hgt = ($h === null) ? $w : $h;
 
             $strokeColor = ($this->image->isIndexed()) ? $this->image->createColor($this->strokeColor) :
                 $this->image->createColor($this->strokeColor, $this->opacity);
@@ -203,9 +203,9 @@ class Gd extends AbstractDraw
     {
         if ($this->hasImage()) {
             $wid = $w;
-            $hgt = (null === $h) ? $w : $h;
+            $hgt = ($h === null) ? $w : $h;
 
-            if (null !== $this->fillColor) {
+            if ($this->fillColor !== null) {
                 $fillColor = ($this->image->isIndexed()) ? $this->image->createColor($this->fillColor) :
                     $this->image->createColor($this->fillColor, $this->opacity);
                 imagefilledarc($this->image->getResource(), $x, $y, $wid, $hgt, $start, $end, $fillColor, IMG_ARC_CHORD);
@@ -240,9 +240,9 @@ class Gd extends AbstractDraw
     {
         if ($this->hasImage()) {
             $wid = $w;
-            $hgt = (null === $h) ? $w : $h;
+            $hgt = ($h === null) ? $w : $h;
 
-            if (null !== $this->fillColor) {
+            if ($this->fillColor !== null) {
                 $fillColor = ($this->image->isIndexed()) ? $this->image->createColor($this->fillColor) :
                     $this->image->createColor($this->fillColor, $this->opacity);
                 imagefilledarc($this->image->getResource(), $x, $y, $wid, $hgt, $start, $end, $fillColor, IMG_ARC_PIE);
@@ -279,7 +279,7 @@ class Gd extends AbstractDraw
                 }
             }
 
-            if (null !== $this->fillColor) {
+            if ($this->fillColor !== null) {
                 $fillColor = ($this->image->isIndexed()) ? $this->image->createColor($this->fillColor) :
                     $this->image->createColor($this->fillColor, $this->opacity);
                 if (strpos(PHP_VERSION, '8.1') !== false) {

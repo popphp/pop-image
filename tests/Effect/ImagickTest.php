@@ -3,9 +3,9 @@
 namespace Pop\Image\Test\Effect;
 
 use Pop\Image\Adapter;
-use Pop\Image\Color\Rgb;
-use Pop\Image\Color\Cmyk;
-use Pop\Image\Color\Gray;
+use Pop\Color\Color\Rgb;
+use Pop\Color\Color\Cmyk;
+use Pop\Color\Color\Grayscale;
 use PHPUnit\Framework\TestCase;
 
 class ImagickTest extends TestCase
@@ -63,7 +63,7 @@ class ImagickTest extends TestCase
     public function testRadialGradient2()
     {
         $image = new Adapter\Imagick(640, 480, 'test.jpg');
-        $image->effect()->radialGradient(new Gray(100), new Gray(0));
+        $image->effect()->radialGradient(new Grayscale(100), new Grayscale(0));
         $this->assertInstanceOf('Pop\Image\Effect\Imagick', $image->effect());
     }
 
@@ -77,7 +77,7 @@ class ImagickTest extends TestCase
     public function testVerticalGradient2()
     {
         $image = new Adapter\Imagick(640, 480, 'test.jpg');
-        $image->effect()->verticalGradient(new Gray(100), new Gray(0));
+        $image->effect()->verticalGradient(new Grayscale(100), new Grayscale(0));
         $this->assertInstanceOf('Pop\Image\Effect\Imagick', $image->effect());
     }
 }
