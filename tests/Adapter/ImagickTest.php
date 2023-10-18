@@ -148,7 +148,6 @@ class ImagickTest extends TestCase
     public function testAdjustImageNotSet()
     {
         $image = new Imagick();
-        $image->setAdjust(new Image\Adjust\Imagick());
         $this->assertInstanceOf('Pop\Image\Adjust\Imagick', $image->adjust());
     }
 
@@ -161,7 +160,6 @@ class ImagickTest extends TestCase
     public function testDrawImageNotSet()
     {
         $image = new Imagick();
-        $image->setDraw(new Image\Draw\Imagick());
         $this->assertInstanceOf('Pop\Image\Draw\Imagick', $image->draw());
     }
 
@@ -174,7 +172,6 @@ class ImagickTest extends TestCase
     public function testEffectImageNotSet()
     {
         $image = new Imagick();
-        $image->setEffect(new Image\Effect\Imagick());
         $this->assertInstanceOf('Pop\Image\Effect\Imagick', $image->effect());
     }
 
@@ -187,7 +184,6 @@ class ImagickTest extends TestCase
     public function testFilterImageNotSet()
     {
         $image = new Imagick();
-        $image->setFilter(new Image\Filter\Imagick());
         $this->assertInstanceOf('Pop\Image\Filter\Imagick', $image->filter());
     }
 
@@ -200,7 +196,6 @@ class ImagickTest extends TestCase
     public function testLayerImageNotSet()
     {
         $image = new Imagick();
-        $image->setLayer(new Image\Layer\Imagick());
         $this->assertInstanceOf('Pop\Image\Layer\Imagick', $image->layer());
     }
 
@@ -213,7 +208,6 @@ class ImagickTest extends TestCase
     public function testTypeImageNotSet()
     {
         $image = new Imagick();
-        $image->setType(new Image\Type\Imagick());
         $this->assertInstanceOf('Pop\Image\Type\Imagick', $image->type());
     }
 

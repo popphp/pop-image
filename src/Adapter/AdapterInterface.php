@@ -134,54 +134,6 @@ interface AdapterInterface
     public function setQuality(int $quality): static;
 
     /**
-     * Set the image adjust object
-     *
-     * @param  Adjust\AdjustInterface $adjust
-     * @return AdapterInterface
-     */
-    public function setAdjust(Adjust\AdjustInterface $adjust): AdapterInterface;
-
-    /**
-     * Set the image draw object
-     *
-     * @param  Draw\DrawInterface $draw
-     * @return AdapterInterface
-     */
-    public function setDraw(Draw\DrawInterface $draw): AdapterInterface;
-
-    /**
-     * Set the image effect object
-     *
-     * @param  Effect\EffectInterface $effect
-     * @return AdapterInterface
-     */
-    public function setEffect(Effect\EffectInterface $effect): AdapterInterface;
-
-    /**
-     * Set the image filter object
-     *
-     * @param  Filter\FilterInterface $filter
-     * @return AdapterInterface
-     */
-    public function setFilter(Filter\FilterInterface $filter): AdapterInterface;
-
-    /**
-     * Set the image layer object
-     *
-     * @param  Layer\LayerInterface $layer
-     * @return AdapterInterface
-     */
-    public function setLayer(Layer\LayerInterface $layer): AdapterInterface;
-
-    /**
-     * Set the image type object
-     *
-     * @param  Type\TypeInterface $type
-     * @return AdapterInterface
-     */
-    public function setType(Type\TypeInterface $type): AdapterInterface;
-
-    /**
      * Load the image resource from the existing image file
      *
      * @param  ?string $name

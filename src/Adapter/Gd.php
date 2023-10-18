@@ -407,10 +407,6 @@ class Gd extends AbstractAdapter
         if ($this->adjust === null) {
             $this->adjust = new Adjust\Gd($this);
         }
-        if ($this->adjust->getImage() === null) {
-            $this->adjust->setImage($this);
-        }
-
         return $this->adjust;
     }
 
@@ -423,9 +419,6 @@ class Gd extends AbstractAdapter
     {
         if ($this->draw === null) {
             $this->draw = new Draw\Gd($this);
-        }
-        if ($this->draw->getImage() === null) {
-            $this->draw->setImage($this);
         }
         return $this->draw;
     }
@@ -440,9 +433,6 @@ class Gd extends AbstractAdapter
         if ($this->effect === null) {
             $this->effect = new Effect\Gd($this);
         }
-        if ($this->effect->getImage() === null) {
-            $this->effect->setImage($this);
-        }
         return $this->effect;
     }
 
@@ -455,9 +445,6 @@ class Gd extends AbstractAdapter
     {
         if ($this->filter === null) {
             $this->filter = new Filter\Gd($this);
-        }
-        if ($this->filter->getImage() === null) {
-            $this->filter->setImage($this);
         }
         return $this->filter;
     }
@@ -472,9 +459,6 @@ class Gd extends AbstractAdapter
         if ($this->layer === null) {
             $this->layer = new Layer\Gd($this);
         }
-        if ($this->layer->getImage() === null) {
-            $this->layer->setImage($this);
-        }
         return $this->layer;
     }
 
@@ -488,24 +472,21 @@ class Gd extends AbstractAdapter
         if ($this->type === null) {
             $this->type = new Type\Gd($this);
         }
-        if ($this->type->getImage() === null) {
-            $this->type->setImage($this);
-        }
         return $this->type;
     }
 
     /**
      * Convert the image object to another format
      *
-     * @param  string $to
+     * @param  string $type
      * @throws Exception
      * @return Gd
      */
-    public function convert(string $to): Gd
+    public function convert(string $type): Gd
     {
-        $to = strtolower($to);
+        $type = strtolower($type);
 
-        if (($to != 'jpg') && ($to != 'jpeg') && ($to != 'gif') && ($to != 'png')) {
+        if (($type != 'jpg') && ($type != 'jpeg') && ($type != 'gif') && ($type != 'png')) {
             throw new Exception('Error: The image type must be a GIF, PNG or JPG');
         }
 
@@ -513,7 +494,7 @@ class Gd extends AbstractAdapter
             throw new Exception('Error: An image resource has not been created or loaded');
         }
 
-        switch ($to) {
+        switch ($type) {
             case 'jpg':
             case 'jpeg':
                 $this->format  = 'jpg';

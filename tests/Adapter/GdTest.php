@@ -94,7 +94,6 @@ class GdTest extends TestCase
     public function testAdjustImageNotSet()
     {
         $image = new Gd();
-        $image->setAdjust(new Image\Adjust\Gd());
         $this->assertInstanceOf('Pop\Image\Adjust\Gd', $image->adjust());
     }
 
@@ -107,7 +106,6 @@ class GdTest extends TestCase
     public function testDrawImageNotSet()
     {
         $image = new Gd();
-        $image->setDraw(new Image\Draw\Gd());
         $this->assertInstanceOf('Pop\Image\Draw\Gd', $image->draw());
     }
 
@@ -120,7 +118,6 @@ class GdTest extends TestCase
     public function testEffectImageNotSet()
     {
         $image = new Gd();
-        $image->setEffect(new Image\Effect\Gd());
         $this->assertInstanceOf('Pop\Image\Effect\Gd', $image->effect());
     }
 
@@ -133,7 +130,6 @@ class GdTest extends TestCase
     public function testFilterImageNotSet()
     {
         $image = new Gd();
-        $image->setFilter(new Image\Filter\Gd());
         $this->assertInstanceOf('Pop\Image\Filter\Gd', $image->filter());
     }
 
@@ -146,7 +142,6 @@ class GdTest extends TestCase
     public function testLayerImageNotSet()
     {
         $image = new Gd();
-        $image->setLayer(new Image\Layer\Gd());
         $this->assertInstanceOf('Pop\Image\Layer\Gd', $image->layer());
     }
 
@@ -159,7 +154,6 @@ class GdTest extends TestCase
     public function testTypeImageNotSet()
     {
         $image = new Gd();
-        $image->setType(new Image\Type\Gd());
         $this->assertInstanceOf('Pop\Image\Type\Gd', $image->type());
     }
 

@@ -23,6 +23,7 @@ class GdTest extends TestCase
         $this->assertEquals(255, $image->draw()->getFillColor()->getR());
         $this->assertEquals(128, $image->draw()->getFillColor()->getG());
         $this->assertEquals(1, $image->draw()->getFillColor()->getB());
+        $this->assertInstanceOf('Pop\Image\Adapter\Gd', $image->draw()->getImage());
     }
 
     public function testSetStrokeColor()

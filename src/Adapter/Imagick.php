@@ -654,10 +654,6 @@ class Imagick extends AbstractAdapter
         if ($this->adjust === null) {
             $this->adjust = new Adjust\Imagick($this);
         }
-        if ($this->adjust->getImage() === null) {
-            $this->adjust->setImage($this);
-        }
-
         return $this->adjust;
     }
 
@@ -670,9 +666,6 @@ class Imagick extends AbstractAdapter
     {
         if ($this->draw === null) {
             $this->draw = new Draw\Imagick($this);
-        }
-        if ($this->draw->getImage() === null) {
-            $this->draw->setImage($this);
         }
         return $this->draw;
     }
@@ -687,9 +680,6 @@ class Imagick extends AbstractAdapter
         if ($this->effect === null) {
             $this->effect = new Effect\Imagick($this);
         }
-        if ($this->effect->getImage() === null) {
-            $this->effect->setImage($this);
-        }
         return $this->effect;
     }
 
@@ -702,9 +692,6 @@ class Imagick extends AbstractAdapter
     {
         if ($this->filter === null) {
             $this->filter = new Filter\Imagick($this);
-        }
-        if ($this->filter->getImage() === null) {
-            $this->filter->setImage($this);
         }
         return $this->filter;
     }
@@ -719,9 +706,6 @@ class Imagick extends AbstractAdapter
         if ($this->layer === null) {
             $this->layer = new Layer\Imagick($this);
         }
-        if ($this->layer->getImage() === null) {
-            $this->layer->setImage($this);
-        }
         return $this->layer;
     }
 
@@ -735,30 +719,27 @@ class Imagick extends AbstractAdapter
         if ($this->type === null) {
             $this->type = new Type\Imagick($this);
         }
-        if ($this->type->getImage() === null) {
-            $this->type->setImage($this);
-        }
         return $this->type;
     }
 
     /**
      * Convert the image object to another format
      *
-     * @param  string $to
+     * @param  string $type
      * @return Imagick
      */
-    public function convert(string $to): Imagick
+    public function convert(string $type): Imagick
     {
-        $to   = strtolower($to);
+        $type = strtolower($type);
         $old  = strtolower($this->format);
 
         if (($old == 'psd') || ($old == 'tif') || ($old == 'tiff')) {
             $this->resource->mergeImageLayers(\Imagick::LAYERMETHOD_FLATTEN);
         }
 
-        $this->resource->setImageFormat($to);
+        $this->resource->setImageFormat($type);
 
-        switch ($to) {
+        switch ($type) {
             case 'jpg':
             case 'jpeg':
                 $this->format  = 'jpg';
@@ -772,7 +753,7 @@ class Imagick extends AbstractAdapter
                 $this->indexed = true;
                 break;
             default:
-                $this->format = $to;
+                $this->format = $type;
         }
 
         return $this;
