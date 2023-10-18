@@ -24,16 +24,10 @@ jobs:
     #  run: composer validate
 
     - name: Cache Composer packages
-      id: composer-cache
-      uses: actions/cache@v3
-      with:
-        path: vendor
-        key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
-        restore-keys: |
-          ${{ runner.os }}-php-
+      run: composer clear-cache
 
     - name: Install extensions
-      run: sudo apt install imagemagick php-imagick
+      run: sudo apt update && sudo apt install imagemagick php-imagick
 
     - name: Install dependencies
       if: steps.composer-cache.outputs.cache-hit != 'true'
