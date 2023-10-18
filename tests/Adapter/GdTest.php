@@ -14,6 +14,14 @@ class GdTest extends TestCase
         $image = new Gd();
         $image->load(__DIR__ . '/../tmp/test.jpg');
         $this->assertEquals('jpg', $image->getFormat());
+        $this->assertTrue($image->hasResource());
+        $this->assertEquals(__DIR__ . '/../tmp/test.jpg', $image->getName());
+        $this->assertEquals(100, $image->getQuality());
+        $this->assertEquals(2, $image->getColorspace());
+        $this->assertTrue(is_array($image->getExif()));
+        $this->assertFalse($image->isGray());
+        $this->assertTrue($image->isRgb());
+        $this->assertFalse($image->isCmyk());
     }
 
     public function testLoadGif()
@@ -369,6 +377,17 @@ class GdTest extends TestCase
         echo $image;
         $result = ob_get_clean();
         $this->assertStringContainsString('JPEG', $result);
+    }
+
+    public function testGetter()
+    {
+        $image = new Gd(__DIR__ . '/../tmp/test.jpg');
+        $this->assertInstanceOf('Pop\Image\Adjust\AbstractAdjust', $image->adjust);
+        $this->assertInstanceOf('Pop\Image\Filter\AbstractFilter', $image->filter);
+        $this->assertInstanceOf('Pop\Image\Layer\AbstractLayer', $image->layer);
+        $this->assertInstanceOf('Pop\Image\Draw\AbstractDraw', $image->draw);
+        $this->assertInstanceOf('Pop\Image\Effect\AbstractEffect', $image->effect);
+        $this->assertInstanceOf('Pop\Image\Type\AbstractType', $image->type);
     }
 
 }

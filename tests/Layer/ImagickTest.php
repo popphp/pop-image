@@ -30,4 +30,13 @@ class ImagickTest extends TestCase
         $this->assertInstanceOf('Pop\Image\Layer\Imagick', $image->layer());
     }
 
+    public function testFlatten()
+    {
+        $image = new Adapter\Imagick(640, 480, 'test.jpg');
+        $image->layer()->setOpacity(0.5);
+        $image->layer()->overlay(__DIR__ . '/../tmp/test.jpg');
+        $image->layer()->flatten();
+        $this->assertInstanceOf('Pop\Image\Layer\Imagick', $image->layer());
+    }
+
 }

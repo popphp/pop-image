@@ -66,9 +66,9 @@ class Captcha
 
     /**
      * CAPTCHA image
-     * @var ?Adapter\Gd
+     * @var ?Adapter\AbstractAdapter
      */
-    protected ?Adapter\Gd $image = null;
+    protected ?Adapter\AbstractAdapter $image = null;
 
     /**
      * Current token data
@@ -315,9 +315,9 @@ class Captcha
     /**
      * Get CAPTCHA image
      *
-     * @return Adapter\Gd|null
+     * @return Adapter\AbstractAdapter|null
      */
-    public function getImage(): Adapter\Gd|null
+    public function getImage(): Adapter\AbstractAdapter|null
     {
         if ($this->image === null) {
             $this->createImage();

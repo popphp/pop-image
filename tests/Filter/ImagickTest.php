@@ -3,6 +3,7 @@
 namespace Pop\Image\Test\Filter;
 
 use Pop\Image\Adapter;
+use Pop\Color\Color;
 use PHPUnit\Framework\TestCase;
 
 class ImagickTest extends TestCase
@@ -78,10 +79,17 @@ class ImagickTest extends TestCase
         $this->assertInstanceOf('Pop\Image\Filter\Imagick', $image->filter());
     }
 
-    public function testSkew()
+    public function testSkew1()
     {
         $image = new Adapter\Imagick(640, 480, 'test.jpg');
         $image->filter()->skew(5, 10);
+        $this->assertInstanceOf('Pop\Image\Filter\Imagick', $image->filter());
+    }
+
+    public function testSkew2()
+    {
+        $image = new Adapter\Imagick(640, 480, 'test.jpg');
+        $image->filter()->skew(5, 10, new Color\Cmyk(100, 50, 50, 50));
         $this->assertInstanceOf('Pop\Image\Filter\Imagick', $image->filter());
     }
 

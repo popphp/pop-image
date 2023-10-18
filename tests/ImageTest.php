@@ -30,10 +30,22 @@ class ImageTest extends TestCase
         $this->assertInstanceOf('Pop\Image\Adapter\Gd', $image);
     }
 
+    public function testLoadImagick()
+    {
+        $image = Image::loadImagick(__DIR__ . '/tmp/test.jpg');
+        $this->assertInstanceOf('Pop\Image\Adapter\Imagick', $image);
+    }
+
     public function testLoadGdFromString()
     {
         $image = Image::loadGdFromString(file_get_contents(__DIR__ . '/tmp/test.jpg'));
         $this->assertInstanceOf('Pop\Image\Adapter\Gd', $image);
+    }
+
+    public function testLoadImagickFromString()
+    {
+        $image = Image::loadImagickFromString(file_get_contents(__DIR__ . '/tmp/test.jpg'));
+        $this->assertInstanceOf('Pop\Image\Adapter\Imagick', $image);
     }
 
     public function testCreateGd()
@@ -42,10 +54,22 @@ class ImageTest extends TestCase
         $this->assertInstanceOf('Pop\Image\Adapter\Gd', $image);
     }
 
+    public function testCreateImagick()
+    {
+        $image = Image::createImagick(640, 480, 'test.jpg');
+        $this->assertInstanceOf('Pop\Image\Adapter\Imagick', $image);
+    }
+
     public function testCreateGdIndex()
     {
         $image = Image::createGdIndex(640, 480, 'test.gif');
         $this->assertInstanceOf('Pop\Image\Adapter\Gd', $image);
+    }
+
+    public function testCreateImagickIndex()
+    {
+        $image = Image::createImagickIndex(640, 480, 'test.gif');
+        $this->assertInstanceOf('Pop\Image\Adapter\Imagick', $image);
     }
 
 }

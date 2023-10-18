@@ -282,11 +282,7 @@ class Gd extends AbstractDraw
             if ($this->fillColor !== null) {
                 $fillColor = ($this->image->isIndexed()) ? $this->image->createColor($this->fillColor) :
                     $this->image->createColor($this->fillColor, $this->opacity);
-                if (strpos(PHP_VERSION, '8.1') !== false) {
-                    imagefilledpolygon($this->image->getResource(), $realPoints, $fillColor);
-                } else {
-                    imagefilledpolygon($this->image->getResource(), $realPoints, count($points), $fillColor);
-                }
+                imagefilledpolygon($this->image->getResource(), $realPoints, $fillColor);
             }
 
             if ($this->strokeWidth > 0) {

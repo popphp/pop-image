@@ -15,8 +15,5 @@
     <include>
       <directory suffix=".php">src</directory>
     </include>
-    <exclude>
-      <file>src/Captcha.php</file>
-    </exclude>
   </source>
 </phpunit>

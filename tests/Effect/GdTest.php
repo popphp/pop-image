@@ -38,14 +38,14 @@ class GdTest extends TestCase
 
     public function testRadialGradientPortrait()
     {
-        $image = new Adapter\Gd(640, 480, 'test.jpg');
+        $image = new Adapter\Gd(480, 640, 'test.jpg');
         $image->effect()->radialGradient(new Rgb(255, 0, 0), new Rgb(0, 0, 255));
         $this->assertInstanceOf('Pop\Image\Effect\Gd', $image->effect());
     }
 
     public function testRadialGradientSquare()
     {
-        $image = new Adapter\Gd(640, 480, 'test.jpg');
+        $image = new Adapter\Gd(480, 480, 'test.jpg');
         $image->effect()->radialGradient(new Rgb(255, 0, 0), new Rgb(0, 0, 255));
         $this->assertInstanceOf('Pop\Image\Effect\Gd', $image->effect());
     }
