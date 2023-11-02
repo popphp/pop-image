@@ -234,7 +234,7 @@ outputToHttp(
 
 ### Destroy an Image
 
-Destroying an image will create the image contents from memory to assist with memory management
+Destroying an image will clear the image contents from memory to assist with memory management
 and prevent possibly exceeding any memory limits when working with a large number of files.
 
 ```php
