@@ -595,7 +595,9 @@ class Gd extends AbstractAdapter
             $to = ($this->name !== null) ? basename($this->name) : 'pop-image.' . $this->format;
         }
 
-        $this->sendHeaders($to, $download, $headers);
+        if ($sendHeaders) {
+            $this->sendHeaders($to, $download, $headers);
+        }
         $this->generateImage((int)$this->quality);
     }
 

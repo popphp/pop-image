@@ -833,7 +833,9 @@ class Imagick extends AbstractAdapter
             $to = ($this->name !== null) ? basename($this->name) : 'pop-image.' . strtolower($this->format);
         }
 
-        $this->sendHeaders($to, $download, $headers);
+        if ($sendHeaders) {
+            $this->sendHeaders($to, $download, $headers);
+        }
         echo ($this->resource->getNumberImages() > 0) ? $this->resource->getImagesBlob() : $this->resource;
     }
 
