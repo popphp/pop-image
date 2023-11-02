@@ -335,7 +335,7 @@ Advanced Editing
 
 ### Using the editing objects
 
-There are 6 available editing objects for advanced editing, adjusting and manipulating images:
+There are 6 available editing objects for advanced editing and adjusting of images:
 
 * Adjust
 * Draw
