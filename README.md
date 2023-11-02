@@ -4,16 +4,27 @@ pop-image
 [![Build Status](https://github.com/popphp/pop-image/workflows/phpunit/badge.svg)](https://github.com/popphp/pop-image/actions)
 [![Coverage Status](http://cc.popphp.org/coverage.php?comp=pop-image)](http://cc.popphp.org/pop-image/)
 
-OVERVIEW
+[![Join the chat at https://popphp.slack.com](https://media.popphp.org/img/slack.svg)](https://popphp.slack.com)
+[![Join the chat at https://discord.gg/D9JBxPa5](https://media.popphp.org/img/discord.svg)](https://discord.gg/D9JBxPa5)
+
+* [Overview](#overview)
+* [Install](#install)
+* [Quickstart](#quickstart)
+* [Advanced](#advanced)
+* [CAPTCHA](#captcha)
+
+Overview
 --------
 `pop-image` is a powerful and robust image processing component that's simple to use.
 It supports the GD and Imagick extensions. The API is similar to the more
-popular image editing application on the market, with calls to manipulation objects
-that can be extended with additional image processing functionality if needed
+popular image editing application on the market, with calls to editing objects
+that can be extended with additional image processing functionality if needed.
 
 `pop-image` is a component of the [Pop PHP Framework](http://www.popphp.org/).
 
-INSTALL
+[Top](#pop-image)
+
+Install
 -------
 
 Install `pop-image` using Composer.
@@ -26,9 +37,10 @@ Or, require it in your composer.json file
         "popphp/pop-image" : "^4.0.0"
     }
 
+[Top](#pop-image)
 
-BASIC USAGE
------------
+Quickstart
+----------
 
 ### Resizing and saving an image
 
@@ -44,12 +56,14 @@ $img->cropThumb(50)
     ->save('image-thumb.jpg');
 ```
 
-ADVANCED USE
-------------
+[Top](#pop-image)
 
-### Using the manipulation objects
+Advanced
+--------
 
-There are 6 available manipulation objects. They are:
+### Using the editing objects
+
+There are 6 available editing objects for advanced editing, adjusting and manipulating images:
 
 * Adjust
 * Draw
@@ -58,8 +72,10 @@ There are 6 available manipulation objects. They are:
 * Layer
 * Type
 
-With each of these, you can perform advanced image processing manipulation on an image.
-If a feature doesn't exist yet, you can extend these classes to add your own custom features.
+With each of these, you can perform advanced image processing on an image. If a feature doesn't
+exist yet, you can extend these classes to add your own custom features.
+
+Here are some example use cases:
 
 ```php
 use Pop\Image\Image;
@@ -85,7 +101,10 @@ $img->type->font('myfont.ttf')
     ->text('Hello World!');
 ```
 
-### CAPTCHA
+[Top](#pop-image)
+
+CAPTCHA
+-------
 
 The `pop-image` component comes with a CAPTCHA tool to create a CAPTCHA image and store
 the token value in session to validate the user's CAPTCHA input.
@@ -117,4 +136,5 @@ Array
 You can use the `captcha` value to display the image in an HTML page and the `answer` value
 to validate the user's CAPTCHA input.
 
+[Top](#pop-image)
 
