@@ -330,11 +330,6 @@ The Imagick adapter API extends the functionality with additional Imagick-specif
 
 [Top](#pop-image)
 
-General Editing
----------------
-
-[Top](#pop-image)
-
 Advanced Editing
 ----------------
 
