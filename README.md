@@ -254,19 +254,19 @@ Image Adapters
 
 The two image adapters available are GD and Imagick and they share a basic core API:
 
-`load(?string $name = null)`
-`loadFromString(string $data, ?string $name = null)`
-`create(?int $width = null, ?int $height = null, ?string $name = null)`
-`createIndex(?int $width = null, ?int $height = null, ?string $name = null)`
-`resizeToWidth(int $w)`
-`resizeToHeight(int $h)`
-`resize(int $px)`
-`scale(float $scale)`
-`crop(int $w, int $h, int $x = 0, int $y = 0)`
-`cropThumb(int $px, ?int $offset = null)`
-`rotate(int $degrees, ?Color\ColorInterface $bgColor = null, int $alpha = null)`
-`flip()`
-`flop()`
+- `load(?string $name = null)`
+- `loadFromString(string $data, ?string $name = null)`
+- `create(?int $width = null, ?int $height = null, ?string $name = null)`
+- `createIndex(?int $width = null, ?int $height = null, ?string $name = null)`
+- `resizeToWidth(int $w)`
+- `resizeToHeight(int $h)`
+- `resize(int $px)`
+- `scale(float $scale)`
+- `crop(int $w, int $h, int $x = 0, int $y = 0)`
+- `cropThumb(int $px, ?int $offset = null)`
+- `rotate(int $degrees, ?Color\ColorInterface $bgColor = null, int $alpha = null)`
+- `flip()`
+- `flop()`
 
 [Top](#pop-image)
 
