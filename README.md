@@ -344,9 +344,6 @@ There are 6 available editing objects for advanced editing and adjusting of imag
 * Layer
 * Type
 
-With each of these, you can perform advanced image processing on an image. If a feature doesn't
-exist yet, you can extend these classes to add your own custom features.
-
 #### Adjust
 
 Make image adjustments like brightness, contrast and desaturate.
