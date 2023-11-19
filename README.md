@@ -167,10 +167,10 @@ $imagickImage = Image::createImagick(640, 480, 'image.jpg');
 use Pop\Image\Image;
 
 // Return an instance of the GD adapter
-$gdImage = Image::createGdIndex(640, 480, 'image.jpg');
+$gdImage = Image::createGdIndex(640, 480, 'image.gif');
 
 // Returns an instance of the Imagick adapter
-$imagickImage = Image::createImagickIndex(640, 480, 'image.jpg');
+$imagickImage = Image::createImagickIndex(640, 480, 'image.gif');
 ```
 
 [Top](#pop-image)
@@ -337,36 +337,12 @@ Advanced Editing
 
 There are 6 available editing objects for advanced editing and adjusting of images:
 
-* Adjust
-* Draw
-* Effect
-* Filter
-* Layer
-* Type
-
-#### Adjust
-
-Make image adjustments like brightness, contrast and desaturate.
-
-#### Draw
-
-Draw basic shapes on the image and apply strokes and fills.
-
-#### Effect
-
-Apply effects to the image, such as gradients.
-
-#### Filter
-
-Apply filters to the image, such as blur, sharpen and negate.
-
-#### Layer
-
-Create overlays and new layers over the image.
-
-#### Type
-
-Add text over the image.
+* **Adjust** - Make image adjustments like brightness, contrast and desaturate.
+* **Draw** - Draw basic shapes on the image and apply strokes and fills.
+* **Effect** - Apply effects to the image, such as gradients.
+* **Filter** - Apply filters to the image, such as blur, sharpen and negate.
+* **Layer** - Create overlays and new layers over the image.
+* **Type** - Add text over the image.
 
 ##### Examples
 
@@ -418,7 +394,7 @@ And with it, the `$_SESSION` variable will store a `pop_captcha` key with a seri
 value in it. When you unserialized the `$_SESSION['pop_captcha']` value, it will give you
 this array:
 
-```php  
+```text
 Array
 (
     [captcha] => <img id="pop-captcha-image" class="pop-captcha-image" src="/captcha.php" /><a class="pop-captcha-reload" href="#" onclick="document.getElementById('pop-captcha-image').src = '/captcha.php?captcha=1'; return false;">Reload</a>
