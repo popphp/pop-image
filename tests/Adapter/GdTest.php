@@ -308,6 +308,12 @@ class GdTest extends TestCase
         $image->writeToFile(__DIR__ . '/../tmp/test2.jpg', 150);
     }
 
+    public function testOutputToRawString()
+    {
+        $image = new Gd(__DIR__ . '/../tmp/test.jpg');
+        $this->assertStringContainsString('JFIF', $image->outputToRawString());
+    }
+
     public function testWriteToFile()
     {
         copy(__DIR__ . '/../tmp/test.jpg', __DIR__ . '/../tmp/test2.jpg');

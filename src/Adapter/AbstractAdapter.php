@@ -542,6 +542,15 @@ abstract class AbstractAdapter implements AdapterInterface
     abstract public function writeToFile(?string $to = null, int $quality = 100): void;
 
     /**
+     * Output the image object to a raw string
+     *
+     * @param  int $quality
+     * @throws Exception
+     * @return string|false
+     */
+    abstract public function outputToRawString(int $quality = 100): string|false;
+
+    /**
      * Output the image object directly to HTTP
      *
      * @param  int     $quality

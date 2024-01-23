@@ -45,8 +45,8 @@ interface EffectInterface
      * @param  int $start
      * @param  int $end
      * @param  int $totalSteps
-     * @return int
+     * @return int|float
      */
-    public function calculateSteps(int $curStep, int $start, int $end, int $totalSteps): int;
+    public function calculateSteps(int $curStep, int $start, int $end, int $totalSteps): int|float;
 
 }

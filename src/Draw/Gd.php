@@ -47,13 +47,13 @@ class Gd extends AbstractDraw
     /**
      * Draw a line on the image.
      *
-     * @param  int $x1
-     * @param  int $y1
-     * @param  int $x2
-     * @param  int $y2
+     * @param  int|float $x1
+     * @param  int|float $y1
+     * @param  int|float $x2
+     * @param  int|float $y2
      * @return Gd
      */
-    public function line(int $x1, int $y1, int $x2, int $y2): Gd
+    public function line(int|float $x1, int|float $y1, int|float $x2, int|float $y2): Gd
     {
         if ($this->hasImage()) {
             $strokeColor = ($this->image->isIndexed()) ? $this->image->createColor($this->strokeColor) :
@@ -69,13 +69,13 @@ class Gd extends AbstractDraw
     /**
      * Draw a rectangle on the image.
      *
-     * @param  int  $x
-     * @param  int  $y
-     * @param  int  $w
-     * @param  ?int $h
+     * @param  int|float  $x
+     * @param  int|float  $y
+     * @param  int|float  $w
+     * @param  int|float|null $h
      * @return Gd
      */
-    public function rectangle(int $x, int $y, int $w, ?int $h = null): Gd
+    public function rectangle(int|float $x, int|float $y, int|float $w, int|float|null $h = null): Gd
     {
         if ($this->hasImage()) {
             $x2 = $x + $w;
@@ -85,7 +85,7 @@ class Gd extends AbstractDraw
                 $fillColor = ($this->image->isIndexed()) ? $this->image->createColor($this->fillColor) :
                     $this->image->createColor($this->fillColor, $this->opacity);
 
-                imagefilledrectangle($this->image->getResource(), $x, $y, $x2, $y2, $fillColor);
+                imagefilledrectangle($this->image->getResource(), (int)$x, (int)$y, (int)$x2, (int)$y2, $fillColor);
             }
 
             if ($this->strokeWidth > 0) {
@@ -102,12 +102,12 @@ class Gd extends AbstractDraw
     /**
      * Draw a square on the image.
      *
-     * @param  int $x
-     * @param  int $y
-     * @param  int $w
+     * @param  int|float $x
+     * @param  int|float $y
+     * @param  int|float $w
      * @return Gd
      */
-    public function square(int $x, int $y, int $w): Gd
+    public function square(int|float $x, int|float $y, int|float $w): Gd
     {
         return $this->rectangle($x, $y, $w, $w);
     }
@@ -115,13 +115,13 @@ class Gd extends AbstractDraw
     /**
      * Draw an ellipse on the image.
      *
-     * @param  int  $x
-     * @param  int  $y
-     * @param  int  $w
-     * @param  ?int $h
+     * @param  int|float  $x
+     * @param  int|float  $y
+     * @param  int|float  $w
+     * @param  int|float|null $h
      * @return Gd
      */
-    public function ellipse(int $x, int $y, int $w, ?int $h = null): Gd
+    public function ellipse(int|float $x, int|float $y, int|float $w, int|float|null $h = null): Gd
     {
         if ($this->hasImage()) {
             $wid = $w;
@@ -147,12 +147,12 @@ class Gd extends AbstractDraw
     /**
      * Method to add a circle to the image.
      *
-     * @param  int $x
-     * @param  int $y
-     * @param  int $w
+     * @param  int|float $x
+     * @param  int|float $y
+     * @param  int|float $w
      * @return Gd
      */
-    public function circle(int $x, int $y, int $w): Gd
+    public function circle(int|float $x, int|float $y, int|float $w): Gd
     {
         return $this->ellipse($x, $y, $w, $w);
     }
@@ -160,15 +160,15 @@ class Gd extends AbstractDraw
     /**
      * Draw an arc on the image.
      *
-     * @param  int  $x
-     * @param  int  $y
-     * @param  int  $start
-     * @param  int  $end
-     * @param  int  $w
-     * @param  ?int $h
+     * @param  int|float      $x
+     * @param  int|float      $y
+     * @param  int|float      $start
+     * @param  int|float      $end
+     * @param  int|float      $w
+     * @param  int|float|null $h
      * @return Gd
      */
-    public function arc(int $x, int $y, int $start, int $end, int $w, ?int $h = null): Gd
+    public function arc(int|float $x, int|float $y, int|float $start, int|float $end, int|float $w, int|float|null $h = null): Gd
     {
         if ($this->hasImage()) {
             if ($this->strokeWidth == 0) {
@@ -191,15 +191,15 @@ class Gd extends AbstractDraw
     /**
      * Draw a chord on the image.
      *
-     * @param  int  $x
-     * @param  int  $y
-     * @param  int  $start
-     * @param  int  $end
-     * @param  int  $w
-     * @param  ?int $h
+     * @param  int|float      $x
+     * @param  int|float      $y
+     * @param  int|float      $start
+     * @param  int|float      $end
+     * @param  int|float      $w
+     * @param  int|float|null $h
      * @return Gd
      */
-    public function chord(int $x, int $y, int $start, int $end, int $w, ?int $h = null): Gd
+    public function chord(int|float $x, int|float $y, int|float $start, int|float $end, int|float $w, int|float|null $h = null): Gd
     {
         if ($this->hasImage()) {
             $wid = $w;
@@ -228,15 +228,15 @@ class Gd extends AbstractDraw
     /**
      * Draw a slice on the image.
      *
-     * @param  int  $x
-     * @param  int  $y
-     * @param  int  $start
-     * @param  int  $end
-     * @param  int  $w
-     * @param  ?int $h
+     * @param  int|float      $x
+     * @param  int|float      $y
+     * @param  int|float      $start
+     * @param  int|float      $end
+     * @param  int|float      $w
+     * @param  int|float|null $h
      * @return Gd
      */
-    public function pie(int $x, int $y, int $start, int $end, int $w, ?int $h = null): Gd
+    public function pie(int|float $x, int|float $y, int|float $start, int|float $end, int|float $w, int|float|null $h = null): Gd
     {
         if ($this->hasImage()) {
             $wid = $w;

@@ -797,6 +797,22 @@ class Imagick extends AbstractAdapter
     }
 
     /**
+     * Output the image object to a raw string
+     *
+     * @param  int $quality
+     * @throws Exception
+     * @return string|false
+     */
+    public function outputToRawString(int $quality = 100): string|false
+    {
+        if ($this->resource === null) {
+            throw new Exception('Error: An image resource has not been created or loaded');
+        }
+
+        return (string)(($this->resource->getNumberImages() > 0) ? $this->resource->getImagesBlob() : $this->resource);
+    }
+
+    /**
      * Output the image object directly to HTTP
      *
      * @param  ?int    $quality

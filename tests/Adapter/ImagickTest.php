@@ -334,6 +334,12 @@ class ImagickTest extends TestCase
         $this->assertEquals('jpg', $image->getFormat());
     }
 
+    public function testOutputToRawString()
+    {
+        $image = new Imagick(__DIR__ . '/../tmp/test.jpg');
+        $this->assertStringContainsString('JFIF', $image->outputToRawString());
+    }
+
     public function testWriteToFileOutOfRangeException()
     {
         $this->expectException('OutOfRangeException');

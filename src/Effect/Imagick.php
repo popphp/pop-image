@@ -33,11 +33,11 @@ class Imagick extends AbstractEffect
      * Draw a border around the image.
      *
      * @param  Color\ColorInterface $color
-     * @param  int                  $w
-     * @param  ?int                 $h
+     * @param  int|float            $w
+     * @param  int|float|null       $h
      * @return Imagick
      */
-    public function border(Color\ColorInterface $color, int $w = 1, ?int $h = null): Imagick
+    public function border(Color\ColorInterface $color, int|float $w = 1, int|float|null $h = null): Imagick
     {
         if ($this->hasImage()) {
             $h = ($h === null) ? $w : $h;

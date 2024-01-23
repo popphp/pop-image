@@ -32,11 +32,11 @@ class Gd extends AbstractEffect
      * Draw a border around the image.
      *
      * @param  Color\ColorInterface $color
-     * @param  int                  $w
-     * @param  ?int                 $h
+     * @param  int|float            $w
+     * @param  int|float|null       $h
      * @return Gd
      */
-    public function border(Color\ColorInterface $color, int $w, ?int $h = null): Gd
+    public function border(Color\ColorInterface $color, int|float $w, int|float|null $h = null): Gd
     {
         if ($this->hasImage()) {
             $h = ($h === null) ? $w : $h;

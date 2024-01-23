@@ -563,6 +563,24 @@ class Gd extends AbstractAdapter
     }
 
     /**
+     * Output the image object to a raw string
+     *
+     * @param  int $quality
+     * @throws Exception
+     * @return string|false
+     */
+    public function outputToRawString(int $quality = 100): string|false
+    {
+        if ($this->resource === null) {
+            throw new Exception('Error: An image resource has not been created or loaded');
+        }
+
+        ob_start();
+        $this->generateImage($quality);
+        return ob_get_clean();
+    }
+
+    /**
      * Output the image object directly to HTTP
      *
      * @param  ?int    $quality
