@@ -4,7 +4,6 @@ pop-image
 [![Build Status](https://github.com/popphp/pop-image/workflows/phpunit/badge.svg)](https://github.com/popphp/pop-image/actions)
 [![Coverage Status](http://cc.popphp.org/coverage.php?comp=pop-image)](http://cc.popphp.org/pop-image/)
 
-[![Join the chat at https://popphp.slack.com](https://media.popphp.org/img/slack.svg)](https://popphp.slack.com)
 [![Join the chat at https://discord.gg/TZjgT74U7E](https://media.popphp.org/img/discord.svg)](https://discord.gg/TZjgT74U7E)
 
 * [Overview](#overview)
@@ -28,7 +27,7 @@ It supports the GD and Imagick extensions. The API is similar to the more
 popular image editing application on the market, with calls to editing objects
 that can be extended with additional image processing functionality if needed.
 
-`pop-image` is a component of the [Pop PHP Framework](http://www.popphp.org/).
+`pop-image` is a component of the [Pop PHP Framework](https://www.popphp.org/).
 
 [Top](#pop-image)
 
@@ -42,7 +41,7 @@ Install `pop-image` using Composer.
 Or, require it in your composer.json file
 
     "require": {
-        "popphp/pop-image" : "^4.0.0"
+        "popphp/pop-image" : "^4.1.0"
     }
 
 [Top](#pop-image)
