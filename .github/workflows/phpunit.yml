@@ -35,7 +35,7 @@ jobs:
       run: composer clear-cache
 
     - name: Install extensions
-      run: sudo apt update && sudo apt install imagemagick php-dom php${{ matrix.php-versions }}-gd php-imagick
+      run: sudo apt update && sudo apt install imagemagick php${{ matrix.php-versions }}-gd php-imagick
 
     - name: Install dependencies
       if: steps.composer-cache.outputs.cache-hit != 'true'
