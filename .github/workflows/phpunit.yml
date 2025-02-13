@@ -26,7 +26,7 @@ jobs:
       with:
         php-version: ${{ matrix.php-versions }}
         tools: phpunit:${{ matrix.phpunit-versions }}
-        extensions: gd, imagick
+        extensions: dom, gd, imagick
 
     #- name: Validate composer.json and composer.lock
     #  run: composer validate
@@ -35,7 +35,7 @@ jobs:
       run: composer clear-cache
 
     - name: Install extensions
-      run: sudo apt update && sudo apt install imagemagick php-gd php-imagick
+      run: sudo apt update && sudo apt install imagemagick php-dom php${{ matrix.php-versions }}-gd php-imagick
 
     - name: Install dependencies
       if: steps.composer-cache.outputs.cache-hit != 'true'
