@@ -18,8 +18,8 @@ class ImagickTest extends TestCase
     public function testSetOverlay()
     {
         $image = new Adapter\Imagick(640, 480, 'test.jpg');
-        $image->layer()->setOverlay(\Imagick::COMPOSITE_ADD);
-        $this->assertEquals(\Imagick::COMPOSITE_ADD, $image->layer()->getOverlay());
+        $image->layer()->setOverlay(\Imagick::COMPOSITE_DEFAULT);
+        $this->assertEquals(\Imagick::COMPOSITE_DEFAULT, $image->layer()->getOverlay());
     }
 
     public function testOverlay()
