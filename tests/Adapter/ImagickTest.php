@@ -37,6 +37,53 @@ class ImagickTest extends TestCase
         $this->assertEquals('jpeg', $image->getFormat());
     }
 
+    public function testLoadFromStringIndexed()
+    {
+        $image = new Imagick();
+        $image->loadFromString(file_get_contents(__DIR__ . '/../tmp/overlay.gif'));
+        $this->assertTrue($image->isIndexed());
+    }
+
+    public function testLoadFromStringWithName()
+    {
+        $image = new Imagick();
+        $image->loadFromString(file_get_contents(__DIR__ . '/../tmp/test.jpg'), 'renamed.jpg');
+        $this->assertEquals('renamed.jpg', $image->getName());
+    }
+
+    public function testLoadFromStringAfterDestroy()
+    {
+        $image = new Imagick(__DIR__ . '/../tmp/test.jpg');
+        $image->destroy();
+        $image->loadFromString(file_get_contents(__DIR__ . '/../tmp/overlay.png'));
+        $this->assertEquals('png', $image->getFormat());
+    }
+
+    public function testLoadAfterDestroy()
+    {
+        $image = new Imagick(__DIR__ . '/../tmp/test.jpg');
+        $image->destroy();
+        $image->load(__DIR__ . '/../tmp/overlay.png');
+        $this->assertEquals('png', $image->getFormat());
+    }
+
+    public function testCreateAfterDestroy()
+    {
+        $image = new Imagick(__DIR__ . '/../tmp/test.jpg');
+        $image->destroy();
+        $image->create(320, 240, 'test.png');
+        $this->assertEquals(320, $image->getWidth());
+        $this->assertEquals(240, $image->getHeight());
+    }
+
+    public function testCreateIndexAfterDestroy()
+    {
+        $image = new Imagick(__DIR__ . '/../tmp/test.jpg');
+        $image->destroy();
+        $image->createIndex(320, 240, 'test.gif');
+        $this->assertTrue($image->isIndexed());
+    }
+
     public function testLoadException()
     {
         $this->expectException('Pop\Image\Adapter\Exception');
@@ -243,6 +290,14 @@ class ImagickTest extends TestCase
         $this->assertEquals(240, $image->getHeight());
     }
 
+    public function testResizeImageDefaultFilterAndBlur()
+    {
+        $image = new Imagick(__DIR__ . '/../tmp/test.jpg');
+        $image->resizeImage(320, 240);
+        $this->assertEquals(320, $image->getResource()->getImageWidth());
+        $this->assertEquals(240, $image->getResource()->getImageHeight());
+    }
+
     public function testCrop()
     {
         $image = new Imagick(__DIR__ . '/../tmp/test.jpg');
@@ -334,10 +389,24 @@ class ImagickTest extends TestCase
         $this->assertEquals('jpg', $image->getFormat());
     }
 
+    public function testConvertOtherFormat()
+    {
+        $image = new Imagick(__DIR__ . '/../tmp/test.jpg');
+        $image->convert('bmp');
+        $this->assertEquals('bmp', $image->getFormat());
+    }
+
     public function testOutputToRawString()
     {
         $image = new Imagick(__DIR__ . '/../tmp/test.jpg');
         $this->assertStringContainsString('JFIF', $image->outputToRawString());
+    }
+
+    public function testWriteToFileNotCreatedException()
+    {
+        $this->expectException('Pop\Image\Adapter\Exception');
+        $image = new Imagick();
+        $image->writeToFile(__DIR__ . '/../tmp/test-240.jpg');
     }
 
     public function testWriteToFileOutOfRangeException()

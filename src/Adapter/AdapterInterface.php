@@ -235,7 +235,7 @@ interface AdapterInterface
      * @param  int                   $degrees
      * @param  ?Color\ColorInterface $bgColor
      * @throws Exception
-     * @return Gd
+     * @return AdapterInterface
      */
     public function rotate(int $degrees, ?Color\ColorInterface $bgColor = null): AdapterInterface;
 

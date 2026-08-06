@@ -52,6 +52,25 @@ class GdTest extends TestCase
         $image->loadFromString('');
     }
 
+    public function testLoadUnsupportedFormatException()
+    {
+        $this->expectException('Pop\Image\Adapter\Exception');
+        file_put_contents(__DIR__ . '/../tmp/unsupported.bmp', 'not an image');
+        try {
+            $image = new Gd();
+            $image->load(__DIR__ . '/../tmp/unsupported.bmp');
+        } finally {
+            @unlink(__DIR__ . '/../tmp/unsupported.bmp');
+        }
+    }
+
+    public function testLoadFromStringWithName()
+    {
+        $image = new Gd();
+        $image->loadFromString(file_get_contents(__DIR__ . '/../tmp/test.jpg'), 'renamed.jpg');
+        $this->assertEquals('renamed.jpg', $image->getName());
+    }
+
     public function testCreate()
     {
         $image = new Gd();
@@ -83,6 +102,22 @@ class GdTest extends TestCase
         $image->writeToFile(__DIR__ . '/../tmp/test.gif');
         $this->assertFileExists(__DIR__ . '/../tmp/test.gif');
         unlink(__DIR__ . '/../tmp/test.gif');
+    }
+
+    public function testCreateIndex()
+    {
+        $image = new Gd();
+        $image->createIndex(640, 480, 'test.gif');
+        $this->assertTrue($image->isIndexed());
+        $this->assertEquals('gif', $image->getFormat());
+    }
+
+    public function testCreateIndexPng()
+    {
+        $image = new Gd();
+        $image->createIndex(640, 480, 'test.png');
+        $this->assertTrue($image->isIndexed());
+        $this->assertEquals('png', $image->getFormat());
     }
 
     public function testAdjust()
@@ -179,6 +214,15 @@ class GdTest extends TestCase
         $image->resize(240);
         $this->assertEquals(240, $image->getWidth());
         $this->assertEquals(180, $image->getHeight());
+    }
+
+    public function testResizeIndexed()
+    {
+        $image = new Gd(__DIR__ . '/../tmp/overlay.gif');
+        $image->resize(20);
+        $this->assertTrue($image->isIndexed());
+        $this->assertEquals(20, $image->getWidth());
+        $this->assertEquals(15, $image->getHeight());
     }
 
     public function testScale()
@@ -314,6 +358,13 @@ class GdTest extends TestCase
         $this->assertStringContainsString('JFIF', $image->outputToRawString());
     }
 
+    public function testOutputToRawStringNotCreatedException()
+    {
+        $this->expectException('Pop\Image\Adapter\Exception');
+        $image = new Gd();
+        $image->outputToRawString();
+    }
+
     public function testWriteToFile()
     {
         copy(__DIR__ . '/../tmp/test.jpg', __DIR__ . '/../tmp/test2.jpg');
@@ -368,6 +419,17 @@ class GdTest extends TestCase
         $image->destroy(true);
         $this->assertStringContainsString('JPEG', $result);
         $this->assertFileDoesNotExist(__DIR__ . '/../tmp/test-240.jpg');
+    }
+
+    public function testOutputToHttpWithAdditionalHeaders()
+    {
+        $image = new Gd(__DIR__ . '/../tmp/test.jpg');
+
+        ob_start();
+        $image->outputToHttp(100, null, false, true, ['X-Test-Header' => 'value']);
+        $result = ob_get_clean();
+
+        $this->assertStringContainsString('JPEG', $result);
     }
 
     public function testToString()

@@ -37,8 +37,8 @@ interface LayerInterface
      * Set the image opacity.
      *
      * @param  int|float $opacity
-     * @return AbstractLayer
+     * @return static
      */
-    public function setOpacity(int|float $opacity): AbstractLayer;
+    public function setOpacity(int|float $opacity): static;
 
 }

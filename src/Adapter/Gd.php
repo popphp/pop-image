@@ -628,10 +628,8 @@ class Gd extends AbstractAdapter
     public function destroy(bool $delete = false): void
     {
         // Destroy the image resource.
-        if ($this->resource !== null) {
-            if (!is_string($this->resource) && is_resource($this->resource)) {
-                imagedestroy($this->resource);
-            }
+        if ($this->resource instanceof \GdImage) {
+            imagedestroy($this->resource);
         }
 
         $this->resource = null;

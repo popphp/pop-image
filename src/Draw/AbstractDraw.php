@@ -37,15 +37,15 @@ abstract class AbstractDraw extends AbstractEditObject implements DrawInterface
 
     /**
      * Fill color
-     * @var ?Color\Colorinterface
+     * @var ?Color\ColorInterface
      */
-    protected ?Color\Colorinterface $fillColor = null;
+    protected ?Color\ColorInterface $fillColor = null;
 
     /**
      * Stroke color
-     * @var ?Color\Colorinterface
+     * @var ?Color\ColorInterface
      */
-    protected ?Color\Colorinterface$strokeColor = null;
+    protected ?Color\ColorInterface $strokeColor = null;
 
     /**
      * Stroke width
@@ -74,9 +74,9 @@ abstract class AbstractDraw extends AbstractEditObject implements DrawInterface
     /**
      * Get fill color
      *
-     * @return Color\Colorinterface
+     * @return Color\ColorInterface
      */
-    public function getFillColor(): Color\Colorinterface
+    public function getFillColor(): Color\ColorInterface
     {
         return $this->fillColor;
     }
@@ -84,9 +84,9 @@ abstract class AbstractDraw extends AbstractEditObject implements DrawInterface
     /**
      * Get stroke color
      *
-     * @return Color\Colorinterface
+     * @return Color\ColorInterface
      */
-    public function getStrokeColor(): Color\Colorinterface
+    public function getStrokeColor(): Color\ColorInterface
     {
         return $this->strokeColor;
     }
