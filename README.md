@@ -40,7 +40,7 @@ Install `pop-image` using Composer.
 Or, require it in your composer.json file
 
     "require": {
-        "popphp/pop-image" : "^4.1.3"
+        "popphp/pop-image" : "^5.0.0"
     }
 
 [Top](#pop-image)
