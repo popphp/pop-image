@@ -46,16 +46,16 @@ interface DrawInterface
     /**
      * Get fill color
      *
-     * @return Color\Colorinterface
+     * @return Color\ColorInterface
      */
-    public function getFillColor(): Color\Colorinterface;
+    public function getFillColor(): Color\ColorInterface;
 
     /**
      * Get stroke color
      *
-     * @return Color\Colorinterface
+     * @return Color\ColorInterface
      */
-    public function getStrokeColor(): Color\Colorinterface;
+    public function getStrokeColor(): Color\ColorInterface;
 
     /**
      * Get stroke width
