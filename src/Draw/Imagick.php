@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * Pop PHP Framework (https://www.popphp.org/)
  *
@@ -32,7 +33,7 @@ class Imagick extends AbstractDraw
      * Opacity
      * @var int|float|null
      */
-    protected int|float|null $opacity = 1.0;
+    protected int|float|null $opacity = 100;
 
     /**
      * Set the opacity
@@ -60,8 +61,8 @@ class Imagick extends AbstractDraw
     {
         if ($this->hasImage()) {
             $draw = new \ImagickDraw();
-            $draw->setStrokeColor($this->image->createColor($this->strokeColor, $this->opacity));
-            $draw->setStrokeWidth(($this->strokeWidth === null) ? 1 : $this->strokeWidth);
+            $draw->setStrokeColor($this->image->createColor($this->strokeColor, (int)$this->opacity));
+            $draw->setStrokeWidth($this->strokeWidth);
             $draw->line($x1, $y1, $x2, $y2);
             $this->image->getResource()->drawImage($draw);
         }
@@ -88,11 +89,11 @@ class Imagick extends AbstractDraw
             $draw = new \ImagickDraw();
 
             if ($this->fillColor !== null) {
-                $draw->setFillColor($this->image->createColor($this->fillColor, $this->opacity));
+                $draw->setFillColor($this->image->createColor($this->fillColor, (int)$this->opacity));
             }
 
             if ($this->strokeWidth > 0) {
-                $draw->setStrokeColor($this->image->createColor($this->strokeColor, $this->opacity));
+                $draw->setStrokeColor($this->image->createColor($this->strokeColor, (int)$this->opacity));
                 $draw->setStrokeWidth($this->strokeWidth);
             }
 
@@ -141,11 +142,11 @@ class Imagick extends AbstractDraw
             $draw = new \ImagickDraw();
 
             if ($this->fillColor !== null) {
-                $draw->setFillColor($this->image->createColor($this->fillColor, $this->opacity));
+                $draw->setFillColor($this->image->createColor($this->fillColor, (int)$this->opacity));
             }
 
             if ($this->strokeWidth > 0) {
-                $draw->setStrokeColor($this->image->createColor($this->strokeColor, $this->opacity));
+                $draw->setStrokeColor($this->image->createColor($this->strokeColor, (int)$this->opacity));
                 $draw->setStrokeWidth($this->strokeWidth);
             }
 
@@ -191,11 +192,11 @@ class Imagick extends AbstractDraw
             $draw = new \ImagickDraw();
 
             if ($this->fillColor !== null) {
-                $draw->setFillColor($this->image->createColor($this->fillColor, $this->opacity));
+                $draw->setFillColor($this->image->createColor($this->fillColor, (int)$this->opacity));
             }
 
             if ($this->strokeWidth > 0) {
-                $draw->setStrokeColor($this->image->createColor($this->strokeColor, $this->opacity));
+                $draw->setStrokeColor($this->image->createColor($this->strokeColor, (int)$this->opacity));
                 $draw->setStrokeWidth($this->strokeWidth);
             }
 
@@ -244,7 +245,7 @@ class Imagick extends AbstractDraw
 
             $draw = new \ImagickDraw();
             $draw->setFillOpacity(0);
-            $draw->setStrokeColor($this->image->createColor($this->strokeColor, $this->opacity));
+            $draw->setStrokeColor($this->image->createColor($this->strokeColor, (int)$this->opacity));
             $draw->setStrokeWidth($this->strokeWidth);
 
             $draw->ellipse($x, $y, $wid, $hgt, $start, $end);
@@ -368,11 +369,11 @@ class Imagick extends AbstractDraw
         if ($this->hasImage()) {
             $draw = new \ImagickDraw();
             if ($this->fillColor !== null) {
-                $draw->setFillColor($this->image->createColor($this->fillColor, $this->opacity));
+                $draw->setFillColor($this->image->createColor($this->fillColor, (int)$this->opacity));
             }
 
             if ($this->strokeWidth > 0) {
-                $draw->setStrokeColor($this->image->createColor($this->strokeColor, $this->opacity));
+                $draw->setStrokeColor($this->image->createColor($this->strokeColor, (int)$this->opacity));
                 $draw->setStrokeWidth($this->strokeWidth);
             }
 

@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * Pop PHP Framework (https://www.popphp.org/)
  *
@@ -83,19 +84,19 @@ class Gd extends AbstractEffect
         if ($this->hasImage()) {
             if ($this->image->getHeight() > $this->image->getWidth()) {
                 $tween = $this->image->getHeight();
-                $tween = round($tween * ($this->image->getHeight() / $this->image->getWidth()));
+                $tween = (int)round($tween * ($this->image->getHeight() / $this->image->getWidth()));
             } else if ($this->image->getWidth() > $this->image->getHeight()) {
                 $tween = $this->image->getWidth();
-                $tween = round($tween * ($this->image->getWidth() / $this->image->getHeight()));
+                $tween = (int)round($tween * ($this->image->getWidth() / $this->image->getHeight()));
             } else {
                 $tween = $this->image->getWidth();
-                $tween = round($tween * 1.5);
+                $tween = (int)round($tween * 1.5);
             }
 
             $blend = $this->getBlend($color1, $color2, $tween);
 
-            $x = round($this->image->getWidth() / 2);
-            $y = round($this->image->getHeight() / 2);
+            $x = (int)round($this->image->getWidth() / 2);
+            $y = (int)round($this->image->getHeight() / 2);
             $w = $tween;
             $h = $tween;
 

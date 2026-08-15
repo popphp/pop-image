@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * Pop PHP Framework (https://www.popphp.org/)
  *
@@ -68,28 +69,34 @@ class Imagick extends AbstractEffect
      *
      * @param  Color\ColorInterface $color1
      * @param  Color\ColorInterface $color2
-     * @throws ImagickException
+     * @throws ImagickException|Exception
      * @return Imagick
      */
     public function radialGradient(Color\ColorInterface $color1, Color\ColorInterface $color2): Imagick
     {
         if ($this->hasImage()) {
             $im = new \Imagick();
-            $width = round($this->image->getWidth() * 1.25);
-            $height = round($this->image->getHeight() * 1.25);
+            $width = (int)round($this->image->getWidth() * 1.25);
+            $height = (int)round($this->image->getHeight() * 1.25);
 
             if (!($color1 instanceof Color\Rgb)) {
+                if (!method_exists($color1, 'toRgb')) {
+                    throw new Exception('Error: The color object does not support conversion to RGB.');
+                }
                 $color1 = $color1->toRgb();
             }
             if (!($color2 instanceof Color\Rgb)) {
+                if (!method_exists($color2, 'toRgb')) {
+                    throw new Exception('Error: The color object does not support conversion to RGB.');
+                }
                 $color2 = $color2->toRgb();
             }
 
             $im->newPseudoImage($width, $height, 'radial-gradient:' . $color1->toHex() . '-' . $color2->toHex());
             $this->image->getResource()->compositeImage(
                 $im, \Imagick::COMPOSITE_ATOP,
-                0 - round(($width - $this->image->getWidth()) / 2),
-                0 - round(($height - $this->image->getHeight()) / 2)
+                0 - (int)round(($width - $this->image->getWidth()) / 2),
+                0 - (int)round(($height - $this->image->getHeight()) / 2)
             );
         }
 
@@ -101,7 +108,7 @@ class Imagick extends AbstractEffect
      *
      * @param  Color\ColorInterface $color1
      * @param  Color\ColorInterface $color2
-     * @throws ImagickException
+     * @throws ImagickException|Exception
      * @return Imagick
      */
     public function verticalGradient(Color\ColorInterface $color1, Color\ColorInterface $color2): Imagick
@@ -110,9 +117,15 @@ class Imagick extends AbstractEffect
             $im = new \Imagick();
 
             if (!($color1 instanceof Color\Rgb)) {
+                if (!method_exists($color1, 'toRgb')) {
+                    throw new Exception('Error: The color object does not support conversion to RGB.');
+                }
                 $color1 = $color1->toRgb();
             }
             if (!($color2 instanceof Color\Rgb)) {
+                if (!method_exists($color2, 'toRgb')) {
+                    throw new Exception('Error: The color object does not support conversion to RGB.');
+                }
                 $color2 = $color2->toRgb();
             }
 
@@ -130,7 +143,7 @@ class Imagick extends AbstractEffect
      *
      * @param  Color\ColorInterface $color1
      * @param  Color\ColorInterface $color2
-     * @throws ImagickException
+     * @throws ImagickException|Exception
      * @return Imagick
      */
     public function horizontalGradient(Color\ColorInterface $color1, Color\ColorInterface $color2): Imagick
@@ -139,9 +152,15 @@ class Imagick extends AbstractEffect
             $im = new \Imagick();
 
             if (!($color1 instanceof Color\Rgb)) {
+                if (!method_exists($color1, 'toRgb')) {
+                    throw new Exception('Error: The color object does not support conversion to RGB.');
+                }
                 $color1 = $color1->toRgb();
             }
             if (!($color2 instanceof Color\Rgb)) {
+                if (!method_exists($color2, 'toRgb')) {
+                    throw new Exception('Error: The color object does not support conversion to RGB.');
+                }
                 $color2 = $color2->toRgb();
             }
 

@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * Pop PHP Framework (https://www.popphp.org/)
  *
@@ -33,7 +34,7 @@ class Imagick extends AbstractType
      * Opacity
      * @var int|float|null
      */
-    protected int|float|null $opacity = 1.0;
+    protected int|float|null $opacity = 100;
 
     /**
      * Set the opacity
@@ -92,14 +93,12 @@ class Imagick extends AbstractType
 
             $draw->setFont($this->font);
             $draw->setFontSize($this->size);
-            $draw->setFillColor($this->image->createColor($this->fillColor, $this->opacity));
+            $draw->setFillColor($this->image->createColor($this->fillColor, (int)$this->opacity));
 
-            if ($this->rotation !== null) {
-                $draw->rotate($this->rotation);
-            }
+            $draw->rotate($this->rotation);
 
             if ($this->strokeColor !== null) {
-                $draw->setStrokeColor($this->image->createColor($this->strokeColor, $this->opacity));
+                $draw->setStrokeColor($this->image->createColor($this->strokeColor, (int)$this->opacity));
                 $draw->setStrokeWidth((int)$this->strokeWidth);
             }
 

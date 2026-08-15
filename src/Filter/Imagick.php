@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * Pop PHP Framework (https://www.popphp.org/)
  *
@@ -186,6 +187,7 @@ class Imagick extends AbstractFilter
      * @param  int                   $x
      * @param  int                   $y
      * @param  ?Color\ColorInterface $color
+     * @throws Exception
      * @return Imagick
      */
     public function skew(int $x, int $y, ?Color\ColorInterface $color = null): Imagick
@@ -195,6 +197,9 @@ class Imagick extends AbstractFilter
                 $color = new Color\Rgb(255, 255, 255);
             }
             if (!($color instanceof Color\Rgb)) {
+                if (!method_exists($color, 'toRgb')) {
+                    throw new Exception('Error: The color object does not support conversion to RGB.');
+                }
                 $color = $color->toRgb();
             }
             $this->image->getResource()->shearImage($color->render(Color\Rgb::CSS), $x, $y);

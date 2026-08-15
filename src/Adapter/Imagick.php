@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * Pop PHP Framework (https://www.popphp.org/)
  *
@@ -81,7 +82,7 @@ class Imagick extends AbstractAdapter
             $this->name = $name;
         }
 
-        if (($this->name === null) || (($filename !== null) && !file_exists($filename))) {
+        if (($filename !== null) && !file_exists($filename)) {
             throw new Exception('Error: The image file has not been passed to the image adapter');
         }
 
@@ -194,12 +195,10 @@ class Imagick extends AbstractAdapter
 
         $this->resource->newImage($this->width, $this->height, new ImagickPixel('white'));
 
-        if ($this->name !== null) {
-            $extension = strtolower(substr($this->name, (strrpos($this->name, '.') + 1)));
-            if (!empty($extension)) {
-                $this->resource->setImageFormat($extension);
-                $this->format = $extension;
-            }
+        $extension = strtolower(substr($this->name, (strrpos($this->name, '.') + 1)));
+        if (!empty($extension)) {
+            $this->resource->setImageFormat($extension);
+            $this->format = $extension;
         }
 
         return $this;
@@ -231,12 +230,10 @@ class Imagick extends AbstractAdapter
 
         $this->resource->newImage($this->width, $this->height, new ImagickPixel('white'));
 
-        if ($this->name !== null) {
-            $extension = strtolower(substr($this->name, (strrpos($this->name, '.') + 1)));
-            if (!empty($extension)) {
-                $this->resource->setImageFormat($extension);
-                $this->format = $extension;
-            }
+        $extension = strtolower(substr($this->name, (strrpos($this->name, '.') + 1)));
+        if (!empty($extension)) {
+            $this->resource->setImageFormat($extension);
+            $this->format = $extension;
         }
 
         $this->resource->setImageType(\Imagick::IMGTYPE_PALETTE);
@@ -412,7 +409,7 @@ class Imagick extends AbstractAdapter
     {
         $scale        = $w / $this->width;
         $this->width  = $w;
-        $this->height = round($this->height * $scale);
+        $this->height = (int)round($this->height * $scale);
 
         return $this->resizeImage($this->width, $this->height, $this->imageFilter, $this->imageBlur);
     }
@@ -427,7 +424,7 @@ class Imagick extends AbstractAdapter
     {
         $scale        = $h / $this->height;
         $this->height = $h;
-        $this->width  = round($this->width * $scale);
+        $this->width  = (int)round($this->width * $scale);
 
         return $this->resizeImage($this->width, $this->height, $this->imageFilter, $this->imageBlur);
     }
@@ -442,8 +439,8 @@ class Imagick extends AbstractAdapter
     public function resize(int $px): Imagick
     {
         $scale        = ($this->width > $this->height) ? ($px / $this->width) : ($px / $this->height);
-        $this->width  = round($this->width * $scale);
-        $this->height = round($this->height * $scale);
+        $this->width  = (int)round($this->width * $scale);
+        $this->height = (int)round($this->height * $scale);
 
         return $this->resizeImage($this->width, $this->height, $this->imageFilter, $this->imageBlur);
     }
@@ -457,8 +454,8 @@ class Imagick extends AbstractAdapter
      */
     public function scale(float $scale): Imagick
     {
-        $this->width  = round($this->width * $scale);
-        $this->height = round($this->height * $scale);
+        $this->width  = (int)round($this->width * $scale);
+        $this->height = (int)round($this->height * $scale);
 
         return $this->resizeImage($this->width, $this->height, $this->imageFilter, $this->imageBlur);
     }
@@ -466,13 +463,13 @@ class Imagick extends AbstractAdapter
     /**
      * Resize image, checking for multiple frames
      *
-     * @param  int  $width
-     * @param  int  $height
-     * @param  ?int $filter
-     * @param  ?int $blur
+     * @param  int    $width
+     * @param  int    $height
+     * @param  ?int   $filter
+     * @param  ?float $blur
      * @return Imagick
      */
-    public function resizeImage(int $width, int $height, ?int $filter = null, ?int $blur = null): Imagick
+    public function resizeImage(int $width, int $height, ?int $filter = null, ?float $blur = null): Imagick
     {
         if ($filter === null) {
             $filter = $this->imageFilter;
@@ -538,8 +535,8 @@ class Imagick extends AbstractAdapter
 
         $scale = ($this->width > $this->height) ? ($px / $this->height) : ($px / $this->width);
 
-        $wid = round($this->width * $scale);
-        $hgt = round($this->height * $scale);
+        $wid = (int)round($this->width * $scale);
+        $hgt = (int)round($this->height * $scale);
 
         // Create a new image output resource.
         if ($offset !== null) {
@@ -769,7 +766,7 @@ class Imagick extends AbstractAdapter
      */
     public function writeToFile(?string $to = null, ?int $quality = null): void
     {
-        if (($this->resource === null) || (($this->resource !== null) && ($this->resource->count() == 0))) {
+        if (($this->resource === null) || ($this->resource->count() == 0)) {
             throw new Exception('Error: An image resource has not been created or loaded');
         }
 
@@ -788,7 +785,7 @@ class Imagick extends AbstractAdapter
         $this->resource->setImageCompressionQuality($this->quality);
 
         if ($to === null) {
-            $to = ($this->name !== null) ? basename($this->name) : 'pop-image.' . $this->format;
+            $to = basename($this->name);
         } else {
             $this->name = $to;
         }
@@ -827,7 +824,7 @@ class Imagick extends AbstractAdapter
         ?int $quality = null, ?string $to = null, bool $download = false, bool $sendHeaders = true, array $headers = []
     ): void
     {
-        if (($this->resource === null) || (($this->resource !== null) && ($this->resource->count() == 0))) {
+        if (($this->resource === null) || ($this->resource->count() == 0)) {
             throw new Exception('Error: An image resource has not been created or loaded');
         }
 
@@ -846,7 +843,7 @@ class Imagick extends AbstractAdapter
         $this->resource->setImageCompressionQuality($this->quality);
 
         if ($to === null) {
-            $to = ($this->name !== null) ? basename($this->name) : 'pop-image.' . strtolower($this->format);
+            $to = basename($this->name);
         }
 
         if ($sendHeaders) {
@@ -882,7 +879,7 @@ class Imagick extends AbstractAdapter
      *
      * @param  ?Color\ColorInterface $color
      * @param  int                   $alpha
-     * @throws ImagickPixelException
+     * @throws ImagickPixelException|Exception
      * @return ImagickPixel
      */
     public function createColor(?Color\ColorInterface $color = null, int $alpha = 100): ImagickPixel
@@ -892,6 +889,9 @@ class Imagick extends AbstractAdapter
         }
 
         if (!($color instanceof Color\Rgb)) {
+            if (!method_exists($color, 'toRgb')) {
+                throw new Exception('Error: The color object does not support conversion to RGB.');
+            }
             $color = $color->toRgb();
         }
 

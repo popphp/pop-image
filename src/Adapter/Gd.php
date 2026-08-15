@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * Pop PHP Framework (https://www.popphp.org/)
  *
@@ -57,7 +58,7 @@ class Gd extends AbstractAdapter
             $this->name = $name;
         }
 
-        if (($this->name === null) || !file_exists($this->name)) {
+        if (!file_exists($this->name)) {
             throw new Exception('Error: The image file has not been passed to the image adapter');
         }
 
@@ -137,10 +138,6 @@ class Gd extends AbstractAdapter
             $this->name = $name;
         }
 
-        if (($this->width === null) && ($this->height === null)) {
-            throw new Exception('Error: You must pass a width and a height');
-        }
-
         if (stripos($this->name, '.gif') !== false) {
             $this->resource = imagecreate($this->width, $this->height);
             $this->indexed  = true;
@@ -181,10 +178,6 @@ class Gd extends AbstractAdapter
             $this->name = $name;
         }
 
-        if (($this->width === null) && ($this->height === null)) {
-            throw new Exception('Error: You must pass a width and a height');
-        }
-
         $this->resource = imagecreate($this->width, $this->height);
         $this->indexed  = true;
 
@@ -210,7 +203,7 @@ class Gd extends AbstractAdapter
     public function resizeToWidth(int $w): Gd
     {
         $scale = $w / $this->width;
-        $h     = round($this->height * $scale);
+        $h     = (int)round($this->height * $scale);
         $this->copyImage($w, $h);
 
         return $this;
@@ -225,7 +218,7 @@ class Gd extends AbstractAdapter
     public function resizeToHeight(int $h): Gd
     {
         $scale = $h / $this->height;
-        $w     = round($this->width * $scale);
+        $w     = (int)round($this->width * $scale);
         $this->copyImage($w, $h);
 
         return $this;
@@ -241,8 +234,8 @@ class Gd extends AbstractAdapter
     public function resize(int $px): Gd
     {
         $scale = ($this->width > $this->height) ? ($px / $this->width) : ($px / $this->height);
-        $w     = round($this->width * $scale);
-        $h     = round($this->height * $scale);
+        $w     = (int)round($this->width * $scale);
+        $h     = (int)round($this->height * $scale);
         $this->copyImage($w, $h);
 
         return $this;
@@ -257,8 +250,8 @@ class Gd extends AbstractAdapter
      */
     public function scale(float $scale): Gd
     {
-        $w = round($this->width * $scale);
-        $h = round($this->height * $scale);
+        $w = (int)round($this->width * $scale);
+        $h = (int)round($this->height * $scale);
         $this->copyImage($w, $h);
 
         return $this;
@@ -308,8 +301,8 @@ class Gd extends AbstractAdapter
         $xOffset = 0;
         $yOffset = 0;
         $scale   = ($this->width > $this->height) ? ($px / $this->height) : ($px / $this->width);
-        $w       = round($this->width * $scale);
-        $h       = round($this->height * $scale);
+        $w       = (int)round($this->width * $scale);
+        $h       = (int)round($this->height * $scale);
 
         if ($offset !== null) {
             if ($this->width > $this->height) {
@@ -321,11 +314,11 @@ class Gd extends AbstractAdapter
             }
         } else {
             if ($this->width > $this->height) {
-                $xOffset = round(($this->width - $this->height) / 2);
+                $xOffset = (int)round(($this->width - $this->height) / 2);
                 $yOffset = 0;
             } else if ($this->width < $this->height) {
                 $xOffset = 0;
-                $yOffset = round(($this->height - $this->width) / 2);
+                $yOffset = (int)round(($this->height - $this->width) / 2);
             }
         }
 
@@ -509,7 +502,7 @@ class Gd extends AbstractAdapter
                 break;
         }
 
-        if (($this->name !== null) && (strpos($this->name, '.') !== false)) {
+        if (strpos($this->name, '.') !== false) {
             $this->name = substr($this->name, 0, (strrpos($this->name, '.') + 1)) . $this->format;
         }
 
@@ -554,7 +547,7 @@ class Gd extends AbstractAdapter
         $this->format = strtolower($this->format);
 
         if ($to === null) {
-            $to = ($this->name !== null) ? basename($this->name) : 'pop-image.' . $this->format;
+            $to = basename($this->name);
         } else {
             $this->name = $to;
         }
@@ -610,7 +603,7 @@ class Gd extends AbstractAdapter
         $this->format = strtolower($this->format);
 
         if ($to === null) {
-            $to = ($this->name !== null) ? basename($this->name) : 'pop-image.' . $this->format;
+            $to = basename($this->name);
         }
 
         if ($sendHeaders) {
@@ -656,6 +649,9 @@ class Gd extends AbstractAdapter
         }
 
         if (!($color instanceof Color\Rgb)) {
+            if (!method_exists($color, 'toRgb')) {
+                throw new Exception('Error: The color object does not support conversion to RGB.');
+            }
             $color = $color->toRgb();
         }
 
@@ -680,7 +676,7 @@ class Gd extends AbstractAdapter
      */
     public function __toString(): string
     {
-        $quality = ($this->quality !== null) ? $this->quality : 100;
+        $quality = $this->quality;
         $this->sendHeaders();
         $this->generateImage($quality);
         return '';

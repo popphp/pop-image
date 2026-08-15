@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * Pop PHP Framework (https://www.popphp.org/)
  *
@@ -30,7 +31,7 @@ abstract class AbstractLayer extends AbstractEditObject implements LayerInterfac
 
     /**
      * Opacity
-     * @var mixed
+     * @var int|float|null
      */
     protected int|float|null $opacity = null;
 

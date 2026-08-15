@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * Pop PHP Framework (https://www.popphp.org/)
  *
@@ -35,14 +36,21 @@ abstract class AbstractEffect extends AbstractEditObject implements EffectInterf
      * @param  Color\ColorInterface $color1
      * @param  Color\ColorInterface $color2
      * @param  int                  $tween
+     * @throws Exception
      * @return array
      */
     public function getBlend(Color\ColorInterface $color1, Color\ColorInterface $color2, int $tween): array
     {
         if (!($color1 instanceof Color\Rgb)) {
+            if (!method_exists($color1, 'toRgb')) {
+                throw new Exception('Error: The color object does not support conversion to RGB.');
+            }
             $color1 = $color1->toRgb();
         }
         if (!($color2 instanceof Color\Rgb)) {
+            if (!method_exists($color2, 'toRgb')) {
+                throw new Exception('Error: The color object does not support conversion to RGB.');
+            }
             $color2 = $color2->toRgb();
         }
 
@@ -61,9 +69,9 @@ abstract class AbstractEffect extends AbstractEditObject implements EffectInterf
         $bTotal = $b2 - $b1;
 
         for ($i = 0; $i <= $tween; $i++) {
-            $blend['r'][] = round($this->calculateSteps($i, $r1, $rTotal, $tween));
-            $blend['g'][] = round($this->calculateSteps($i, $g1, $gTotal, $tween));
-            $blend['b'][] = round($this->calculateSteps($i, $b1, $bTotal, $tween));
+            $blend['r'][] = (int)round($this->calculateSteps($i, $r1, $rTotal, $tween));
+            $blend['g'][] = (int)round($this->calculateSteps($i, $g1, $gTotal, $tween));
+            $blend['b'][] = (int)round($this->calculateSteps($i, $b1, $bTotal, $tween));
         }
 
         return $blend;

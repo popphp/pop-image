@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * Pop PHP Framework (https://www.popphp.org/)
  *
@@ -319,7 +320,7 @@ abstract class AbstractAdapter implements AdapterInterface
     public function sendHeaders(?string $to = null, bool $download = false, array $additionalHeaders = []): void
     {
         if ($to === null) {
-            $to = ($this->name !== null) ? basename($this->name) : 'pop-image.' . $this->format;
+            $to = basename($this->name);
         }
 
         // Determine if the force download argument has been passed.

@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * Pop PHP Framework (https://www.popphp.org/)
  *
@@ -124,11 +125,11 @@ class Imagick extends AbstractAdjust
         if ($this->hasImage()) {
             if ($amount > 0) {
                 for ($i = 1; $i <= $amount; $i++) {
-                    $this->image->getResource()->contrastImage(1);
+                    $this->image->getResource()->contrastImage(true);
                 }
             } else if ($amount < 0) {
                 for ($i = -1; $i >= $amount; $i--) {
-                    $this->image->getResource()->contrastImage(0);
+                    $this->image->getResource()->contrastImage(false);
                 }
             }
         }
