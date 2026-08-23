@@ -2,7 +2,7 @@ pop-image
 =========
 
 [![Build Status](https://github.com/popphp/pop-image/workflows/phpunit/badge.svg)](https://github.com/popphp/pop-image/actions)
-[![Coverage Status](http://cc.popphp.org/coverage.php?comp=pop-image)](http://cc.popphp.org/pop-image/)
+[![Coverage Status](https://cc.popphp.org/coverage.php?comp=pop-image)](https://cc.popphp.org/pop-image/)
 
 [![Join the chat at https://discord.gg/TZjgT74U7E](https://media.popphp.org/img/discord.svg)](https://discord.gg/TZjgT74U7E)
 
