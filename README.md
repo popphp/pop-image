@@ -545,9 +545,9 @@ Shapes:
 | `pie($x, $y, $start, $end, $w, $h = null)` | ✓ | ✓ |
 | `polygon(array $points)` | ✓ | ✓ |
 
-`$h` defaults to `$w` when omitted, drawing a regular (equal-sided) shape. `polygon()` takes a flat
-array of coordinates: `[$x1, $y1, $x2, $y2, ...]`. GD's shape methods accept `int|float` for all
-coordinate/size arguments; Imagick's are `int`-only.
+`$h` defaults to `$w` when omitted, drawing a regular (equal-sided) shape. `polygon()` takes an array
+of point arrays: `[['x' => $x1, 'y' => $y1], ['x' => $x2, 'y' => $y2], ...]`. GD's shape methods
+accept `int|float` for all coordinate/size arguments; Imagick's are `int`-only.
 
 ```php
 $img->draw->setFillColor(new Rgb(255, 0, 0))

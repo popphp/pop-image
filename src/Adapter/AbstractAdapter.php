@@ -146,7 +146,7 @@ abstract class AbstractAdapter implements AdapterInterface
         $this->createResource();
 
         // $image
-        if (isset($args[0]) && !is_numeric($args[0]) && file_exists($args[0])) {
+        if (isset($args[0]) && !is_numeric($args[0])) {
             $this->name = $args[0];
             $this->load();
         // $width, $height, $name

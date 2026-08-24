@@ -75,14 +75,14 @@ class Imagick extends AbstractAdapter
      */
     public function load(?string $name = null): Imagick
     {
-        $filename = null;
         if ($name !== null) {
-            $filename = ((str_contains($name, '[')) && (str_contains($name, ']'))) ?
-                substr($name, 0, strpos($name, '[')) : $name;
             $this->name = $name;
         }
 
-        if (($filename !== null) && !file_exists($filename)) {
+        $filename = ((str_contains($this->name, '[')) && (str_contains($this->name, ']'))) ?
+            substr($this->name, 0, strpos($this->name, '[')) : $this->name;
+
+        if (!file_exists($filename)) {
             throw new Exception('Error: The image file has not been passed to the image adapter');
         }
 

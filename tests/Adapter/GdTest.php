@@ -45,6 +45,12 @@ class GdTest extends TestCase
         $image->load('bad-image.jpg');
     }
 
+    public function testConstructorLoadException()
+    {
+        $this->expectException('Pop\Image\Adapter\Exception');
+        new Gd('bad-image.jpg');
+    }
+
     public function testLoadFromStringException()
     {
         $this->expectException('Pop\Image\Adapter\Exception');

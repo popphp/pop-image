@@ -91,6 +91,12 @@ class ImagickTest extends TestCase
         $image->load('bad-image.jpg');
     }
 
+    public function testConstructorLoadException()
+    {
+        $this->expectException('Pop\Image\Adapter\Exception');
+        new Imagick('bad-image.jpg');
+    }
+
     public function testLoadFromStringException()
     {
         $this->expectException('ImagickException');
